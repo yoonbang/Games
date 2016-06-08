@@ -17,10 +17,6 @@ public class Block_Move_Ctrl : MonoBehaviour {
     public GameObject H_Zone;
     public GameObject I_Zone;
     public GameObject J_Zone;
-    public GameObject K_Zone;
-
-    public GameObject Sky1, Sky2, Sky3;
-
     void Start () {
 	
 	}
@@ -43,13 +39,6 @@ public class Block_Move_Ctrl : MonoBehaviour {
         H_Zone.transform.Translate(Vector3.left * Block_Move_Speed * Time.deltaTime);
         I_Zone.transform.Translate(Vector3.left * Block_Move_Speed * Time.deltaTime);
         J_Zone.transform.Translate(Vector3.left * Block_Move_Speed * Time.deltaTime);
-        K_Zone.transform.Translate(Vector3.left * Block_Move_Speed * Time.deltaTime);
-
-
-        Sky1.transform.Translate(Vector3.left * Block_Move_Speed * Time.deltaTime);
-        Sky2.transform.Translate(Vector3.left * Block_Move_Speed * Time.deltaTime);
-        Sky3.transform.Translate(Vector3.left * Block_Move_Speed * Time.deltaTime);
-
     }
 
     void Make()

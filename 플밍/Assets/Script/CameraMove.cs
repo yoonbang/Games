@@ -19,7 +19,7 @@ public class CameraMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.transform.position.y >= 17.0f || player.transform.position.y<=-60f)
+        if (player.transform.position.y >= 17.0f)
         {
             NeolttwigiCamera();
         }
@@ -43,7 +43,7 @@ public class CameraMove : MonoBehaviour
     {
         Vector2 newPos2D = Vector2.zero;
         newPos2D.x = Mathf.SmoothDamp(thisTransform.position.x, player.position.x, ref velocity.x, smothrate);
-        newPos2D.y = 2.5f;
+        newPos2D.y = 3.0f;
 
         Vector3 newPos = new Vector3(newPos2D.x + 9f, newPos2D.y, transform.position.z);
         transform.position = Vector3.Slerp(transform.position, newPos, Time.time);
