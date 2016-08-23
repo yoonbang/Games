@@ -22,14 +22,14 @@ public class FSMEnemy : FSMBase
     Transform player;
     FSMPlayer fsmPlayer;
     
+    public Transform finish;
+    public GameObject hp_Bar;
 
-
-    public Transform Finish;
     protected override void Awake()
     {
         //FSMBase 의 Awake() 를 호출한다. (캐릭터컨트롤러와 Animator)
         base.Awake();
-        Finish = GameObject.FindGameObjectWithTag("Finish").transform;
+        finish = GameObject.FindGameObjectWithTag("Finish").transform;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         fsmPlayer = player.GetComponent<FSMPlayer>();
 
@@ -53,7 +53,7 @@ protected override void OnEnable()
 
 
             //순찰 쿨타임 완료를 체크한다.
-            if (Vector3.Distance(Finish.position, transform.position) >= FindRange)
+            if (Vector3.Distance(finish.position, transform.position) >= FindRange)
             {
 
                 SetState(CharacterState.Run);
@@ -72,7 +72,7 @@ protected override void OnEnable()
             yield return null;
 
 
-            if (MoveUtil.MoveFrame(characterController, Finish, walkSpeed, turnSpeed) == 0)
+            if (MoveUtil.MoveFrame(characterController, finish, walkSpeed, turnSpeed) == 0)
             {
                 //목표지점에 도착하면 Idle 상태로 바꾼다.
                 SetState(CharacterState.Idle);
@@ -106,7 +106,7 @@ protected override void OnEnable()
         do
         {
             yield return null;
-            Destroy(this.gameObject, 1f);
+            Destroy(this.gameObject);
 
         } while (!isNewState);
     }
@@ -114,7 +114,7 @@ protected override void OnEnable()
     public void ProcessDamage()
     {
         currentHP -= (int)fsmPlayer.attack;
-        Debug.Log("데미지");
+        decreasehealth();
         if (currentHP <= 0)
         {
             SetState(CharacterState.Dead);
@@ -122,4 +122,16 @@ protected override void OnEnable()
             return;
         }
     }
+
+    void decreasehealth()
+    {
+        float calc_Health = (float)currentHP/(float)maxHP;
+        SetHealthBar(calc_Health);
+    }
+
+    public void SetHealthBar(float myHealth)
+    {
+        hp_Bar.transform.localScale = new Vector3(myHealth, hp_Bar.transform.localScale.y, hp_Bar.transform.localScale.z);
+    }
+
 }
