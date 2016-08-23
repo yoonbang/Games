@@ -22,8 +22,9 @@ public class FSMEnemy : FSMBase
     Transform player;
     FSMPlayer fsmPlayer;
     
-    public Transform finish;
+    public Transform finish,hit_position;
     public GameObject hp_Bar;
+    public GameObject hit_Effect;
 
     protected override void Awake()
     {
@@ -131,6 +132,7 @@ protected override void OnEnable()
 
     public void SetHealthBar(float myHealth)
     {
+        GameObject FX = Instantiate(hit_Effect, hit_position.position, Quaternion.LookRotation(hit_position.forward)) as GameObject;
         hp_Bar.transform.localScale = new Vector3(myHealth, hp_Bar.transform.localScale.y, hp_Bar.transform.localScale.z);
     }
 

@@ -56,7 +56,6 @@ public class FSMPlayer : FSMBase
 
                 if (layer == LayerMask.NameToLayer(clickLayer))
                 {
-                    attackpoint++;
                     fsmEnemy = hitInfo.collider.transform.GetComponent<FSMEnemy>();
                     Vector3 dest = hitInfo.point;
                     movePoint.transform.position = dest;
@@ -73,7 +72,7 @@ public class FSMPlayer : FSMBase
 
     protected override IEnumerator Idle()
     {
-        attack = 1;
+        attackpoint = 1;
         do
         {
             yield return null;
@@ -84,29 +83,30 @@ public class FSMPlayer : FSMBase
     protected virtual IEnumerator Attack()
     {
         // Debug.Log("click");
+        anim.Play("Attack");
         OnAttack();
         do
-        {
+        {  
             yield return null;
             
             //MoveUtil.cs 의 MoveFrame 을 호출하고 목표지점에 도착했는지 체크한다.
             if (MoveUtil.MoveFrame(characterController, movePoint, moveSpeed, turnSpeed) == 0) //if 문 전체추가
             {
-                movePoint.gameObject.SetActive(false);
-                anim.Play("Attack");
-
+                 movePoint.gameObject.SetActive(false);
                     if (attackpoint % 2 == 0)
                     {
+                        attackpoint++;
                         SetState(CharacterState.Skill1);
                         break;
                     }
                     else
                     {
-                        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime % 1.0f > 0.9f &&
+   
+                    if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime % 1.0f > 0.9f &&
                         anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-                        { 
-                        SetState(CharacterState.Idle);
-                        break;
+                        {
+                            SetState(CharacterState.Idle);
+                            break;
                         }
                     }
             }
@@ -141,13 +141,16 @@ public class FSMPlayer : FSMBase
 
     protected virtual IEnumerator Skill1()
     {
+        anim.Play("Skill1");
+        OnAttack();
         do
         {
             yield return null;
-            anim.Play("Skill1");
+            
+            
             if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime % 1.0f > 0.9f &&
                anim.GetCurrentAnimatorStateInfo(0).IsName("Skill1"))
-            {
+            { 
                 SetState(CharacterState.Idle);
                 break;
             }
