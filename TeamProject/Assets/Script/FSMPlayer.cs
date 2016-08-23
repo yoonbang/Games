@@ -28,6 +28,7 @@ public class FSMPlayer : FSMBase
     public string blockLayer = "Block";
     public string enemyLayer = "Enemy";
 
+    public int attackpoint=1;
 
     protected override void Awake() //Awake문 전체 추가
     {
@@ -49,16 +50,18 @@ public class FSMPlayer : FSMBase
             //레이케스트와 충돌한 대상의 레이어가 Click, Block, Enemy 인지 체크한다.
             if (Physics.Raycast(ray, out hitInfo, 100f, layerMask))
             {
+
                 //광선과 충돌한 대상의 레이어 정보를 맴버변수에 담는다.
                 int layer = hitInfo.transform.gameObject.layer;
 
                 if (layer == LayerMask.NameToLayer(clickLayer))
                 {
+                    attackpoint++;
                     fsmEnemy = hitInfo.collider.transform.GetComponent<FSMEnemy>();
                     Vector3 dest = hitInfo.point;
                     movePoint.transform.position = dest;
                     //FSMBase 의 SetState 메소드를 호출한다.
-                    SetState(CharacterState.Run);
+                    SetState(CharacterState.Attack);
                     movePoint.gameObject.SetActive(true);
                 }
             }
@@ -70,6 +73,7 @@ public class FSMPlayer : FSMBase
 
     protected override IEnumerator Idle()
     {
+        attack = 1;
         do
         {
             yield return null;
@@ -77,9 +81,9 @@ public class FSMPlayer : FSMBase
         } while (!isNewState);
     }
 
-    protected virtual IEnumerator Run()
+    protected virtual IEnumerator Attack()
     {
-       // Debug.Log("click");
+        // Debug.Log("click");
         OnAttack();
         do
         {
@@ -89,15 +93,26 @@ public class FSMPlayer : FSMBase
             if (MoveUtil.MoveFrame(characterController, movePoint, moveSpeed, turnSpeed) == 0) //if 문 전체추가
             {
                 movePoint.gameObject.SetActive(false);
+                anim.Play("Attack");
 
-                //FSMBase 의 SetState 메소드를 호출한다
-                SetState(CharacterState.Idle);
-                break;
+                    if (attackpoint % 2 == 0)
+                    {
+                        SetState(CharacterState.Skill1);
+                        break;
+                    }
+                    else
+                    {
+                        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime % 1.0f > 0.9f &&
+                        anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                        { 
+                        SetState(CharacterState.Idle);
+                        break;
+                        }
+                    }
             }
 
         } while (!isNewState);
     }
-
 
     protected virtual IEnumerator AttackRun()
     {
@@ -108,7 +123,7 @@ public class FSMPlayer : FSMBase
     }
 
 
-    protected virtual IEnumerator Attack()
+    protected virtual IEnumerator Attack2()
     {
         do
         {
@@ -129,6 +144,13 @@ public class FSMPlayer : FSMBase
         do
         {
             yield return null;
+            anim.Play("Skill1");
+            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime % 1.0f > 0.9f &&
+               anim.GetCurrentAnimatorStateInfo(0).IsName("Skill1"))
+            {
+                SetState(CharacterState.Idle);
+                break;
+            }
         } while (!isNewState);
     }
 
