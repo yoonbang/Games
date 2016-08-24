@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 //FSMPlayer 는 FSMBase 로 부터 상속받는다. (FSMPlayer 는 FSMBase 의 코드 내용을 담는다 라고 생각하면 된다.)
 public class FSMPlayer : FSMBase
@@ -30,6 +31,9 @@ public class FSMPlayer : FSMBase
 
     public int attackpoint=1;
 
+    private List<GameObject> touchList = new List<GameObject>();
+    private GameObject[] touchesOld;
+
     protected override void Awake() //Awake문 전체 추가
     {
         base.Awake();
@@ -42,7 +46,44 @@ public class FSMPlayer : FSMBase
 
     void Update() //업데이트문 전체 추가
     {
-        if (Input.GetMouseButtonDown(0) || (Input.touchCount>2 && Input.GetTouch(0).phase==TouchPhase.Began))
+        if (Input.touchCount > 0)
+        {
+            touchesOld = new GameObject[touchList.Count];
+            touchList.CopyTo(touchesOld);
+            touchList.Clear();
+
+            foreach (Touch touch in Input.touches)
+            {
+                Ray ray = Camera.main.ScreenPointToRay(touch.position);
+                RaycastHit hitInfo;
+
+                if (Physics.Raycast(ray, out hitInfo, 100f, layerMask))
+                {
+                    int layer = hitInfo.transform.gameObject.layer;
+                    GameObject recipient = hitInfo.transform.gameObject;
+                    touchList.Add(recipient);
+                    if (layer == LayerMask.NameToLayer(clickLayer) && touch.phase == TouchPhase.Began)
+                    {
+                        attackpoint++;
+                        fsmEnemy = hitInfo.collider.transform.GetComponent<FSMEnemy>();
+                        Vector3 dest = hitInfo.point;
+                        movePoint.transform.position = dest;
+                        movePoint.gameObject.SetActive(true);
+                        //FSMBase 의 SetState 메소드를 호출한다.
+                        if (attackpoint % 2 == 1)
+                        {
+                            SetState(CharacterState.Attack);
+                        }
+                        else if (attackpoint % 2 == 0)
+                        {
+                            SetState(CharacterState.Skill1);
+                        }
+
+                    }
+                }
+            }
+        }
+        /*if (Input.GetMouseButtonDown(0) || (Input.touchCount>2 && Input.GetTouch(0).phase==TouchPhase.Began))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
@@ -73,7 +114,7 @@ public class FSMPlayer : FSMBase
                     
                 }
             }
-        }
+        }*/
     }
 
 
