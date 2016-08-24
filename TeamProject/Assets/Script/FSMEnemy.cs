@@ -132,7 +132,7 @@ protected override void OnEnable()
 
     public void SetHealthBar(float myHealth)
     {
-        GameObject FX = Instantiate(hit_Effect, hit_position.position, Quaternion.LookRotation(hit_position.forward)) as GameObject;
+        //GameObject FX = Instantiate(hit_Effect, hit_position.position, Quaternion.LookRotation(hit_position.forward)) as GameObject;
         hp_Bar.transform.localScale = new Vector3(myHealth, hp_Bar.transform.localScale.y, hp_Bar.transform.localScale.z);
     }
 

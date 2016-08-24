@@ -42,7 +42,7 @@ public class FSMPlayer : FSMBase
 
     void Update() //업데이트문 전체 추가
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || (Input.touchCount>2 && Input.GetTouch(0).phase==TouchPhase.Began))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
@@ -56,12 +56,21 @@ public class FSMPlayer : FSMBase
 
                 if (layer == LayerMask.NameToLayer(clickLayer))
                 {
+                    attackpoint++;
                     fsmEnemy = hitInfo.collider.transform.GetComponent<FSMEnemy>();
                     Vector3 dest = hitInfo.point;
                     movePoint.transform.position = dest;
-                    //FSMBase 의 SetState 메소드를 호출한다.
-                    SetState(CharacterState.Attack);
                     movePoint.gameObject.SetActive(true);
+                    //FSMBase 의 SetState 메소드를 호출한다.
+                    if (attackpoint % 2 == 1)
+                    {
+                        SetState(CharacterState.Attack);
+                    }
+                    else if (attackpoint %2 == 0)
+                    {
+                        SetState(CharacterState.Skill1);
+                    }
+                    
                 }
             }
         }
@@ -72,7 +81,7 @@ public class FSMPlayer : FSMBase
 
     protected override IEnumerator Idle()
     {
-        attackpoint = 1;
+        attackpoint=0;
         do
         {
             yield return null;
@@ -83,8 +92,9 @@ public class FSMPlayer : FSMBase
     protected virtual IEnumerator Attack()
     {
         // Debug.Log("click");
-        anim.Play("Attack");
         OnAttack();
+        anim.Play("Attack");
+        
         do
         {  
             yield return null;
@@ -92,15 +102,15 @@ public class FSMPlayer : FSMBase
             //MoveUtil.cs 의 MoveFrame 을 호출하고 목표지점에 도착했는지 체크한다.
             if (MoveUtil.MoveFrame(characterController, movePoint, moveSpeed, turnSpeed) == 0) //if 문 전체추가
             {
-                 movePoint.gameObject.SetActive(false);
-                    if (attackpoint % 2 == 0)
+                    movePoint.gameObject.SetActive(false);
+                    /*if (attackpoint % 2 == 1)
                     {
-                        attackpoint++;
+                        
                         SetState(CharacterState.Skill1);
                         break;
                     }
                     else
-                    {
+                    {*/
    
                     if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime % 1.0f > 0.9f &&
                         anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
@@ -108,7 +118,7 @@ public class FSMPlayer : FSMBase
                             SetState(CharacterState.Idle);
                             break;
                         }
-                    }
+                    //}
             }
 
         } while (!isNewState);
@@ -141,19 +151,31 @@ public class FSMPlayer : FSMBase
 
     protected virtual IEnumerator Skill1()
     {
-        anim.Play("Skill1");
         OnAttack();
+        anim.Play("Skill1");
+        
         do
         {
             yield return null;
-            
-            
-            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime % 1.0f > 0.9f &&
-               anim.GetCurrentAnimatorStateInfo(0).IsName("Skill1"))
-            { 
-                SetState(CharacterState.Idle);
+            /*if (attackpoint % 2 == 0)
+            {
+                
+                SetState(CharacterState.Attack);
                 break;
+            }*/
+            //else {
+            if (MoveUtil.MoveFrame(characterController, movePoint, moveSpeed, turnSpeed) == 0) //if 문 전체추가
+            {
+                movePoint.gameObject.SetActive(false);
+                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime % 1.0f > 0.9f &&
+                   anim.GetCurrentAnimatorStateInfo(0).IsName("Skill1"))
+                {
+                    SetState(CharacterState.Idle);
+                    break;
+                }
+                //}
             }
+
         } while (!isNewState);
     }
 
