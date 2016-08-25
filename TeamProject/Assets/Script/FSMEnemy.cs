@@ -20,7 +20,7 @@ public class FSMEnemy : FSMBase
     public float FindRange = 50f; //순찰 동선 변수
 
     Transform player;
-    FSMPlayer fsmPlayer;
+    FSMPlayer_Mobile fsmPlayer;
     
     public Transform finish,hit_position;
     public GameObject hp_Bar;
@@ -32,7 +32,7 @@ public class FSMEnemy : FSMBase
         base.Awake();
         finish = GameObject.FindGameObjectWithTag("Finish").transform;
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        fsmPlayer = player.GetComponent<FSMPlayer>();
+        fsmPlayer = player.GetComponent<FSMPlayer_Mobile>();
 
     }
 
