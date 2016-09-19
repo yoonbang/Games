@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameSystem : MonoBehaviour {
+public class GameSystem_PC : MonoBehaviour {
     public GameObject[] foodRotation = new GameObject[7];
     public GameObject redFood;
     public GameObject blueFood;
@@ -24,16 +24,14 @@ public class GameSystem : MonoBehaviour {
     int dishid;
     int nodeid;
 
-    private List<GameObject> touchList = new List<GameObject>();
-    private GameObject[] touchesOld;
-
-    // Use this for initialization
     void Start()
     {
         FoodSating();
     }
+    // Use this for initialization
     void Awake()
     {
+
         layerMask = LayerMask.GetMask(DishLayer, SkillLayer);
     }
 	
@@ -81,36 +79,29 @@ public class GameSystem : MonoBehaviour {
     #region MouseButtonClick
     public void MouseButtonClick()
     {
-        if (Input.touchCount > 0)
+        if (Input.GetMouseButtonDown(0))
         {
-            touchesOld = new GameObject[touchList.Count];
-            touchList.CopyTo(touchesOld);
-            touchList.Clear();
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hitInfo;
 
-            foreach (Touch touch in Input.touches)
+            if (Physics.Raycast(ray, out hitInfo, 100f, layerMask))
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hitInfo;
-
-                if (Physics.Raycast(ray, out hitInfo, 100f, layerMask))
-                {
                     int layer = hitInfo.transform.gameObject.layer;
-                    GameObject recipient = hitInfo.transform.gameObject;
-
                     dish = hitInfo.collider.transform.GetComponent<Dish>();
                     node = GameObject.FindGameObjectWithTag("Rice").GetComponent<Node>();
-                    touchList.Add(recipient);    
                     dishid = dish.id;
                     nodeid = node.id;
                     if (layer == LayerMask.NameToLayer(DishLayer) && dishid == nodeid)
                     {
+                        Debug.Log(dishid);
+                        Debug.Log(nodeid);
                         food_Dish = GameObject.FindGameObjectWithTag("Food_Dish").GetComponent<Food_Dish>();
                         food_Dish.Damage();
                         Destroy(foodRotation[0]);
                     }
-                }
-            }
+                 }
         }
+
         if(foodRotation[0]==null)
         {
             foodRotation[0] = Instantiate(foodRotation[1]) as GameObject;
