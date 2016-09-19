@@ -10,8 +10,23 @@ public class GameSystem : MonoBehaviour {
     public Transform[] food = new Transform[7];
     int foodCount=7;
     int randomFood = 0;
-	// Use this for initialization
-	void Start () {
+
+    int layerMask;
+
+    public string DishLayer = "Dish";
+    public string SkillLayer = "Skill";
+
+    Dish dish;
+    Node node;
+
+    int dishid;
+    int nodeid;
+    // Use this for initialization
+    void Start () {
+        layerMask = LayerMask.GetMask(DishLayer, SkillLayer);
+    }
+    void Awake()
+    {
         FoodSating();
     }
 	
@@ -59,15 +74,32 @@ public class GameSystem : MonoBehaviour {
     #region MouseButtonClick
     public void MouseButtonClick()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) || (Input.touchCount > 2 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
-            Destroy(foodRotation[0]);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hitInfo;
+
+            if (Physics.Raycast(ray, out hitInfo, 100f, layerMask))
+            {
+                int layer = hitInfo.transform.gameObject.layer;
+                dish = hitInfo.collider.transform.GetComponent<Dish>();
+                node = GameObject.FindGameObjectWithTag("Rice").GetComponent<Node>();
+                dishid = dish.id;
+                nodeid = node.id;
+                if (layer==LayerMask.NameToLayer(DishLayer) && dishid==nodeid)
+                {
+                    Debug.Log(dishid);
+                    Debug.Log(nodeid);
+                    Destroy(foodRotation[0]);
+                }
+            }
         }
         if(foodRotation[0]==null)
         {
             foodRotation[0] = Instantiate(foodRotation[1]) as GameObject;
             foodRotation[0].transform.parent = food[0].transform;
             foodRotation[0].transform.position = food[0].transform.position;
+            nodeid = foodRotation[0].GetComponent<Node>().id;
 
             Destroy(foodRotation[1]);
             foodRotation[1] = Instantiate(foodRotation[2]) as GameObject;
