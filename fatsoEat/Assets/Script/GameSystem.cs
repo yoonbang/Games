@@ -95,18 +95,22 @@ public class GameSystem : MonoBehaviour {
                 if (Physics.Raycast(ray, out hitInfo, 100f, layerMask))
                 {
                     int layer = hitInfo.transform.gameObject.layer;
+
                     GameObject recipient = hitInfo.transform.gameObject;
+                    touchList.Add(recipient);
 
                     dish = hitInfo.collider.transform.GetComponent<Dish>();
                     node = GameObject.FindGameObjectWithTag("Rice").GetComponent<Node>();
-                    touchList.Add(recipient);    
+                    
+                      
                     dishid = dish.id;
                     nodeid = node.id;
-                    if (layer == LayerMask.NameToLayer(DishLayer) && dishid == nodeid)
+                    if (touch.phase==TouchPhase.Began && layer == LayerMask.NameToLayer(DishLayer) && dishid == nodeid)
                     {
                         food_Dish = GameObject.FindGameObjectWithTag("Food_Dish").GetComponent<Food_Dish>();
                         food_Dish.Damage();
                         Destroy(foodRotation[0]);
+                        //Debug.Log("click");
                     }
                 }
             }
