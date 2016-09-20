@@ -8,7 +8,7 @@ public class GameSystem : MonoBehaviour {
     public GameObject blueFood;
     public GameObject yellowFood;
     public GameObject blackFood;
-    public Transform[] food = new Transform[7];
+    public Transform[] food_Transform = new Transform[7];
     int foodCount=7;
     int randomFood = 0;
 
@@ -19,7 +19,7 @@ public class GameSystem : MonoBehaviour {
 
     Dish dish;
     Node node;
-    Food_Dish food_Dish;
+    Food food;
 
     int dishid;
     int nodeid;
@@ -51,27 +51,27 @@ public class GameSystem : MonoBehaviour {
             if (randomFood == 1)
             {
                 foodRotation[index] = Instantiate(redFood) as GameObject;
-                foodRotation[index].transform.parent = food[index].transform;
-                foodRotation[index].transform.position = food[index].transform.position;
+                foodRotation[index].transform.parent = food_Transform[index].transform;
+                foodRotation[index].transform.position = food_Transform[index].transform.position;
             }
             if (randomFood == 2)
             {
                 foodRotation[index] = Instantiate(blueFood) as GameObject;
-                foodRotation[index].transform.parent = food[index].transform;
-                foodRotation[index].transform.position = food[index].transform.position;
+                foodRotation[index].transform.parent = food_Transform[index].transform;
+                foodRotation[index].transform.position = food_Transform[index].transform.position;
             }
             if (randomFood == 3)
             {
                 foodRotation[index] = Instantiate(yellowFood) as GameObject;
-                foodRotation[index].transform.parent = food[index].transform;
-                foodRotation[index].transform.position = food[index].transform.position;
+                foodRotation[index].transform.parent = food_Transform[index].transform;
+                foodRotation[index].transform.position = food_Transform[index].transform.position;
             }
 
             if (randomFood == 4)
             {
                 foodRotation[index] = Instantiate(blackFood) as GameObject;
-                foodRotation[index].transform.parent = food[index].transform;
-                foodRotation[index].transform.position = food[index].transform.position;
+                foodRotation[index].transform.parent = food_Transform[index].transform;
+                foodRotation[index].transform.position = food_Transform[index].transform.position;
             }
 
         }
@@ -107,45 +107,46 @@ public class GameSystem : MonoBehaviour {
                     nodeid = node.id;
                     if (touch.phase==TouchPhase.Began && layer == LayerMask.NameToLayer(DishLayer) && dishid == nodeid)
                     {
-                        food_Dish = GameObject.FindGameObjectWithTag("Food_Dish").GetComponent<Food_Dish>();
-                        food_Dish.Damage();
+                        food = GameObject.FindGameObjectWithTag("Food").GetComponent<Food>();
+                        food.Damage();
                         Destroy(foodRotation[0]);
                         //Debug.Log("click");
                     }
                 }
             }
         }
+
         if(foodRotation[0]==null)
         {
             foodRotation[0] = Instantiate(foodRotation[1]) as GameObject;
-            foodRotation[0].transform.parent = food[0].transform;
-            foodRotation[0].transform.position = food[0].transform.position;
+            foodRotation[0].transform.parent = food_Transform[0].transform;
+            foodRotation[0].transform.position = food_Transform[0].transform.position;
             nodeid = foodRotation[0].GetComponent<Node>().id;
 
             Destroy(foodRotation[1]);
             foodRotation[1] = Instantiate(foodRotation[2]) as GameObject;
-            foodRotation[1].transform.parent = food[1].transform;
-            foodRotation[1].transform.position = food[1].transform.position;
+            foodRotation[1].transform.parent = food_Transform[1].transform;
+            foodRotation[1].transform.position = food_Transform[1].transform.position;
 
             Destroy(foodRotation[2]);
             foodRotation[2] = Instantiate(foodRotation[3]) as GameObject;
-            foodRotation[2].transform.parent = food[2].transform;
-            foodRotation[2].transform.position = food[2].transform.position;
+            foodRotation[2].transform.parent = food_Transform[2].transform;
+            foodRotation[2].transform.position = food_Transform[2].transform.position;
 
             Destroy(foodRotation[3]);
             foodRotation[3] = Instantiate(foodRotation[4]) as GameObject;
-            foodRotation[3].transform.parent = food[3].transform;
-            foodRotation[3].transform.position = food[3].transform.position;
+            foodRotation[3].transform.parent = food_Transform[3].transform;
+            foodRotation[3].transform.position = food_Transform[3].transform.position;
 
             Destroy(foodRotation[4]);
             foodRotation[4] = Instantiate(foodRotation[5]) as GameObject;
-            foodRotation[4].transform.parent = food[4].transform;
-            foodRotation[4].transform.position = food[4].transform.position;
+            foodRotation[4].transform.parent = food_Transform[4].transform;
+            foodRotation[4].transform.position = food_Transform[4].transform.position;
 
             Destroy(foodRotation[5]);
             foodRotation[5] = Instantiate(foodRotation[6]) as GameObject;
-            foodRotation[5].transform.parent = food[5].transform;
-            foodRotation[5].transform.position = food[5].transform.position;
+            foodRotation[5].transform.parent = food_Transform[5].transform;
+            foodRotation[5].transform.position = food_Transform[5].transform.position;
 
             randomFood = Random.Range(1, 5);
 
@@ -153,32 +154,33 @@ public class GameSystem : MonoBehaviour {
             {
                 Destroy(foodRotation[6]);
                 foodRotation[6] = Instantiate(redFood) as GameObject;
-                foodRotation[6].transform.parent = food[6].transform;
-                foodRotation[6].transform.position = food[6].transform.position;
+                foodRotation[6].transform.parent = food_Transform[6].transform;
+                foodRotation[6].transform.position = food_Transform[6].transform.position;
             }
             if (randomFood == 2)
             {
                 Destroy(foodRotation[6]);
                 foodRotation[6] = Instantiate(blueFood) as GameObject;
-                foodRotation[6].transform.parent = food[6].transform;
-                foodRotation[6].transform.position = food[6].transform.position;
+                foodRotation[6].transform.parent = food_Transform[6].transform;
+                foodRotation[6].transform.position = food_Transform[6].transform.position;
             }
             if (randomFood == 3)
             {
                 Destroy(foodRotation[6]);
                 foodRotation[6] = Instantiate(yellowFood) as GameObject;
-                foodRotation[6].transform.parent = food[6].transform;
-                foodRotation[6].transform.position = food[6].transform.position;
+                foodRotation[6].transform.parent = food_Transform[6].transform;
+                foodRotation[6].transform.position = food_Transform[6].transform.position;
             }
 
             if (randomFood == 4)
             {
                 Destroy(foodRotation[6]);
                 foodRotation[6] = Instantiate(blackFood) as GameObject;
-                foodRotation[6].transform.parent = food[6].transform;
-                foodRotation[6].transform.position = food[6].transform.position;
+                foodRotation[6].transform.parent = food_Transform[6].transform;
+                foodRotation[6].transform.position = food_Transform[6].transform.position;
             }
         }
     }
     #endregion MouseButtonClick
+
 }

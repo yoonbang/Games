@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-public class Food_Dish : MonoBehaviour {
+public class Food : MonoBehaviour {
     public GameObject hp_Bar;
     public GameObject hp_Bar_Dish;
     public GameObject timerBar;
@@ -18,9 +18,13 @@ public class Food_Dish : MonoBehaviour {
     float timeHealth=0.0f;
 
     PlayerControll playerControll;
+    Food_Dish_Rotation food_Dish_Rotation;
+
+    
     void Awake()
     {
         playerControll = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControll>();
+        food_Dish_Rotation = GameObject.Find("Food_Dish_Rotation").GetComponent<Food_Dish_Rotation>();
     }
 
     void Update()
@@ -49,11 +53,6 @@ public class Food_Dish : MonoBehaviour {
         hp_Bar_Dish.transform.localScale = new Vector3(health, hp_Bar_Dish.transform.localScale.y, hp_Bar_Dish.transform.localScale.z);
     }
 
-    public void FoodChange()
-    {
-        Destroy(this.gameObject);
-    }
-
     public void Timer()
     {
         if (currentTimer > 0)
@@ -75,5 +74,10 @@ public class Food_Dish : MonoBehaviour {
             hp_Bar_Dish.transform.localScale = new Vector3(health, hp_Bar_Dish.transform.localScale.y, hp_Bar_Dish.transform.localScale.z);
             timerBar.transform.localScale = new Vector3(timeHealth, timerBar.transform.localScale.y, timerBar.transform.localScale.z);
         }
+    }
+
+    public void FoodChange()
+    {
+        food_Dish_Rotation.Food_Change();
     }
 }
