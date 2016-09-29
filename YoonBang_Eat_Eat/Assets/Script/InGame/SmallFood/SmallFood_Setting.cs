@@ -9,6 +9,7 @@ public class SmallFood_Setting : MonoBehaviour
     int foodCount=0;
 
     public SmallFood_Position smallfood_Postion;
+    public SmallFood_Food_Menu smallFood_Food_Menu;
     // Use this for initialization
     void Start()
     {
@@ -33,24 +34,29 @@ public class SmallFood_Setting : MonoBehaviour
                 smallFood_Index[index] = Instantiate(small_Red_Dish) as GameObject;
                 smallFood_Index[index].transform.parent = smallfood_Postion.smallFood_Position[index].transform;
                 smallFood_Index[index].transform.position = smallfood_Postion.smallFood_Position[index].transform.position;
+                smallFood_Index[index].GetComponentInChildren<SmallFood_Food_Menu>().FoodSetting();
             }
             if (randomIndex == 2)
             {
                 smallFood_Index[index] = Instantiate(small_Blue_Dish) as GameObject;
                 smallFood_Index[index].transform.parent = smallfood_Postion.smallFood_Position[index].transform;
                 smallFood_Index[index].transform.position = smallfood_Postion.smallFood_Position[index].transform.position;
+                smallFood_Index[index].GetComponentInChildren<SmallFood_Food_Menu>().FoodSetting();
+
             }
             if (randomIndex == 3)
             {
                 smallFood_Index[index] = Instantiate(small_Yellow_Dish) as GameObject;
                 smallFood_Index[index].transform.parent = smallfood_Postion.smallFood_Position[index].transform;
                 smallFood_Index[index].transform.position = smallfood_Postion.smallFood_Position[index].transform.position;
+                smallFood_Index[index].GetComponentInChildren<SmallFood_Food_Menu>().FoodSetting();
             }
             if (randomIndex == 4)
             {
                 smallFood_Index[index] = Instantiate(small_Green_Dish) as GameObject;
                 smallFood_Index[index].transform.parent = smallfood_Postion.smallFood_Position[index].transform;
                 smallFood_Index[index].transform.position = smallfood_Postion.smallFood_Position[index].transform.position;
+                smallFood_Index[index].GetComponentInChildren<SmallFood_Food_Menu>().FoodSetting();
             }
         }
     }

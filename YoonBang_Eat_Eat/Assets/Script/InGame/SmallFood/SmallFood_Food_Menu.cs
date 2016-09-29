@@ -8,8 +8,8 @@ public class SmallFood_Food_Menu : MonoBehaviour {
     int randomIndex = 0;
     // Use this for initialization
     void Start () {
-        smallFood_Collection = GameObject.FindGameObjectWithTag("SmallFood_Collection").GetComponent<SmallFood_Collection>();
-        FoodSetting();
+        //smallFood_Collection = GameObject.FindGameObjectWithTag("SmallFood_Collection").GetComponent<SmallFood_Collection>();
+        //FoodSetting();
     }
 	
 	// Update is called once per frame
@@ -18,6 +18,8 @@ public class SmallFood_Food_Menu : MonoBehaviour {
 	}
     public void FoodSetting()
     {
+        smallFood_Collection = GameObject.FindGameObjectWithTag("SmallFood_Collection").GetComponent<SmallFood_Collection>();
+
         randomIndex = Random.Range(0, 5);
 
         if (randomIndex == 0)
