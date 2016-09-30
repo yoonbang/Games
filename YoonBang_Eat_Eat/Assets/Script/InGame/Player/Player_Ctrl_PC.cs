@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public enum PlayerState1
 {
@@ -18,17 +19,22 @@ public class Player_Ctrl_PC : MonoBehaviour
     Dish_Node_Id dish_Node_Id;
     SmallFood_Dish_Id smallFood_Dish_Id;
     MainFood_Setting mainFood_Setting;
+    Combo_System combo_system;
+
 
     int layerMask;
 
     public string DishLayer = "Dish";
     public string SkillLayer = "Skill";
     // Use this for initialization
+
+    public int combo_Count=1;
     public float power=10.0f;
     void Awake()
     {
         smallFood_Setting = GameObject.FindGameObjectWithTag("SmallMenu_Setting").GetComponent<SmallFood_Setting>();
         mainFood_Setting = GameObject.FindGameObjectWithTag("MainFood_Setting").GetComponent<MainFood_Setting>();
+        combo_system = GameObject.FindGameObjectWithTag("Combo_System").GetComponent<Combo_System>();
         layerMask = LayerMask.GetMask(DishLayer, SkillLayer);
     }
 
@@ -54,8 +60,16 @@ public class Player_Ctrl_PC : MonoBehaviour
                 //Debug.Log("smallFood_Dish_Id="); Debug.Log(smallFood_Dish_Id.id);
                 if (layer == LayerMask.NameToLayer(DishLayer) && dish_Node_Id.id == smallFood_Dish_Id.id)
                 {
+                    combo_Count += 1;
                     Destroy(smallFood_Setting.smallFood_Index[0]);
                     mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
+                    combo_system.combo_Strike();
+                }
+                if (layer == LayerMask.NameToLayer(DishLayer) && dish_Node_Id.id != smallFood_Dish_Id.id)
+                {
+                    mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
+                    mainFood_Setting.GetComponentInChildren<MainFood>().Heal();
+                    combo_Count = 0;
                 }
             }
         }

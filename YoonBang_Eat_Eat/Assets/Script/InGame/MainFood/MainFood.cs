@@ -37,6 +37,13 @@ public class MainFood : MonoBehaviour {
             mainFood_Setting.Food_Change();
         }
     }
+
+    public void Heal()
+    {
+        currentHp += (player.power * 2);
+        hp_Bar.fillAmount = currentHp / maxHP;
+        Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
+    }
     public void Timer_Play()
     {
         if(currentTimer>0)
