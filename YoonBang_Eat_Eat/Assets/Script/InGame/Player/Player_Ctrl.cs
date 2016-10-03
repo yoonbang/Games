@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public enum PlayerState
+public enum PlayerState1
 {
     Idle,
     Skill,

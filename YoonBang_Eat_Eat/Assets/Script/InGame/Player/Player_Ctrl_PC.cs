@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public enum PlayerState1
+public enum PlayerState
 {
     Idle,
     Skill,
     Combo,
     Eat,
     SuperMode,
+    False,
 }
 
 public class Player_Ctrl_PC : MonoBehaviour
@@ -21,7 +22,7 @@ public class Player_Ctrl_PC : MonoBehaviour
     MainFood_Setting mainFood_Setting;
     Combo_System combo_system;
 
-
+    public PlayerState ps;
     int layerMask;
 
     public string DishLayer = "Dish";
@@ -30,6 +31,13 @@ public class Player_Ctrl_PC : MonoBehaviour
 
     public int combo_Count=1;
     public float power=10.0f;
+
+    public float superComboMode_Count = 1f;
+    public float maxCombo = 20f;
+    public AudioClip eat_Sound;
+
+    public GameObject eat_Effect;
+    public Transform eat_Transform;
     void Awake()
     {
         smallFood_Setting = GameObject.FindGameObjectWithTag("SmallMenu_Setting").GetComponent<SmallFood_Setting>();
@@ -60,17 +68,32 @@ public class Player_Ctrl_PC : MonoBehaviour
                 //Debug.Log("smallFood_Dish_Id="); Debug.Log(smallFood_Dish_Id.id);
                 if (layer == LayerMask.NameToLayer(DishLayer) && dish_Node_Id.id == smallFood_Dish_Id.id)
                 {
-                    combo_Count += 1;
-                    Destroy(smallFood_Setting.smallFood_Index[0]);
-                    mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
-                    combo_system.combo_Strike();
+                    if (ps == PlayerState.Combo)
+                    {
+                        Combo_Mode();
+                    }
+                    else {
+                        ps = PlayerState.Eat;
+                        Eat_Mode();
+                    }
                 }
                 if (layer == LayerMask.NameToLayer(DishLayer) && dish_Node_Id.id != smallFood_Dish_Id.id)
                 {
-                    mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
-                    mainFood_Setting.GetComponentInChildren<MainFood>().Heal();
-                    combo_Count = 0;
+                    if (ps == PlayerState.Combo)
+                    {
+                        Combo_Mode();
+                    }
+                    else {
+                        ps = PlayerState.False;
+                        Flase_Mode();
+                    }
                 }
+                if (layer==LayerMask.NameToLayer(DishLayer) && superComboMode_Count >= 20)
+                {
+                    ps = PlayerState.Combo;   
+                }
+
+
             }
         }
 
@@ -140,6 +163,56 @@ public class Player_Ctrl_PC : MonoBehaviour
                 smallFood_Setting.smallFood_Index[6].transform.position = smallFood_Setting.smallfood_Postion.smallFood_Position[6].transform.position;
                 smallFood_Setting.smallFood_Index[6].GetComponentInChildren<SmallFood_Food_Menu>().FoodSetting();
             }
+        }
+    }
+    public void Combo_Mode()
+    {
+        if(ps==PlayerState.Combo)
+        {
+            Destroy(smallFood_Setting.smallFood_Index[0]);
+            mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
+            combo_Count += 1;
+            GetComponent<AudioSource>().clip = eat_Sound;
+            GetComponent<AudioSource>().Play();
+            eat_Effect=Instantiate(Resources.Load("Eat_Effect"), Vector3.zero, Quaternion.identity) as GameObject;
+            eat_Effect.transform.SetParent(eat_Transform.transform);
+            eat_Effect.transform.position = eat_Transform.transform.position;
+            combo_system.Combo_Mode();
+        }
+    }
+    public void Eat_Mode()
+    {
+        if(ps == PlayerState.Eat)
+        {
+            if(superComboMode_Count>=maxCombo)
+            {
+                superComboMode_Count = maxCombo;
+            }
+            else
+            {
+                superComboMode_Count += 1f;
+            }
+            combo_Count += 1;
+            Destroy(smallFood_Setting.smallFood_Index[0]);
+            mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
+            GetComponent<AudioSource>().clip = eat_Sound;
+            GetComponent<AudioSource>().Play();
+            eat_Effect = Instantiate(Resources.Load("Eat_Effect"), Vector3.zero, Quaternion.identity) as GameObject;
+            eat_Effect.transform.SetParent(eat_Transform.transform);
+            eat_Effect.transform.position = eat_Transform.transform.position;
+
+
+            combo_system.combo_Strike();
+        }
+    }
+    public void Flase_Mode()
+    {
+        if(ps==PlayerState.False)
+        {
+            mainFood_Setting.GetComponentInChildren<MainFood>().Heal();
+            combo_Count = 1;
+            combo_system.combo_Text.text = combo_Count.ToString();
+            ps = PlayerState.Idle;
         }
     }
 }
