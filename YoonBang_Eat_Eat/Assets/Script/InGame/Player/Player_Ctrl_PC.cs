@@ -211,6 +211,8 @@ public class Player_Ctrl_PC : MonoBehaviour
         {
             mainFood_Setting.GetComponentInChildren<MainFood>().Heal();
             combo_Count = 1;
+            superComboMode_Count = 1;
+            combo_system.combo_Gaze.fillAmount = superComboMode_Count / maxCombo;
             combo_system.combo_Text.text = combo_Count.ToString();
             ps = PlayerState.Idle;
         }
