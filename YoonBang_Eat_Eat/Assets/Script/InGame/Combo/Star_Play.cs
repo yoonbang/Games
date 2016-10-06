@@ -2,10 +2,12 @@
 using System.Collections;
 
 public class Star_Play : MonoBehaviour {
-
+    public int randomSecond;
 	// Use this for initialization
 	void Start () {
-        iTween.MoveTo(this.gameObject, iTween.Hash("y", 15.0f, "time", 10.0f));
+        randomSecond = Random.Range(8, 30);
+        iTween.MoveTo(this.gameObject, iTween.Hash("y", 20.0f, "time", randomSecond));
+        Destroy(this.gameObject, 7f);
 	}
 	
 	// Update is called once per frame
