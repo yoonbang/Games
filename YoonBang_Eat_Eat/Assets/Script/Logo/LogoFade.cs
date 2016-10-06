@@ -18,12 +18,12 @@ public class LogoFade : MonoBehaviour
         {
             if (canvasGroup.alpha > 0)
             {
-                canvasGroup.alpha -= Time.deltaTime * 2;
+                canvasGroup.alpha -= Time.deltaTime / 2;
             }
             else
             {
                 canvasGroup.interactable = false;
-                Application.LoadLevel("InGame");
+                Application.LoadLevel("Title_Lobby");
 
             }
         }
