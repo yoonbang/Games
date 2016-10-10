@@ -4,16 +4,16 @@ using System.Collections;
 public class Star_Collection : MonoBehaviour {
     public GameObject[] starCollection = new GameObject[3];
     // Use this for initialization
-    public float fireRate = 0f;
-    private float nextFire = 0.0f;
+    public float fireRate = 0.1f;
+    public float nextFire = 0.1f;
     public int randomIndex = 0;
 
     public Transform position;
-
+    public GameObject star;
     void Start()
     {
-        nextFire = Random.Range(1, 10);
-        fireRate = Random.Range(1, 10);
+        nextFire = Random.Range(1, 8);
+        fireRate = Random.Range(1, 8);   
     }
 
     void Update()
@@ -26,9 +26,9 @@ public class Star_Collection : MonoBehaviour {
     }
     public void MakeStar()
     {
-        fireRate = Random.Range(1, 10);
+        fireRate = Random.Range(1, 8);
         randomIndex = Random.Range(0, 3);
-        GameObject star = Instantiate(starCollection[randomIndex],Vector3.zero, Quaternion.identity) as GameObject;
+        star = Instantiate(starCollection[randomIndex],Vector3.zero, Quaternion.identity) as GameObject;
         star.transform.SetParent(position.transform,false);
         star.transform.position = position.transform.position;
     }

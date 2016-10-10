@@ -38,6 +38,7 @@ public class Player_Ctrl_PC : MonoBehaviour
 
     public GameObject eat_Effect;
     public Transform eat_Transform;
+
     void Awake()
     {
         smallFood_Setting = GameObject.FindGameObjectWithTag("SmallMenu_Setting").GetComponent<SmallFood_Setting>();
@@ -169,6 +170,7 @@ public class Player_Ctrl_PC : MonoBehaviour
     {
         if(ps==PlayerState.Combo)
         {
+            Food_Shot();
             Destroy(smallFood_Setting.smallFood_Index[0]);
             mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
             combo_Count += 1;
@@ -192,6 +194,7 @@ public class Player_Ctrl_PC : MonoBehaviour
             {
                 superComboMode_Count += 1f;
             }
+            Food_Shot();
             combo_Count += 1;
             Destroy(smallFood_Setting.smallFood_Index[0]);
             mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
@@ -200,6 +203,7 @@ public class Player_Ctrl_PC : MonoBehaviour
             eat_Effect = Instantiate(Resources.Load("Eat_Effect"), Vector3.zero, Quaternion.identity) as GameObject;
             eat_Effect.transform.SetParent(eat_Transform.transform);
             eat_Effect.transform.position = eat_Transform.transform.position;
+
 
 
             combo_system.combo_Strike();
@@ -215,6 +219,38 @@ public class Player_Ctrl_PC : MonoBehaviour
             combo_system.combo_Gaze.fillAmount = superComboMode_Count / maxCombo;
             combo_system.combo_Text.text = combo_Count.ToString();
             ps = PlayerState.Idle;
+        }
+    }
+
+    public void Food_Shot()
+    {
+        if (smallFood_Setting.smallFood_Index[0].layer == 12)
+        {
+            GameObject shoot = Instantiate(Resources.Load("SmallFood_Red_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
+            shoot.transform.SetParent(eat_Transform.transform);
+            shoot.transform.position = eat_Transform.transform.position;
+            iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Red_Fly"), "time", 2));
+        }
+        else if (smallFood_Setting.smallFood_Index[0].layer == 11)
+        {
+            GameObject shoot = Instantiate(Resources.Load("SmallFood_Yellow_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
+            shoot.transform.SetParent(eat_Transform.transform);
+            shoot.transform.position = eat_Transform.transform.position;
+            iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Yellow_Fly"), "time", 2));
+        }
+        else if (smallFood_Setting.smallFood_Index[0].layer == 10)
+        {
+            GameObject shoot = Instantiate(Resources.Load("SmallFood_Green_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
+            shoot.transform.SetParent(eat_Transform.transform);
+            shoot.transform.position = eat_Transform.transform.position;
+            iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Green_Fly"), "time", 2));
+        }
+        else if (smallFood_Setting.smallFood_Index[0].layer == 9)
+        {
+            GameObject shoot = Instantiate(Resources.Load("SmallFood_Blue_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
+            shoot.transform.SetParent(eat_Transform.transform);
+            shoot.transform.position = eat_Transform.transform.position;
+            iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Blue_Fly"), "time", 2));
         }
     }
 }

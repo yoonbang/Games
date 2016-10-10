@@ -41,8 +41,8 @@ public class Combo_System : MonoBehaviour {
         }
         if(cs== Combo_State.SuperMode)
         {
-            pc.superComboMode_Count -= Time.deltaTime * 3
-                ;
+            pc.superComboMode_Count -= Time.deltaTime * 3;
+            fiver_Map.SetActive(true);
             Super_Combo_Play();
         }
 
@@ -96,7 +96,7 @@ public class Combo_System : MonoBehaviour {
 
         combo_Gaze.fillAmount = pc.superComboMode_Count / pc.maxCombo;
 
-        combo_Object = Instantiate(Resources.Load("SuperCombo_Text_Obejct"), Vector3.zero, Quaternion.identity) as GameObject;
+        combo_Object = Instantiate(Resources.Load("SuperCombo_Text_Object"), Vector3.zero, Quaternion.identity) as GameObject;
         combo_Object.transform.SetParent(combo_Position.transform,false);
         combo_Object.transform.position = combo_Position.transform.position;
 
@@ -110,8 +110,7 @@ public class Combo_System : MonoBehaviour {
     {
         combo_Gaze.fillAmount = pc.superComboMode_Count / pc.maxCombo;
         combo_Gaze_Position.FindChild("ComboGaze(Clone)").FindChild("Gaze").GetComponent<Image>().fillAmount = pc.superComboMode_Count / pc.maxCombo;
-        fiver_Map.SetActive(true);
-
+        
         if (pc.superComboMode_Count<=0)
         {
             Destroy(combo_Object);
