@@ -12,7 +12,7 @@ public class Title_Lobby : MonoBehaviour {
 	  if (Input.GetMouseButtonDown(0))
       {
             GPGSBtn.ClickEvent();
-            //Application.LoadLevel("InGame");
+            Application.LoadLevel("InGame");
       }
 	}
 }

@@ -217,7 +217,7 @@ public class Player_Ctrl_PC : MonoBehaviour
             combo_Count = 1;
             superComboMode_Count = 1;
             combo_system.combo_Gaze.fillAmount = superComboMode_Count / maxCombo;
-            combo_system.combo_Text.text = combo_Count.ToString();
+            combo_system.combo_Text.text = combo_Count.ToString()+" Combo";
             ps = PlayerState.Idle;
         }
     }
