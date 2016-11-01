@@ -38,12 +38,20 @@ public class Player_Ctrl_PC : MonoBehaviour
 
     public GameObject eat_Effect;
     public Transform eat_Transform;
+    public StageManager stage;
+
+    public Text gold_UI;
+    public int level;
+    public int gold;
+
+    
 
     void Awake()
     {
         smallFood_Setting = GameObject.FindGameObjectWithTag("SmallMenu_Setting").GetComponent<SmallFood_Setting>();
         mainFood_Setting = GameObject.FindGameObjectWithTag("MainFood_Setting").GetComponent<MainFood_Setting>();
         combo_system = GameObject.FindGameObjectWithTag("Combo_System").GetComponent<Combo_System>();
+        stage = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageManager>();
         layerMask = LayerMask.GetMask(DishLayer, SkillLayer);
     }
 
@@ -67,6 +75,7 @@ public class Player_Ctrl_PC : MonoBehaviour
 
                 //Debug.Log("Dish_Node_Id="); Debug.Log(dish_Node_Id.id);
                 //Debug.Log("smallFood_Dish_Id="); Debug.Log(smallFood_Dish_Id.id);
+
                 if (layer == LayerMask.NameToLayer(DishLayer) && dish_Node_Id.id == smallFood_Dish_Id.id)
                 {
                     if (ps == PlayerState.Combo)
@@ -102,7 +111,7 @@ public class Player_Ctrl_PC : MonoBehaviour
         {
             smallFood_Setting.smallFood_Index[0] = Instantiate(smallFood_Setting.smallFood_Index[1]) as GameObject;
             smallFood_Setting.smallFood_Index[0].transform.parent= smallFood_Setting.smallfood_Postion.smallFood_Position[0].transform;
-            smallFood_Setting.smallFood_Index[0].transform.position = smallFood_Setting.smallfood_Postion.smallFood_Position[0].transform.position;
+            smallFood_Setting.smallFood_Index[0].transform.position = smallFood_Setting.smallfood_Postion.smallFood_Position[00].transform.position;
 
             Destroy(smallFood_Setting.smallFood_Index[1]);
             smallFood_Setting.smallFood_Index[1] = Instantiate(smallFood_Setting.smallFood_Index[2]) as GameObject;
@@ -186,7 +195,7 @@ public class Player_Ctrl_PC : MonoBehaviour
     {
         if(ps == PlayerState.Eat)
         {
-            if(superComboMode_Count>=maxCombo)
+            if(superComboMode_Count>maxCombo)
             {
                 superComboMode_Count = maxCombo;
             }
@@ -203,8 +212,6 @@ public class Player_Ctrl_PC : MonoBehaviour
             eat_Effect = Instantiate(Resources.Load("Eat_Effect"), Vector3.zero, Quaternion.identity) as GameObject;
             eat_Effect.transform.SetParent(eat_Transform.transform);
             eat_Effect.transform.position = eat_Transform.transform.position;
-
-
 
             combo_system.combo_Strike();
         }
