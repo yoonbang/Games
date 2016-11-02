@@ -17,7 +17,7 @@ public class Combo_System : MonoBehaviour {
     public Image combo_Gaze;
     public GameObject combo_Gaze_Object;
     public GameObject fiver_Map;
-    Player_Ctrl_PC pc;
+    public Player_Ctrl_PC pc;
     public Combo_State cs;
 
 
@@ -56,11 +56,11 @@ public class Combo_System : MonoBehaviour {
             {
                 cs = Combo_State.Eat;
 
+                combo_Text.text = pc.combo_Count.ToString() + " Combo";
                 combo_Object = Instantiate(Resources.Load("Combo_Text_Object"), Vector3.zero, Quaternion.identity) as GameObject;
                 combo_Object.transform.SetParent(combo_Position.transform,false);
                 combo_Object.transform.position = combo_Position.transform.position;
-                combo_Text.text = pc.combo_Count.ToString() + " Combo";
-
+                
                 combo_Gaze_Object = Instantiate(Resources.Load("ComboGaze"), Vector3.zero, Quaternion.identity) as GameObject;
                 combo_Gaze_Object.transform.SetParent(combo_Gaze_Position.transform,false);
                 combo_Gaze_Object.transform.position = combo_Gaze_Position.transform.position;
@@ -74,10 +74,11 @@ public class Combo_System : MonoBehaviour {
                 Destroy(combo_Object);
                 Destroy(combo_Gaze_Object);
 
+                combo_Text.text = pc.combo_Count.ToString() + " Combo";
                 combo_Object = Instantiate(Resources.Load("Combo_Text_Object"), Vector3.zero, Quaternion.identity) as GameObject;
                 combo_Object.transform.SetParent(combo_Position.transform,false);
                 combo_Object.transform.position = combo_Position.transform.position;
-                combo_Text.text = pc.combo_Count.ToString()+" Combo";
+                
 
                 combo_Gaze.fillAmount = pc.superComboMode_Count / pc.maxCombo;
                 combo_Gaze_Object = Instantiate(Resources.Load("ComboGaze"), Vector3.zero, Quaternion.identity) as GameObject;
@@ -116,7 +117,7 @@ public class Combo_System : MonoBehaviour {
         {
             Destroy(combo_Object);
             Destroy(combo_Gaze_Object);
-            pc.superComboMode_Count = 0f;
+            pc.superComboMode_Count = 1f;
             fiver_Map.SetActive(false);
             combo_Text.text = pc.combo_Count.ToString()+" Combo";
             cs = Combo_State.Idle;

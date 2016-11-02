@@ -9,7 +9,6 @@ public class MainFood_Setting : MonoBehaviour {
 
     int foodChangeIndex = 0;
 
-
     // Use this for initialization
     void Start () {
         mainFood_Collection = GameObject.FindGameObjectWithTag("MainFood_Collection").GetComponent<MainFood_Collection>();

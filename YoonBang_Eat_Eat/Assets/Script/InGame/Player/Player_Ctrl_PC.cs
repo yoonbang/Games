@@ -40,7 +40,7 @@ public class Player_Ctrl_PC : MonoBehaviour
     public Transform eat_Transform;
     public StageManager stage;
 
-    public Text gold_UI;
+    public Text goldText;
     public int level;
     public int gold;
 
@@ -98,7 +98,8 @@ public class Player_Ctrl_PC : MonoBehaviour
                         Flase_Mode();
                     }
                 }
-                if (layer==LayerMask.NameToLayer(DishLayer) && superComboMode_Count >= 20)
+                //if (layer==LayerMask.NameToLayer(DishLayer) && superComboMode_Count == 20)
+                if(superComboMode_Count>=20)
                 {
                     ps = PlayerState.Combo;   
                 }
@@ -183,6 +184,9 @@ public class Player_Ctrl_PC : MonoBehaviour
             Destroy(smallFood_Setting.smallFood_Index[0]);
             mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
             combo_Count += 1;
+            int randomGold = Random.Range(stage.stageCount, stage.stageCount+stage.stageCount);
+            gold = gold + randomGold;
+            goldText.text = gold.ToString();
             GetComponent<AudioSource>().clip = eat_Sound;
             GetComponent<AudioSource>().Play();
             eat_Effect=Instantiate(Resources.Load("Eat_Effect"), Vector3.zero, Quaternion.identity) as GameObject;
@@ -207,6 +211,10 @@ public class Player_Ctrl_PC : MonoBehaviour
             combo_Count += 1;
             Destroy(smallFood_Setting.smallFood_Index[0]);
             mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
+            int randomGold = Random.Range(stage.stageCount, (stage.stageCount + stage.stageCount)+1);
+            Debug.Log(randomGold);
+            gold = gold + randomGold;
+            goldText.text = gold.ToString();
             GetComponent<AudioSource>().clip = eat_Sound;
             GetComponent<AudioSource>().Play();
             eat_Effect = Instantiate(Resources.Load("Eat_Effect"), Vector3.zero, Quaternion.identity) as GameObject;
@@ -221,7 +229,7 @@ public class Player_Ctrl_PC : MonoBehaviour
         if(ps==PlayerState.False)
         {
             mainFood_Setting.GetComponentInChildren<MainFood>().Heal();
-            combo_Count = 1;
+            combo_Count = 0;
             superComboMode_Count = 1;
             combo_system.combo_Gaze.fillAmount = superComboMode_Count / maxCombo;
             combo_system.combo_Text.text = combo_Count.ToString()+" Combo";
