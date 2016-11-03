@@ -101,10 +101,11 @@ public class Player_Ctrl_PC : MonoBehaviour
                 //if (layer==LayerMask.NameToLayer(DishLayer) && superComboMode_Count == 20)
                 if(superComboMode_Count>=20)
                 {
-                    ps = PlayerState.Combo;   
+                    if (ps != PlayerState.Skill)
+                    {
+                        ps = PlayerState.Combo;
+                    }
                 }
-
-
             }
         }
 
