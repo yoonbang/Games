@@ -9,7 +9,7 @@ public class SmallFood_Setting : MonoBehaviour
     int foodCount=0;
 
     public SmallFood_Position smallfood_Postion;
-    public SmallFood_Food_Menu smallFood_Food_Menu;
+   // public SmallFood_Food_Menu smallFood_Food_Menu;
     // Use this for initialization
     void Start()
     {

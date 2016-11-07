@@ -76,8 +76,8 @@ public class Player_Ctrl_PC : MonoBehaviour
                 dish_Node_Id = hitInfo.collider.transform.GetComponent<Dish_Node_Id>();
                 smallFood_Dish_Id = GameObject.FindGameObjectWithTag("SmallFood").GetComponent<SmallFood_Dish_Id>();
 
-                //Debug.Log("Dish_Node_Id="); Debug.Log(dish_Node_Id.id);
-                //Debug.Log("smallFood_Dish_Id="); Debug.Log(smallFood_Dish_Id.id);
+                Debug.Log("Dish_Node_Id="); Debug.Log(dish_Node_Id.id);
+                Debug.Log("smallFood_Dish_Id="); Debug.Log(smallFood_Dish_Id.id);
 
                 if (layer == LayerMask.NameToLayer(DishLayer) && dish_Node_Id.id == smallFood_Dish_Id.id)
                 {
@@ -231,7 +231,6 @@ public class Player_Ctrl_PC : MonoBehaviour
                     Destroy(smallFood_Setting.smallFood_Index[0]);
                
                     int randomGold = Random.Range(stage.stageCount, (stage.stageCount + stage.stageCount) + 1);
-                    Debug.Log(randomGold);
                     gold = gold + randomGold;
                     goldText.text = gold.ToString();
                     GetComponent<AudioSource>().clip = eat_Sound;
