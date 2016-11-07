@@ -20,6 +20,7 @@ public class Player_Ctrl_PC : MonoBehaviour
     Dish_Node_Id dish_Node_Id;
     SmallFood_Dish_Id smallFood_Dish_Id;
     MainFood_Setting mainFood_Setting;
+    SmallStageMenu_Setting smallStageMenu_Setting;
     Combo_System combo_system;
 
     public PlayerState ps;
@@ -44,11 +45,13 @@ public class Player_Ctrl_PC : MonoBehaviour
     public int level;
     public int gold;
 
+    public bool mainStage;
     
 
     void Awake()
     {
         smallFood_Setting = GameObject.FindGameObjectWithTag("SmallMenu_Setting").GetComponent<SmallFood_Setting>();
+        smallStageMenu_Setting = GameObject.FindGameObjectWithTag("SmallStageMenu_Setting").GetComponent<SmallStageMenu_Setting>();
         mainFood_Setting = GameObject.FindGameObjectWithTag("MainFood_Setting").GetComponent<MainFood_Setting>();
         combo_system = GameObject.FindGameObjectWithTag("Combo_System").GetComponent<Combo_System>();
         stage = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageManager>();
@@ -181,9 +184,16 @@ public class Player_Ctrl_PC : MonoBehaviour
     {
         if(ps==PlayerState.Combo)
         {
+            if (mainStage == false)
+            {
+                smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Damage();
+            }
+            else
+            {
+                mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
+            }
             Food_Shot();
             Destroy(smallFood_Setting.smallFood_Index[0]);
-            mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
             combo_Count += 1;
             int randomGold = Random.Range(stage.stageCount, stage.stageCount+stage.stageCount);
             gold = gold + randomGold;
@@ -200,36 +210,52 @@ public class Player_Ctrl_PC : MonoBehaviour
     {
         if(ps == PlayerState.Eat)
         {
-            if(superComboMode_Count>maxCombo)
-            {
-                superComboMode_Count = maxCombo;
-            }
-            else
-            {
-                superComboMode_Count += 1f;
-            }
-            Food_Shot();
-            combo_Count += 1;
-            Destroy(smallFood_Setting.smallFood_Index[0]);
-            mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
-            int randomGold = Random.Range(stage.stageCount, (stage.stageCount + stage.stageCount)+1);
-            Debug.Log(randomGold);
-            gold = gold + randomGold;
-            goldText.text = gold.ToString();
-            GetComponent<AudioSource>().clip = eat_Sound;
-            GetComponent<AudioSource>().Play();
-            eat_Effect = Instantiate(Resources.Load("Eat_Effect"), Vector3.zero, Quaternion.identity) as GameObject;
-            eat_Effect.transform.SetParent(eat_Transform.transform);
-            eat_Effect.transform.position = eat_Transform.transform.position;
+                if(superComboMode_Count>maxCombo)
+                {
+                    superComboMode_Count = maxCombo;
+                }
+                else
+                {
+                    superComboMode_Count += 1f;
+                }
+                if (mainStage == false)
+                {
+                    smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Damage();
+                }
+                else
+                {
+                    mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
+                }
+                    Food_Shot();
+                    combo_Count += 1;
+                    Destroy(smallFood_Setting.smallFood_Index[0]);
+               
+                    int randomGold = Random.Range(stage.stageCount, (stage.stageCount + stage.stageCount) + 1);
+                    Debug.Log(randomGold);
+                    gold = gold + randomGold;
+                    goldText.text = gold.ToString();
+                    GetComponent<AudioSource>().clip = eat_Sound;
+                    GetComponent<AudioSource>().Play();
+                    eat_Effect = Instantiate(Resources.Load("Eat_Effect"), Vector3.zero, Quaternion.identity) as GameObject;
+                    eat_Effect.transform.SetParent(eat_Transform.transform);
+                    eat_Effect.transform.position = eat_Transform.transform.position;
 
-            combo_system.combo_Strike();
+                    combo_system.combo_Strike();
         }
+       
     }
     public void Flase_Mode()
     {
         if(ps==PlayerState.False)
         {
-            mainFood_Setting.GetComponentInChildren<MainFood>().Heal();
+            if (mainStage == false)
+            {
+                smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Heal();
+            }
+            else
+            {
+                mainFood_Setting.GetComponentInChildren<MainFood>().Heal();
+            }
             combo_Count = 0;
             superComboMode_Count = 1;
             combo_system.combo_Gaze.fillAmount = superComboMode_Count / maxCombo;

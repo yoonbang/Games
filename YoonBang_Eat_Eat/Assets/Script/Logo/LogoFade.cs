@@ -4,7 +4,7 @@ using System.Collections;
 public class LogoFade : MonoBehaviour
 {
     CanvasGroup canvasGroup;
-    private float logeRate = 2.0f;
+    private float logeRate = 3.0f;
     // Use this for initialization
     void Start()
     {
@@ -18,7 +18,7 @@ public class LogoFade : MonoBehaviour
         {
             if (canvasGroup.alpha > 0)
             {
-                canvasGroup.alpha -= Time.deltaTime / 2;
+                canvasGroup.alpha -= Time.deltaTime *2;
             }
             else
             {
