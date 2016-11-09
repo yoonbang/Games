@@ -23,6 +23,7 @@ public class Player_Ctrl_PC : MonoBehaviour
     SmallStageMenu_Setting smallStageMenu_Setting;
     Combo_System combo_system;
     StartSmallFoodAnimation startSmallFoodAnimation;
+    MainSpoonAnimation mainSpoonAnimation;
     public PlayerState ps;
     int layerMask;
 
@@ -57,6 +58,7 @@ public class Player_Ctrl_PC : MonoBehaviour
         stage = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageManager>();
         layerMask = LayerMask.GetMask(DishLayer, SkillLayer);
         startSmallFoodAnimation = GameObject.FindGameObjectWithTag("StartSmallFoodPosition").GetComponent<StartSmallFoodAnimation>();
+        mainSpoonAnimation = GameObject.FindGameObjectWithTag("MainSpoon").GetComponent<MainSpoonAnimation>();
     }
 
     // Update is called once per frame
@@ -84,12 +86,17 @@ public class Player_Ctrl_PC : MonoBehaviour
                 {
                     if (ps == PlayerState.Combo)
                     {
+                        if(smallFood_Dish_Id.id==2)
+                        {
+                            mainSpoonAnimation.MainSpoonAnimationStart();
+                        }
                         Combo_Mode();
+
                     }
                     else {
                         if (dish_Node_Id.id == 2)
                         {
-                            
+                            mainSpoonAnimation.MainSpoonAnimationStart();
                         }
                         ps = PlayerState.Eat;
                         Eat_Mode();
@@ -235,6 +242,7 @@ public class Player_Ctrl_PC : MonoBehaviour
                     combo_Count += 1;
                     Destroy(smallFood_Setting.smallFood_Index[0]);
                     startSmallFoodAnimation.SmallFoodAnimation();
+                    
                     int randomGold = Random.Range(stage.stageCount, (stage.stageCount + stage.stageCount) + 1);
                     gold = gold + randomGold;
                     goldText.text = gold.ToString();
