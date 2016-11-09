@@ -21,7 +21,7 @@ public class GPGSMng : Singleton<GPGSMng> {
     public void InitializeGPGS()
     {
         bLogin = false;
-        PlayGamesPlatform.Activate();
+        //PlayGamesPlatform.Activate();
     }
     /// <summary>
     /// GPGS를 로그인합니다.
@@ -48,7 +48,7 @@ public class GPGSMng : Singleton<GPGSMng> {
     {
         if(Social.localUser.authenticated)
         {
-           ((GooglePlayGames.PlayGamesPlatform)Social.Active).SignOut();
+           //((GooglePlayGames.PlayGamesPlatform)Social.Active).SignOut();
             bLogin = false;
         }
     }
