@@ -24,6 +24,7 @@ public class Player_Ctrl_PC : MonoBehaviour
     Combo_System combo_system;
     StartSmallFoodAnimation startSmallFoodAnimation;
     MainSpoonAnimation mainSpoonAnimation;
+    SmallSpoonAnimation SmallSpoonAnimation;
     public PlayerState ps;
     int layerMask;
 
@@ -59,6 +60,7 @@ public class Player_Ctrl_PC : MonoBehaviour
         layerMask = LayerMask.GetMask(DishLayer, SkillLayer);
         startSmallFoodAnimation = GameObject.FindGameObjectWithTag("StartSmallFoodPosition").GetComponent<StartSmallFoodAnimation>();
         mainSpoonAnimation = GameObject.FindGameObjectWithTag("MainSpoon").GetComponent<MainSpoonAnimation>();
+        SmallSpoonAnimation = GameObject.FindGameObjectWithTag("SmallSpoonAnimation").GetComponent<SmallSpoonAnimation>();
     }
 
     // Update is called once per frame
@@ -89,6 +91,7 @@ public class Player_Ctrl_PC : MonoBehaviour
                         if(smallFood_Dish_Id.id==2)
                         {
                             mainSpoonAnimation.MainSpoonAnimationStart();
+                            SmallSpoonAnimation.SmallSpoonAttackAnimation();
                         }
                         Combo_Mode();
 
@@ -97,6 +100,7 @@ public class Player_Ctrl_PC : MonoBehaviour
                         if (dish_Node_Id.id == 2)
                         {
                             mainSpoonAnimation.MainSpoonAnimationStart();
+                            SmallSpoonAnimation.SmallSpoonAttackAnimation();
                         }
                         ps = PlayerState.Eat;
                         Eat_Mode();
