@@ -87,6 +87,10 @@ public class Player_Ctrl_PC : MonoBehaviour
                         Combo_Mode();
                     }
                     else {
+                        if (dish_Node_Id.id == 2)
+                        {
+                            
+                        }
                         ps = PlayerState.Eat;
                         Eat_Mode();
                     }
