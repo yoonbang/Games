@@ -5,8 +5,13 @@ public class Skill1CoolTime : MonoBehaviour {
     public Image img;
     public UnityEngine.UI.Button btn;
     public float cooltime = 3.0f;
-    public Text cooltimeText;
+    public Text minuteText;
+	public Text secondText;
     float leftTime = 0f;
+	int minute=0;
+	int secondBox;
+	int second;
+
     // Use this for initialization
     public Player_Ctrl_PC pc;
     void Start () {
@@ -34,13 +39,20 @@ public class Skill1CoolTime : MonoBehaviour {
         btn.enabled = true;
         if (leftTime > 0)
         {
-            cooltimeText.enabled = true;
+			if (leftTime >= 60f) {
+				Debug.Log(minute);
+				Debug.Log (second);
+			}
+
+            minuteText.enabled = true;
             leftTime -= Time.deltaTime;
-            cooltimeText.text = leftTime.ToString("0");
+
+			minuteText.text = minute.ToString("00")+" : " +second.ToString ("00");
+
             if (leftTime < 0)
             {
                 leftTime = 0;
-                cooltimeText.enabled = false;
+                minuteText.enabled = false;
                 if(btn)
                 {
                     btn.enabled = true;

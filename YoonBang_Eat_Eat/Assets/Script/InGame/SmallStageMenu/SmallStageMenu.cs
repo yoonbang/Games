@@ -43,9 +43,13 @@ public class SmallStageMenu : MonoBehaviour
 
     public void Heal()
     {
-        currentHp += (player.power * 2);
-        hp_Bar.fillAmount = currentHp / maxHP;
-        Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
+		currentHp += (player.power * 2);
+		if (currentHp >= maxHP) {
+			currentHp = maxHP;
+		}
+			hp_Bar.fillAmount = currentHp / maxHP;
+			Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
+		
     }
     public void Timer_Play()
     {

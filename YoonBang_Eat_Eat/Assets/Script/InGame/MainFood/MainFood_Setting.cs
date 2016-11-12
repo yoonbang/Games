@@ -35,7 +35,10 @@ public class MainFood_Setting : MonoBehaviour {
     
     public void Food_Change()
     {
-        Destroy(main_Food);
+        //Destroy(main_Food);
+		if (smallStageMenu_Setting.smallStageFood != null) {
+			Destroy (smallStageMenu_Setting.smallStageFood);
+		}
         player_Ctrl_PC.mainStage = true;
         foodChangeIndex++;
         StageManager stageManager = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageManager>();
