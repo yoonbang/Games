@@ -252,6 +252,8 @@ public class Player_Ctrl_PC : MonoBehaviour
                     goldText.text = gold.ToString();
                     GetComponent<AudioSource>().clip = eat_Sound;
                     GetComponent<AudioSource>().Play();
+
+					eat_Effect=Instantiate(Resources.Load("Eat_Effect"), Vector3.zero, Quaternion.identity) as GameObject;
                     eat_Effect.transform.SetParent(eat_Transform.transform);
                     eat_Effect.transform.position = eat_Transform.transform.position;
 					
