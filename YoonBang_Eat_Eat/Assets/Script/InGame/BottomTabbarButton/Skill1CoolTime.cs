@@ -6,11 +6,9 @@ public class Skill1CoolTime : MonoBehaviour {
     public UnityEngine.UI.Button btn;
     public float cooltime = 3.0f;
     public Text minuteText;
-	public Text secondText;
     float leftTime = 0f;
 	int minute=0;
-	int secondBox;
-	int second;
+	float second=0f;
 
     // Use this for initialization
     public Player_Ctrl_PC pc;
@@ -40,8 +38,11 @@ public class Skill1CoolTime : MonoBehaviour {
         if (leftTime > 0)
         {
 			if (leftTime >= 60f) {
-				Debug.Log(minute);
-				Debug.Log (second);
+				minute=(int)(leftTime/60f);
+				second = (int)(leftTime - (minute * 60));
+			}  else {
+				minute = 0;
+				second = leftTime;
 			}
 
             minuteText.enabled = true;

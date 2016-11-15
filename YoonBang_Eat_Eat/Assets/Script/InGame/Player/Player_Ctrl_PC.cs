@@ -118,7 +118,7 @@ public class Player_Ctrl_PC : MonoBehaviour
                     }
                 }
                 //if (layer==LayerMask.NameToLayer(DishLayer) && superComboMode_Count == 20)
-                if(superComboMode_Count>=20)
+                if(superComboMode_Count>19)
                 {
                     if (ps != PlayerState.Skill)
                     {
@@ -243,8 +243,8 @@ public class Player_Ctrl_PC : MonoBehaviour
                     mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
                 }
                     Food_Shot();
-                    combo_Count += 1;
-                    Destroy(smallFood_Setting.smallFood_Index[0]);
+                    
+					combo_Count += 1;
                     startSmallFoodAnimation.SmallFoodAnimation();
                     
                     int randomGold = Random.Range(stage.stageCount, (stage.stageCount + stage.stageCount) + 1);
@@ -252,10 +252,10 @@ public class Player_Ctrl_PC : MonoBehaviour
                     goldText.text = gold.ToString();
                     GetComponent<AudioSource>().clip = eat_Sound;
                     GetComponent<AudioSource>().Play();
-                    eat_Effect = Instantiate(Resources.Load("Eat_Effect"), Vector3.zero, Quaternion.identity) as GameObject;
                     eat_Effect.transform.SetParent(eat_Transform.transform);
                     eat_Effect.transform.position = eat_Transform.transform.position;
-
+					
+					Destroy(smallFood_Setting.smallFood_Index[0]);
                     combo_system.combo_Strike();
         }
        
@@ -273,7 +273,7 @@ public class Player_Ctrl_PC : MonoBehaviour
                 mainFood_Setting.GetComponentInChildren<MainFood>().Heal();
             }
             combo_Count = 0;
-            superComboMode_Count = 1;
+            superComboMode_Count = 0;
             combo_system.combo_Gaze.fillAmount = superComboMode_Count / maxCombo;
             combo_system.combo_Text.text = combo_Count.ToString()+" Combo";
             ps = PlayerState.Idle;
