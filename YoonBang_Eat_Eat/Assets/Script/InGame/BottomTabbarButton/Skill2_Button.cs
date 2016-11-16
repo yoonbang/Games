@@ -10,10 +10,14 @@ public class Skill2_Button : MonoBehaviour {
 	public Text minuteText;
 	float leftTime = 0f;
 	int minute=0;
-	float second=0f;
-	public GameObject Skill2Effect;
-	// Use this for initialization
-	public Player_Ctrl_PC pc;
+	int secondBox;
+	int second=0;
+    public float power=0f;
+    SmallStageMenu_Setting smallStageMenu_Setting;
+    MainFood_Setting mainFood_Setting;
+
+    // Use this for initialization
+    public Player_Ctrl_PC pc;
 	void Start () {
 		if (img == null)
 			img = gameObject.GetComponent<Image>();
@@ -39,12 +43,9 @@ public class Skill2_Button : MonoBehaviour {
 		btn.enabled = true;
 		if (leftTime > 0)
 		{
-			if (leftTime >= 60f) {
-				minute = (int)(leftTime / 60f);
-				second = (int)(leftTime - (minute * 60f));
-			} else {
-				minute = 0;
-				second = leftTime;
+			if (leftTime >= 60) {
+                minute = (int)(leftTime / 60);
+                second = (int)(leftTime - (minute*60));
 			}
 
 			minuteText.enabled = true;
@@ -71,7 +72,9 @@ public class Skill2_Button : MonoBehaviour {
 		if(leftTime==0 && btn.enabled == true)
 		{
 			leftTime = cooltime;
-			Skill2Effect.SetActive (true);
+            smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Skill2Damage();
+            Debug.Log("허잇차");
+	
 		}
-	}	
+	}
 }
