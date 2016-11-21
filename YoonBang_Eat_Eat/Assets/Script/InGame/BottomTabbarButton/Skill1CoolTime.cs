@@ -37,13 +37,16 @@ public class Skill1CoolTime : MonoBehaviour {
         btn.enabled = true;
         if (leftTime > 0)
         {
-			if (leftTime >= 60f) {
-				minute=(int)(leftTime/60f);
-				second = (int)(leftTime - (minute * 60));
-			}  else {
-				minute = 0;
-				second = leftTime;
-			}
+            if (leftTime >= 59)
+            {
+                minute = (int)(leftTime / 60);
+                second = (int)(leftTime - (minute * 60));
+            }
+            else if (leftTime <= 59)
+            {
+                minute = 0;
+                second = leftTime;
+            }
 
             minuteText.enabled = true;
             leftTime -= Time.deltaTime;

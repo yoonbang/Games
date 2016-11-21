@@ -11,8 +11,9 @@ public class Skill2_Button : MonoBehaviour {
 	float leftTime = 0f;
 	int minute=0;
 	int secondBox;
-	int second=0;
+	float second=0f;
     public float power=0f;
+    public GameObject Skill2;
     SmallStageMenu_Setting smallStageMenu_Setting;
     MainFood_Setting mainFood_Setting;
 
@@ -45,12 +46,17 @@ public class Skill2_Button : MonoBehaviour {
 		btn.enabled = true;
 		if (leftTime > 0)
 		{
-			if (leftTime >= 60) {
+			if (leftTime >= 59) {
                 minute = (int)(leftTime / 60);
                 second = (int)(leftTime - (minute*60));
 			}
+            else if (leftTime <=59)
+            {
+                minute = 0;
+                second = leftTime;
+            }
 
-			minuteText.enabled = true;
+            minuteText.enabled = true;
 			leftTime -= Time.deltaTime;
 
 			minuteText.text = minute.ToString("00")+" : " +second.ToString ("00");
@@ -74,9 +80,7 @@ public class Skill2_Button : MonoBehaviour {
 		if(leftTime==0 && btn.enabled == true)
 		{
 			leftTime = cooltime;
-            smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Skill2Damage();
-            //Debug.Log("허잇차");
-	
+            Skill2.SetActive(true);
 		}
 	}
 }
