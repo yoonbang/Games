@@ -24,7 +24,9 @@ public class Skill2_Button : MonoBehaviour {
 		if (btn == null)
 			btn = gameObject.GetComponent<UnityEngine.UI.Button>();
 		pc = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Ctrl_PC>();
-	}
+        smallStageMenu_Setting = GameObject.FindGameObjectWithTag("SmallStageMenu_Setting").GetComponent<SmallStageMenu_Setting>();
+
+    }
 
 	// Update is called once per frame
 	public void Update () {
@@ -73,7 +75,7 @@ public class Skill2_Button : MonoBehaviour {
 		{
 			leftTime = cooltime;
             smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Skill2Damage();
-            Debug.Log("허잇차");
+            //Debug.Log("허잇차");
 	
 		}
 	}
