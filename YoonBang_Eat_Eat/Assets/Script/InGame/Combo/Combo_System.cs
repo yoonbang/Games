@@ -117,7 +117,7 @@ public class Combo_System : MonoBehaviour {
         {
             Destroy(combo_Object);
             Destroy(combo_Gaze_Object);
-            pc.superComboMode_Count = 1f;
+            pc.superComboMode_Count = 0f;
             fiver_Map.SetActive(false);
             combo_Text.text = pc.combo_Count.ToString()+" Combo";
             cs = Combo_State.Idle;

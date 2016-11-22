@@ -117,18 +117,20 @@ public class Player_Ctrl_PC : MonoBehaviour
                         Flase_Mode();
                     }
                 }
-                //if (layer==LayerMask.NameToLayer(DishLayer) && superComboMode_Count == 20)
-                if(superComboMode_Count>19)
+                if (superComboMode_Count >= 20)
                 {
                     if (ps != PlayerState.Skill)
                     {
                         ps = PlayerState.Combo;
+                        combo_Count -= 1;
+                        Combo_Mode();
                     }
                 }
+                //if (layer==LayerMask.NameToLayer(DishLayer) && superComboMode_Count == 20)
             }
         }
 
-        if(smallFood_Setting.smallFood_Index[0]==null)
+        if (smallFood_Setting.smallFood_Index[0]==null)
         {
             smallFood_Setting.smallFood_Index[0] = Instantiate(smallFood_Setting.smallFood_Index[1]) as GameObject;
             smallFood_Setting.smallFood_Index[0].transform.SetParent(smallFood_Setting.smallfood_Postion.smallFood_Position[0].transform,false);
@@ -211,6 +213,7 @@ public class Player_Ctrl_PC : MonoBehaviour
             Food_Shot();
             Destroy(smallFood_Setting.smallFood_Index[0]);
             combo_Count += 1;
+            Debug.Log("콤보모드!!!");
             int randomGold = Random.Range(stage.stageCount, stage.stageCount+stage.stageCount);
             gold = gold + randomGold;
             goldText.text = gold.ToString();
