@@ -43,11 +43,12 @@ public class MainFood : MonoBehaviour {
 
     public void Heal()
     {
-		if (currentHp > maxHP) {
+        currentHp += (player.power * 2);
+        if (currentHp > maxHP) {
 			currentHp = maxHP;
 		}
 
-        currentHp += (player.power * 2);
+        
         hp_Bar.fillAmount = currentHp / maxHP;
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
     }
