@@ -20,37 +20,37 @@ public class SmallFood_Food_Menu : MonoBehaviour {
     {
         smallFood_Collection = GameObject.FindGameObjectWithTag("SmallFood_Collection").GetComponent<SmallFood_Collection>();
 
-        randomIndex = Random.Range(0, 5);
+        randomIndex = Random.Range(0, 4);
 
         if (randomIndex == 0)
         {
             food = Instantiate(smallFood_Collection.smallFood_Menu[randomIndex]) as GameObject;
-            food.transform.parent = food_Position.transform;
+            food.transform.SetParent(food_Position.transform,false);
             food.transform.position = food_Position.transform.position;
         }
         if (randomIndex == 1)
         {
             food = Instantiate(smallFood_Collection.smallFood_Menu[randomIndex]) as GameObject;
-            food.transform.parent = food_Position.transform;
+            food.transform.SetParent(food_Position.transform, false);
             food.transform.position = food_Position.transform.position;
         }
         if (randomIndex == 2)
         {
             food = Instantiate(smallFood_Collection.smallFood_Menu[randomIndex]) as GameObject;
-            food.transform.parent = food_Position.transform;
+            food.transform.SetParent(food_Position.transform, false);
             food.transform.position = food_Position.transform.position;
         }
         if (randomIndex == 3)
         {
             food = Instantiate(smallFood_Collection.smallFood_Menu[randomIndex]) as GameObject;
-            food.transform.parent = food_Position.transform;
+            food.transform.SetParent(food_Position.transform, false);
             food.transform.position = food_Position.transform.position;
         }
-        if (randomIndex == 4)
+        /*if (randomIndex == 4)
         {
             food = Instantiate(smallFood_Collection.smallFood_Menu[randomIndex]) as GameObject;
-            food.transform.parent = food_Position.transform;
+            food.transform.SetParent(food_Position.transform, false);
             food.transform.position = food_Position.transform.position;
-        }
+        }*/
     }
 }
