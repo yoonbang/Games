@@ -162,39 +162,44 @@ public class Player_Ctrl_PC : MonoBehaviour
             smallFood_Setting.smallFood_Index[5].transform.SetParent(smallFood_Setting.smallfood_Postion.smallFood_Position[5].transform, false);
             smallFood_Setting.smallFood_Index[5].transform.position = smallFood_Setting.smallfood_Postion.smallFood_Position[5].transform.position;
 
+            Destroy(smallFood_Setting.smallFood_Index[6]);
+            smallFood_Setting.smallFood_Index[6] = Instantiate(smallFood_Setting.smallFood_Index[7]) as GameObject;
+            smallFood_Setting.smallFood_Index[6].transform.SetParent(smallFood_Setting.smallfood_Postion.smallFood_Position[6].transform, false);
+            smallFood_Setting.smallFood_Index[6].transform.position = smallFood_Setting.smallfood_Postion.smallFood_Position[6].transform.position;
+
             int randomFood = Random.Range(1, 5);
 
             if(randomFood == 1)
             {
-                Destroy(smallFood_Setting.smallFood_Index[6]);
-                smallFood_Setting.smallFood_Index[6] = Instantiate(smallFood_Setting.small_Red_Dish) as GameObject;
-                smallFood_Setting.smallFood_Index[6].transform.SetParent(smallFood_Setting.smallfood_Postion.smallFood_Position[6].transform,false);
-                smallFood_Setting.smallFood_Index[6].transform.position = smallFood_Setting.smallfood_Postion.smallFood_Position[6].transform.position;
-                smallFood_Setting.smallFood_Index[6].GetComponentInChildren<SmallFood_Food_Menu>().FoodSetting();
+                Destroy(smallFood_Setting.smallFood_Index[7]);
+                smallFood_Setting.smallFood_Index[7] = Instantiate(smallFood_Setting.small_Red_Dish) as GameObject;
+                smallFood_Setting.smallFood_Index[7].transform.SetParent(smallFood_Setting.smallfood_Postion.smallFood_Position[7].transform,false);
+                smallFood_Setting.smallFood_Index[7].transform.position = smallFood_Setting.smallfood_Postion.smallFood_Position[7].transform.position;
+                smallFood_Setting.smallFood_Index[7].GetComponentInChildren<SmallFood_Food_Menu>().FoodSetting();
             }
             if (randomFood == 2)
             {
-                Destroy(smallFood_Setting.smallFood_Index[6]);
-                smallFood_Setting.smallFood_Index[6] = Instantiate(smallFood_Setting.small_Blue_Dish) as GameObject;
-                smallFood_Setting.smallFood_Index[6].transform.SetParent(smallFood_Setting.smallfood_Postion.smallFood_Position[6].transform, false);
-                smallFood_Setting.smallFood_Index[6].transform.position = smallFood_Setting.smallfood_Postion.smallFood_Position[6].transform.position;
-                smallFood_Setting.smallFood_Index[6].GetComponentInChildren<SmallFood_Food_Menu>().FoodSetting();
+                Destroy(smallFood_Setting.smallFood_Index[7]);
+                smallFood_Setting.smallFood_Index[7] = Instantiate(smallFood_Setting.small_Blue_Dish) as GameObject;
+                smallFood_Setting.smallFood_Index[7].transform.SetParent(smallFood_Setting.smallfood_Postion.smallFood_Position[7].transform, false);
+                smallFood_Setting.smallFood_Index[7].transform.position = smallFood_Setting.smallfood_Postion.smallFood_Position[7].transform.position;
+                smallFood_Setting.smallFood_Index[7].GetComponentInChildren<SmallFood_Food_Menu>().FoodSetting();
             }
             if (randomFood == 3)
             {
-                Destroy(smallFood_Setting.smallFood_Index[6]);
-                smallFood_Setting.smallFood_Index[6] = Instantiate(smallFood_Setting.small_Yellow_Dish) as GameObject;
-                smallFood_Setting.smallFood_Index[6].transform.SetParent(smallFood_Setting.smallfood_Postion.smallFood_Position[6].transform, false);
-                smallFood_Setting.smallFood_Index[6].transform.position = smallFood_Setting.smallfood_Postion.smallFood_Position[6].transform.position;
-                smallFood_Setting.smallFood_Index[6].GetComponentInChildren<SmallFood_Food_Menu>().FoodSetting();
+                Destroy(smallFood_Setting.smallFood_Index[7]);
+                smallFood_Setting.smallFood_Index[7] = Instantiate(smallFood_Setting.small_Yellow_Dish) as GameObject;
+                smallFood_Setting.smallFood_Index[7].transform.SetParent(smallFood_Setting.smallfood_Postion.smallFood_Position[7].transform, false);
+                smallFood_Setting.smallFood_Index[7].transform.position = smallFood_Setting.smallfood_Postion.smallFood_Position[7].transform.position;
+                smallFood_Setting.smallFood_Index[7].GetComponentInChildren<SmallFood_Food_Menu>().FoodSetting();
             }
             if (randomFood == 4)
             {
-                Destroy(smallFood_Setting.smallFood_Index[6]);
-                smallFood_Setting.smallFood_Index[6] = Instantiate(smallFood_Setting.small_Green_Dish) as GameObject;
-                smallFood_Setting.smallFood_Index[6].transform.SetParent(smallFood_Setting.smallfood_Postion.smallFood_Position[6].transform, false);
-                smallFood_Setting.smallFood_Index[6].transform.position = smallFood_Setting.smallfood_Postion.smallFood_Position[6].transform.position;
-                smallFood_Setting.smallFood_Index[6].GetComponentInChildren<SmallFood_Food_Menu>().FoodSetting();
+                Destroy(smallFood_Setting.smallFood_Index[7]);
+                smallFood_Setting.smallFood_Index[7] = Instantiate(smallFood_Setting.small_Green_Dish) as GameObject;
+                smallFood_Setting.smallFood_Index[7].transform.SetParent(smallFood_Setting.smallfood_Postion.smallFood_Position[7].transform, false);
+                smallFood_Setting.smallFood_Index[7].transform.position = smallFood_Setting.smallfood_Postion.smallFood_Position[7].transform.position;
+                smallFood_Setting.smallFood_Index[7].GetComponentInChildren<SmallFood_Food_Menu>().FoodSetting();
             }
         }
     }

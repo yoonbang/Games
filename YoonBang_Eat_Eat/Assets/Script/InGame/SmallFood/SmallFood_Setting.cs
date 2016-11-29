@@ -4,7 +4,7 @@ using System.Collections;
 public class SmallFood_Setting : MonoBehaviour
 {
     public GameObject small_Red_Dish, small_Blue_Dish, small_Yellow_Dish, small_Green_Dish;
-    public GameObject[] smallFood_Index = new GameObject[10];
+    public GameObject[] smallFood_Index = new GameObject[7];
     int randomIndex=0;
     int foodCount=0;
 
