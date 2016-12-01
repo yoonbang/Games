@@ -1,20 +1,7 @@
 fileFormatVersion: 2
-guid: d8bb456d30c804e168a7c05d71ebda70
-labels:
-- soomla
-- store
-- storefront
-- icon
-- icons
-- ui
-- unibill
-- prime31
-- iap
-- billing
-- inapppurchase
-- 2d
-- coins
-- shop
+guid: 483bbf0dc7b5c4f429eb32ee356b48e1
+timeCreated: 1480578582
+licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
@@ -40,7 +27,7 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -3
-  maxTextureSize: 1024
+  maxTextureSize: 2048
   textureSettings:
     filterMode: -1
     aniso: 16
