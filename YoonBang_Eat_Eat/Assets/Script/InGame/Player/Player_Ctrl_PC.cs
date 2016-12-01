@@ -25,6 +25,10 @@ public class Player_Ctrl_PC : MonoBehaviour
     StartSmallFoodAnimation startSmallFoodAnimation;
     MainSpoonAnimation mainSpoonAnimation;
     SmallSpoonAnimation SmallSpoonAnimation;
+    MainChopsticAnimation mainChopsticAnimation;
+    MainForksAnimation mainForksAnimation;
+    MainKnifeAnimation mainKnifeAnimation;
+
     public PlayerState ps;
     int layerMask;
 
@@ -60,7 +64,10 @@ public class Player_Ctrl_PC : MonoBehaviour
         layerMask = LayerMask.GetMask(DishLayer, SkillLayer);
         startSmallFoodAnimation = GameObject.FindGameObjectWithTag("StartSmallFoodPosition").GetComponent<StartSmallFoodAnimation>();
         mainSpoonAnimation = GameObject.FindGameObjectWithTag("MainSpoon").GetComponent<MainSpoonAnimation>();
+        mainChopsticAnimation = GameObject.FindGameObjectWithTag("MainChopstic").GetComponent<MainChopsticAnimation>();
         SmallSpoonAnimation = GameObject.FindGameObjectWithTag("SmallSpoonAnimation").GetComponent<SmallSpoonAnimation>();
+        mainForksAnimation = GameObject.FindGameObjectWithTag("MainForks").GetComponent<MainForksAnimation>();
+        mainKnifeAnimation = GameObject.FindGameObjectWithTag("MainKnife").GetComponent<MainKnifeAnimation>();
     }
 
     // Update is called once per frame
@@ -88,20 +95,9 @@ public class Player_Ctrl_PC : MonoBehaviour
                 {
                     if (ps == PlayerState.Combo)
                     {
-                        if(smallFood_Dish_Id.id==2)
-                        {
-                            mainSpoonAnimation.MainSpoonAnimationStart();
-                            SmallSpoonAnimation.SmallSpoonAttackAnimation();
-                        }
                         Combo_Mode();
-
                     }
                     else {
-                        if (dish_Node_Id.id == 2)
-                        {
-                            mainSpoonAnimation.MainSpoonAnimationStart();
-                            SmallSpoonAnimation.SmallSpoonAttackAnimation();
-                        }
                         ps = PlayerState.Eat;
                         Eat_Mode();
                     }
@@ -294,31 +290,40 @@ public class Player_Ctrl_PC : MonoBehaviour
     {
         if (smallFood_Setting.smallFood_Index[0].layer == 12)
         {
+            mainKnifeAnimation.MainSpoonAnimationStart();
+
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Red_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
             shoot.transform.SetParent(eat_Transform.transform);
             shoot.transform.position = eat_Transform.transform.position;
-            iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Red_Fly"), "time", 2));
+            iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Red_Fly"), "time", 1));
         }
         else if (smallFood_Setting.smallFood_Index[0].layer == 11)
         {
+            mainChopsticAnimation.MainSpoonAnimationStart();
+
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Yellow_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
             shoot.transform.SetParent(eat_Transform.transform);
             shoot.transform.position = eat_Transform.transform.position;
-            iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Yellow_Fly"), "time", 2));
+            iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Yellow_Fly"), "time", 1));
         }
         else if (smallFood_Setting.smallFood_Index[0].layer == 10)
         {
+            mainForksAnimation.MainSpoonAnimationStart();
+
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Green_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
             shoot.transform.SetParent(eat_Transform.transform);
             shoot.transform.position = eat_Transform.transform.position;
-            iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Green_Fly"), "time", 2));
+            iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Green_Fly"), "time", 1));
         }
         else if (smallFood_Setting.smallFood_Index[0].layer == 9)
         {
+            SmallSpoonAnimation.SmallSpoonAttackAnimation();
+            mainSpoonAnimation.MainSpoonAnimationStart();
+
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Blue_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
             shoot.transform.SetParent(eat_Transform.transform);
             shoot.transform.position = eat_Transform.transform.position;
-            iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Blue_Fly"), "time", 2));
+            iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Blue_Fly"), "time", 1));
         }
     }
 }
