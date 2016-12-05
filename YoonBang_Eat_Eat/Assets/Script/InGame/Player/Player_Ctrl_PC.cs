@@ -28,6 +28,10 @@ public class Player_Ctrl_PC : MonoBehaviour
     MainChopsticAnimation mainChopsticAnimation;
     MainForksAnimation mainForksAnimation;
     MainKnifeAnimation mainKnifeAnimation;
+    BlueDishGather blueDishGather;
+    YellowDishGather yellowDishGather;
+    GreenDishGather greenDishGather;
+    RedDishGather redDishGather;
 
     public PlayerState ps;
     int layerMask;
@@ -68,6 +72,10 @@ public class Player_Ctrl_PC : MonoBehaviour
         SmallSpoonAnimation = GameObject.FindGameObjectWithTag("SmallSpoonAnimation").GetComponent<SmallSpoonAnimation>();
         mainForksAnimation = GameObject.FindGameObjectWithTag("MainForks").GetComponent<MainForksAnimation>();
         mainKnifeAnimation = GameObject.FindGameObjectWithTag("MainKnife").GetComponent<MainKnifeAnimation>();
+        blueDishGather = GameObject.FindGameObjectWithTag("Blue_Dish_Gather").GetComponent<BlueDishGather>();
+        yellowDishGather = GameObject.FindGameObjectWithTag("Yellow_Dish_Gather").GetComponent<YellowDishGather>();
+        greenDishGather = GameObject.FindGameObjectWithTag("Green_Dish_Gather").GetComponent<GreenDishGather>();
+        redDishGather = GameObject.FindGameObjectWithTag("Red_Dish_Gather").GetComponent<RedDishGather>();
     }
 
     // Update is called once per frame
@@ -291,15 +299,19 @@ public class Player_Ctrl_PC : MonoBehaviour
         if (smallFood_Setting.smallFood_Index[0].layer == 12)
         {
             mainKnifeAnimation.MainSpoonAnimationStart();
+            redDishGather.redDishGatherPlus();
 
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Red_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
             shoot.transform.SetParent(eat_Transform.transform);
             shoot.transform.position = eat_Transform.transform.position;
             iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Red_Fly"), "time", 1));
+
+            smallFood_Setting = GameObject.FindGameObjectWithTag("SmallMenu_Setting").GetComponent<SmallFood_Setting>();
         }
         else if (smallFood_Setting.smallFood_Index[0].layer == 11)
         {
             mainChopsticAnimation.MainSpoonAnimationStart();
+            yellowDishGather.yellowDishGatherPlus();
 
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Yellow_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
             shoot.transform.SetParent(eat_Transform.transform);
@@ -309,6 +321,7 @@ public class Player_Ctrl_PC : MonoBehaviour
         else if (smallFood_Setting.smallFood_Index[0].layer == 10)
         {
             mainForksAnimation.MainSpoonAnimationStart();
+            greenDishGather.greenDishGatherPlus();
 
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Green_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
             shoot.transform.SetParent(eat_Transform.transform);
@@ -319,6 +332,8 @@ public class Player_Ctrl_PC : MonoBehaviour
         {
             SmallSpoonAnimation.SmallSpoonAttackAnimation();
             mainSpoonAnimation.MainSpoonAnimationStart();
+
+            blueDishGather.blueDishGatherPlus();
 
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Blue_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
             shoot.transform.SetParent(eat_Transform.transform);
