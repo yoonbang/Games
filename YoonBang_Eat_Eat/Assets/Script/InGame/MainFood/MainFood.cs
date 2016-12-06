@@ -5,6 +5,7 @@ public class MainFood : MonoBehaviour {
     Player_Ctrl_PC player;
     MainFood_Setting mainFood_Setting;
     SmallStageMenu_Setting smallStageMenu_Setting;
+    StageManager stageManager;
     public Image hp_Bar;
     public Image Canvas_UI_Hp_Bar;
     public Image Canvas_UI_Timer_Bar;
@@ -20,7 +21,7 @@ public class MainFood : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Ctrl_PC>();
         mainFood_Setting = GameObject.FindGameObjectWithTag("MainFood_Setting").GetComponent<MainFood_Setting>();
         smallStageMenu_Setting = GameObject.FindGameObjectWithTag("SmallStageMenu_Setting").GetComponent<SmallStageMenu_Setting>();
-
+        stageManager = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageManager>();
     }
 	
 	// Update is called once per frame
@@ -35,6 +36,9 @@ public class MainFood : MonoBehaviour {
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
         if (currentHp<=0)
         {
+            stageManager.mainStageCount++;
+            stageManager.mainStageChange();
+            stageManager.smallstageText.gameObject.SetActive(true);
             Destroy(mainFood_Setting.main_Food);
             player.mainStage = false;
             smallStageMenu_Setting.Food_Change();
@@ -47,8 +51,7 @@ public class MainFood : MonoBehaviour {
         if (currentHp > maxHP) {
 			currentHp = maxHP;
 		}
-
-        
+               
         hp_Bar.fillAmount = currentHp / maxHP;
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
     }

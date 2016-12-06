@@ -41,8 +41,8 @@ public class MainFood_Setting : MonoBehaviour {
 		}
         player_Ctrl_PC.mainStage = true;
         foodChangeIndex++;
-        StageManager stageManager = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageManager>();
-        stageManager.stageCount = stageManager.stageCount+1;
+        //StageManager stageManager = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageManager>();
+        //stageManager.mainStageCount = stageManager.mainStageCount + 1;
         main_Food = Instantiate(mainFood_Collection.mainFood_Collection[foodChangeIndex]) as GameObject;
         main_Food.transform.parent = food_Transform.transform;
         main_Food.transform.position = food_Transform.position;

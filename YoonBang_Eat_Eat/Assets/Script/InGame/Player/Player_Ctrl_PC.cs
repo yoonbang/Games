@@ -223,7 +223,7 @@ public class Player_Ctrl_PC : MonoBehaviour
             Destroy(smallFood_Setting.smallFood_Index[0]);
             combo_Count += 1;
             Debug.Log("콤보모드!!!");
-            int randomGold = Random.Range(stage.stageCount, stage.stageCount+stage.stageCount);
+            int randomGold = Random.Range(stage.mainStageCount, stage.mainStageCount + stage.mainStageCount);
             gold = gold + randomGold;
             goldText.text = gold.ToString();
             GetComponent<AudioSource>().clip = eat_Sound;
@@ -259,7 +259,7 @@ public class Player_Ctrl_PC : MonoBehaviour
 					combo_Count += 1;
                     startSmallFoodAnimation.SmallFoodAnimation();
                     
-                    int randomGold = Random.Range(stage.stageCount, (stage.stageCount + stage.stageCount) + 1);
+                    int randomGold = Random.Range(stage.mainStageCount, (stage.mainStageCount + stage.mainStageCount) + 1);
                     gold = gold + randomGold;
                     goldText.text = gold.ToString();
                     GetComponent<AudioSource>().clip = eat_Sound;

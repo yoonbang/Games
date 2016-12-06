@@ -6,6 +6,7 @@ public class SmallStageMenu : MonoBehaviour
     Player_Ctrl_PC player;
     SmallStageMenu_Setting smallStageMenu_Setting;
     Skill2_Button skill2;
+    StageManager stageManager;
     public Image hp_Bar;
     public Image Canvas_UI_Hp_Bar;
     public Image Canvas_UI_Timer_Bar;
@@ -22,6 +23,7 @@ public class SmallStageMenu : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Ctrl_PC>();
         smallStageMenu_Setting = GameObject.FindGameObjectWithTag("SmallStageMenu_Setting").GetComponent<SmallStageMenu_Setting>();
         skill2 = GameObject.FindGameObjectWithTag("Skill2").GetComponent<Skill2_Button>();
+        stageManager = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageManager>();
     }
 
     // Update is called once per frame
@@ -37,6 +39,9 @@ public class SmallStageMenu : MonoBehaviour
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
         if (currentHp <= 0)
         {
+            stageManager.smallstageCount = stageManager.smallstageCount + 1;
+            stageManager.smallStageChange();
+            smallStageMenu_Setting.foodChangeIndex++;
             smallStageMenu_Setting.Food_Change();
         }
     }
@@ -48,6 +53,9 @@ public class SmallStageMenu : MonoBehaviour
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
         if (currentHp <= 0)
         {
+            stageManager.smallstageCount = stageManager.smallstageCount + 1;
+            stageManager.smallStageChange();
+            smallStageMenu_Setting.foodChangeIndex++;
             smallStageMenu_Setting.Food_Change();
         }
     }
