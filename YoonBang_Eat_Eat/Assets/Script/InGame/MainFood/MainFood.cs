@@ -22,6 +22,8 @@ public class MainFood : MonoBehaviour {
         mainFood_Setting = GameObject.FindGameObjectWithTag("MainFood_Setting").GetComponent<MainFood_Setting>();
         smallStageMenu_Setting = GameObject.FindGameObjectWithTag("SmallStageMenu_Setting").GetComponent<SmallStageMenu_Setting>();
         stageManager = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageManager>();
+        maxHP = stageManager.mainStageHp;
+        currentHp = stageManager.mainStageHp;
     }
 	
 	// Update is called once per frame
@@ -42,6 +44,7 @@ public class MainFood : MonoBehaviour {
             Destroy(mainFood_Setting.main_Food);
             player.mainStage = false;
             smallStageMenu_Setting.Food_Change();
+            stageManager.SmallStageSetting();
         }
     }
 

@@ -32,6 +32,7 @@ public class SmallStageMenu_Setting : MonoBehaviour {
     {
         if (stageindex == 0)
         {
+
             randomFood = Random.Range(0, 9);
             smallStageFood = Instantiate(smallStageMenu_Collection.smallStageFood_Collection[randomFood]) as GameObject;
             smallStageFood.transform.parent = food_Transform.transform;
@@ -55,8 +56,9 @@ public class SmallStageMenu_Setting : MonoBehaviour {
             stageManager.smallstageCount = 1;
             stageManager.smallstageText.gameObject.SetActive(false);
             stageManager.smallStageChange();
-            mainFood_Setting.Food_Change ();
-		} else {
+            mainFood_Setting.Food_Change();
+            stageManager.MainStageSetting();
+        } else {
 			Destroy (smallStageFood);
             
 			if (stageindex == 0) {
@@ -70,7 +72,14 @@ public class SmallStageMenu_Setting : MonoBehaviour {
 			smallStageFood.transform.parent = food_Transform.transform;
 			smallStageFood.transform.position = food_Transform.position;
 
-			smallStageFood.GetComponentInChildren<SmallStageMenu> ().Canvas_UI_Hp_Bar.fillAmount = smallStageFood.GetComponentInChildren<SmallStageMenu> ().currentHp / smallStageFood.GetComponentInChildren<SmallStageMenu> ().maxHP;
-		}
+            smallStageFood.GetComponentInChildren<SmallStageMenu>().maxHP = stageManager.smallStageHp;
+            smallStageFood.GetComponentInChildren<SmallStageMenu>().currentHp = stageManager.smallStageHp;
+            
+            smallStageFood.GetComponentInChildren<SmallStageMenu> ().Canvas_UI_Hp_Bar.fillAmount = smallStageFood.GetComponentInChildren<SmallStageMenu> ().currentHp / smallStageFood.GetComponentInChildren<SmallStageMenu> ().maxHP;
+
+            
+
+
+        }
     }
 }

@@ -24,6 +24,9 @@ public class SmallStageMenu : MonoBehaviour
         smallStageMenu_Setting = GameObject.FindGameObjectWithTag("SmallStageMenu_Setting").GetComponent<SmallStageMenu_Setting>();
         skill2 = GameObject.FindGameObjectWithTag("Skill2").GetComponent<Skill2_Button>();
         stageManager = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageManager>();
+
+        maxHP = stageManager.smallStageHp;
+        currentHp = stageManager.smallStageHp;
     }
 
     // Update is called once per frame
