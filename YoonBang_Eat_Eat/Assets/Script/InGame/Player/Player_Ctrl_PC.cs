@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public enum PlayerState
 {
@@ -56,7 +57,9 @@ public class Player_Ctrl_PC : MonoBehaviour
     public int gold;
 
     public bool mainStage;
-    
+
+    private List<GameObject> touchList = new List<GameObject>();
+    private GameObject[] touchesOld;
 
     void Awake()
     {
@@ -85,60 +88,72 @@ public class Player_Ctrl_PC : MonoBehaviour
     }
     public void MouseButtonClick()
     {
-        if (Input.GetMouseButtonDown(0))
+        int cnt = Input.touchCount;
+
+        for (int i = 0; i < cnt; ++i)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
-
-            if (Physics.Raycast(ray, out hitInfo, 100f, layerMask))
+            if (EventSystem.current.IsPointerOverGameObject(i) == false)
             {
-                int layer = hitInfo.transform.gameObject.layer;
-                dish_Node_Id = hitInfo.collider.transform.GetComponent<Dish_Node_Id>();
-                smallFood_Dish_Id = GameObject.FindGameObjectWithTag("SmallFood").GetComponent<SmallFood_Dish_Id>();
+                
+                Vector2 pos = Input.GetTouch(0).position;
+                Vector3 theTouch = new Vector3(pos.x, pos.y, 0.0f);
 
-                Debug.Log("Dish_Node_Id="); Debug.Log(dish_Node_Id.id);
-                Debug.Log("smallFood_Dish_Id="); Debug.Log(smallFood_Dish_Id.id);
+                Ray ray = Camera.main.ScreenPointToRay(theTouch);
+                RaycastHit hit;
 
-                if (layer == LayerMask.NameToLayer(DishLayer) && dish_Node_Id.id == smallFood_Dish_Id.id)
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                 {
-                    if (ps == PlayerState.Combo)
+                    int layer = hit.transform.gameObject.layer;
+
+                    dish_Node_Id = hit.collider.transform.GetComponent<Dish_Node_Id>();
+                    smallFood_Dish_Id = GameObject.FindGameObjectWithTag("SmallFood").GetComponent<SmallFood_Dish_Id>();
+                    
+                    if (Input.GetTouch(0).phase == TouchPhase.Began && layer == LayerMask.NameToLayer(DishLayer) && dish_Node_Id.id == smallFood_Dish_Id.id)
                     {
-                        Combo_Mode();
+                        Debug.Log("엄청눌렀다");
+                        Destroy(smallFood_Setting.smallFood_Index[0]);
+                        if (ps == PlayerState.Combo)
+                        {
+                            Combo_Mode();
+                        }
+                        else {
+                            ps = PlayerState.Eat;
+                            Eat_Mode();
+                        }
                     }
-                    else {
-                        ps = PlayerState.Eat;
-                        Eat_Mode();
+                    if (Input.GetTouch(0).phase == TouchPhase.Began && layer == LayerMask.NameToLayer(DishLayer) && dish_Node_Id.id != smallFood_Dish_Id.id)
+                    {
+                        if (ps == PlayerState.Combo)
+                        {
+                            Combo_Mode();
+                        }
+                        else {
+                            ps = PlayerState.False;
+                            Flase_Mode();
+                        }
+                    }
+                    if (superComboMode_Count >= 20)
+                    {
+                        if (ps != PlayerState.Skill)
+                        {
+                            ps = PlayerState.Combo;
+                            combo_Count -= 1;
+                            Combo_Mode();
+                        }
                     }
                 }
-                if (layer == LayerMask.NameToLayer(DishLayer) && dish_Node_Id.id != smallFood_Dish_Id.id)
-                {
-                    if (ps == PlayerState.Combo)
-                    {
-                        Combo_Mode();
-                    }
-                    else {
-                        ps = PlayerState.False;
-                        Flase_Mode();
-                    }
-                }
-                if (superComboMode_Count >= 20)
-                {
-                    if (ps != PlayerState.Skill)
-                    {
-                        ps = PlayerState.Combo;
-                        combo_Count -= 1;
-                        Combo_Mode();
-                    }
-                }
-                //if (layer==LayerMask.NameToLayer(DishLayer) && superComboMode_Count == 20)
-            }
+            } 
         }
+
+
+
+
 
         if (smallFood_Setting.smallFood_Index[0]==null)
         {
             smallFood_Setting.smallFood_Index[0] = Instantiate(smallFood_Setting.smallFood_Index[1]) as GameObject;
             smallFood_Setting.smallFood_Index[0].transform.SetParent(smallFood_Setting.smallfood_Postion.smallFood_Position[0].transform,false);
-            smallFood_Setting.smallFood_Index[0].transform.position = smallFood_Setting.smallfood_Postion.smallFood_Position[00].transform.position;
+            smallFood_Setting.smallFood_Index[0].transform.position = smallFood_Setting.smallfood_Postion.smallFood_Position[0].transform.position;
 
             Destroy(smallFood_Setting.smallFood_Index[1]);
             smallFood_Setting.smallFood_Index[1] = Instantiate(smallFood_Setting.smallFood_Index[2]) as GameObject;
@@ -222,7 +237,6 @@ public class Player_Ctrl_PC : MonoBehaviour
             Food_Shot();
             Destroy(smallFood_Setting.smallFood_Index[0]);
             combo_Count += 1;
-            Debug.Log("콤보모드!!!");
             int randomGold = Random.Range(stage.mainStageCount, stage.mainStageCount + stage.mainStageCount);
             gold = gold + randomGold;
             goldText.text = gold.ToString();
@@ -255,8 +269,8 @@ public class Player_Ctrl_PC : MonoBehaviour
                     mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
                 }
                     Food_Shot();
-                    
-					combo_Count += 1;
+                    Destroy(smallFood_Setting.smallFood_Index[0]);
+                    combo_Count += 1;
                     startSmallFoodAnimation.SmallFoodAnimation();
                     
                     int randomGold = Random.Range(stage.mainStageCount, (stage.mainStageCount + stage.mainStageCount) + 1);
@@ -269,7 +283,7 @@ public class Player_Ctrl_PC : MonoBehaviour
                     eat_Effect.transform.SetParent(eat_Transform.transform);
                     eat_Effect.transform.position = eat_Transform.transform.position;
 					
-					Destroy(smallFood_Setting.smallFood_Index[0]);
+					
                     combo_system.combo_Strike();
         }
        
@@ -305,6 +319,7 @@ public class Player_Ctrl_PC : MonoBehaviour
             shoot.transform.SetParent(eat_Transform.transform);
             shoot.transform.position = eat_Transform.transform.position;
             iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Red_Fly"), "time", 1));
+
 
             smallFood_Setting = GameObject.FindGameObjectWithTag("SmallMenu_Setting").GetComponent<SmallFood_Setting>();
         }

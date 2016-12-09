@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
 public class LevelManager : MonoBehaviour {
     public Player_Ctrl_PC player;
     public Text GoldText;
@@ -15,23 +17,21 @@ public class LevelManager : MonoBehaviour {
         GoldText.text = LevelUpPoint.ToString();
         playerLevel.text ="Level " + player.level.ToString();
     }
-
     public void LevelUp()
     {
-        if(player.gold>=LevelUpPoint)
-        {
-            player.level+=1;
-            player.gold -= LevelUpPoint;
-            player.goldText.text = player.gold.ToString();
+            if (player.gold >= LevelUpPoint)
+            {
+                player.level += 1;
+                player.gold -= LevelUpPoint;
+                player.goldText.text = player.gold.ToString();
 
-            LevelUpPoint = (player.level * player.level) * 50;
+                LevelUpPoint = (player.level * player.level) * 50;
 
-			player.power = player.power + (player.power * 0.5f);
+                player.power = player.power + (player.power * 0.5f);
 
-            GoldText.text = LevelUpPoint.ToString();
-            playerLevel.text = "Level " + player.level.ToString();
+                GoldText.text = LevelUpPoint.ToString();
+                playerLevel.text = "Level " + player.level.ToString();
 
-
-        }
+            }
     }
 }

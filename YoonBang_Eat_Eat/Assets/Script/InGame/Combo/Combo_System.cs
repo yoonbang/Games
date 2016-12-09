@@ -54,8 +54,6 @@ public class Combo_System : MonoBehaviour {
         {
             if (combo_Object == null)
             {
-                cs = Combo_State.Eat;
-
                 combo_Text.text = pc.combo_Count.ToString() + " Combo";
                 combo_Object = Instantiate(Resources.Load("Combo_Text_Object"), Vector3.zero, Quaternion.identity) as GameObject;
                 combo_Object.transform.SetParent(combo_Position.transform,false);
@@ -67,10 +65,12 @@ public class Combo_System : MonoBehaviour {
                 combo_Object.SetActive(true);
                 combo_Gaze.fillAmount = pc.superComboMode_Count / pc.maxCombo;
 
-            }
-            else if (combo_Object != null)
-            {
+
                 cs = Combo_State.Eat;
+            }
+
+            if (combo_Object != null)
+            {
                 Destroy(combo_Object);
                 Destroy(combo_Gaze_Object);
 
@@ -85,12 +85,12 @@ public class Combo_System : MonoBehaviour {
                 combo_Gaze_Object.transform.SetParent(combo_Gaze_Position.transform,false);
                 combo_Gaze_Object.transform.position = combo_Gaze_Position.transform.position;
 
-                
+                cs = Combo_State.Eat;
 
-                //Debug.Log(pc.combo_Count);
             }
         }
     }
+
     public void Combo_Mode()
     {
         Destroy(combo_Object);
@@ -108,6 +108,7 @@ public class Combo_System : MonoBehaviour {
 
         cs = Combo_State.SuperMode;
     }
+
     public void Super_Combo_Play()
     {
         combo_Gaze.fillAmount = pc.superComboMode_Count / pc.maxCombo;

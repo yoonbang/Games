@@ -74,6 +74,10 @@ public class StageManager : MonoBehaviour {
         {
             mainFood_Setting.GetComponentInChildren<MainFood>().maxHP = mainStageHp;
             mainFood_Setting.GetComponentInChildren<MainFood>().currentHp = mainStageHp;
+
+            mainFood_Setting.main_Food.GetComponentInChildren<MainFood>().Canvas_UI_Hp_Bar.fillAmount = mainFood_Setting.main_Food.GetComponentInChildren<MainFood>().currentHp / mainFood_Setting.main_Food.GetComponentInChildren<MainFood>().maxHP;
+            mainFood_Setting.main_Food.GetComponentInChildren<MainFood>().hp_Text.text = mainFood_Setting.main_Food.GetComponentInChildren<MainFood>().currentHp.ToString() + "HP";
+            mainFood_Setting.main_Food.GetComponentInChildren<MainFood>().mainMenuName.text = mainFood_Setting.main_Food.GetComponentInChildren<MainFood>().Name_String;
         }
         else
         {
@@ -84,6 +88,8 @@ public class StageManager : MonoBehaviour {
             mainFood_Setting.GetComponentInChildren<MainFood>().currentHp = mainStageHp;
 
             mainFood_Setting.main_Food.GetComponentInChildren<MainFood>().Canvas_UI_Hp_Bar.fillAmount = mainFood_Setting.main_Food.GetComponentInChildren<MainFood>().currentHp / mainFood_Setting.main_Food.GetComponentInChildren<MainFood>().maxHP;
+            mainFood_Setting.main_Food.GetComponentInChildren<MainFood>().hp_Text.text = mainFood_Setting.main_Food.GetComponentInChildren<MainFood>().currentHp.ToString() + "HP";
+            mainFood_Setting.main_Food.GetComponentInChildren<MainFood>().mainMenuName.text = mainFood_Setting.main_Food.GetComponentInChildren<MainFood>().Name_String;
 
         }
     }
@@ -96,11 +102,15 @@ public class StageManager : MonoBehaviour {
             smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().currentHp = smallStageHp;
 
             smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().Canvas_UI_Hp_Bar.fillAmount = smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().currentHp / smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().maxHP;
+            smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().hp_Text.text = smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().currentHp.ToString() + " HP";
+            smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().smallMenuName.text = smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().Name_String;
         }
         smallStageHp = smallStageHp * 1.57f;
         smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().maxHP = smallStageHp;
         smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().currentHp = smallStageHp;
 
         smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().Canvas_UI_Hp_Bar.fillAmount = smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().currentHp / smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().maxHP;
+        smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().hp_Text.text = smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().currentHp.ToString() + "HP";
+        smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().smallMenuName.text = smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().Name_String;
     }
 }

@@ -8,7 +8,8 @@ public class MainFood_Setting : MonoBehaviour {
     MainFood_Collection mainFood_Collection;
     SmallStageMenu_Setting smallStageMenu_Setting;
     Player_Ctrl_PC player_Ctrl_PC;
-
+    public int foodrandomIndexMax;
+    public int randomFood = 0;
     int foodChangeIndex = -1; //다음메뉴로 넘어가는 값
     int stageindex = 0; // 해당스테이지의 메뉴값(1~10스테이지의 메뉴 , 11~20스테이지의 메뉴)
 
@@ -17,6 +18,8 @@ public class MainFood_Setting : MonoBehaviour {
         mainFood_Collection = GameObject.FindGameObjectWithTag("MainFood_Collection").GetComponent<MainFood_Collection>();
         player_Ctrl_PC = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Ctrl_PC>();
         smallStageMenu_Setting = GameObject.FindGameObjectWithTag("SmallStageMenu_Setting").GetComponent<SmallStageMenu_Setting>();
+
+        foodrandomIndexMax = mainFood_Collection.mainFood_Collection.Length;
         //StartMainMenuSetting();
     }
 	
@@ -40,13 +43,16 @@ public class MainFood_Setting : MonoBehaviour {
 			Destroy (smallStageMenu_Setting.smallStageFood);
 		}
         player_Ctrl_PC.mainStage = true;
-        foodChangeIndex++;
+        randomFood = Random.Range(0, foodrandomIndexMax);
+        //foodChangeIndex++;
         //StageManager stageManager = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageManager>();
         //stageManager.mainStageCount = stageManager.mainStageCount + 1;
-        main_Food = Instantiate(mainFood_Collection.mainFood_Collection[foodChangeIndex]) as GameObject;
+        main_Food = Instantiate(mainFood_Collection.mainFood_Collection[randomFood]) as GameObject;
         main_Food.transform.parent = food_Transform.transform;
         main_Food.transform.position = food_Transform.position;
 
         main_Food.GetComponentInChildren<MainFood>().Canvas_UI_Hp_Bar.fillAmount = main_Food.GetComponentInChildren<MainFood>().currentHp / main_Food.GetComponentInChildren<MainFood>().maxHP;
+        main_Food.GetComponentInChildren<MainFood>().hp_Text.text = main_Food.GetComponentInChildren<MainFood>().currentHp.ToString("N1") + " HP";
+        main_Food.GetComponentInChildren<MainFood>().mainMenuName.text = main_Food.GetComponentInChildren<MainFood>().Name_String;
     }
 }

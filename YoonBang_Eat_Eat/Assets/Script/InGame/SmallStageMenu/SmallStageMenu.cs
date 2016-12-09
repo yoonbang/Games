@@ -11,12 +11,16 @@ public class SmallStageMenu : MonoBehaviour
     public Image Canvas_UI_Hp_Bar;
     public Image Canvas_UI_Timer_Bar;
     public Text timeText;
+    public Text smallMenuName;
+    public Text hp_Text;
+
+    public string Name_String;
 
     public float maxHP = 100.0f;
     public float currentHp = 100.0f;
     public float currentTimer = 15.0f;
     public float maxTimer = 15.0f;
-
+    
     // Use this for initialization
     void Start()
     {
@@ -27,6 +31,7 @@ public class SmallStageMenu : MonoBehaviour
 
         maxHP = stageManager.smallStageHp;
         currentHp = stageManager.smallStageHp;
+
     }
 
     // Update is called once per frame
@@ -40,6 +45,7 @@ public class SmallStageMenu : MonoBehaviour
         currentHp -= player.power;
         hp_Bar.fillAmount = currentHp / maxHP;
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
+        hp_Text.text = currentHp.ToString("N1") +" HP";
         if (currentHp <= 0)
         {
             stageManager.smallstageCount = stageManager.smallstageCount + 1;
@@ -54,6 +60,7 @@ public class SmallStageMenu : MonoBehaviour
         currentHp -= skill2.power;
         hp_Bar.fillAmount = currentHp / maxHP;
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
+        hp_Text.text = currentHp.ToString("N1") + " HP";
         if (currentHp <= 0)
         {
             stageManager.smallstageCount = stageManager.smallstageCount + 1;
@@ -71,7 +78,8 @@ public class SmallStageMenu : MonoBehaviour
 		}
 			hp_Bar.fillAmount = currentHp / maxHP;
 			Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
-		
+            hp_Text.text = currentHp.ToString("N1") +" HP";
+
     }
     public void Timer_Play()
     {

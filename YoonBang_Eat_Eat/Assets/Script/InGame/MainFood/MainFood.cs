@@ -11,6 +11,11 @@ public class MainFood : MonoBehaviour {
     public Image Canvas_UI_Timer_Bar;
     public Text timeText;
 
+    public Text mainMenuName;
+    public Text hp_Text;
+
+    public string Name_String;
+
     public float maxHP = 100.0f;
     public float currentHp = 100.0f;
     public float currentTimer=15.0f;
@@ -36,6 +41,7 @@ public class MainFood : MonoBehaviour {
         currentHp -= player.power;
         hp_Bar.fillAmount = currentHp / maxHP;
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
+        hp_Text.text = currentHp.ToString("N1") + " HP";
         if (currentHp<=0)
         {
             stageManager.mainStageCount++;
@@ -57,6 +63,7 @@ public class MainFood : MonoBehaviour {
                
         hp_Bar.fillAmount = currentHp / maxHP;
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
+        hp_Text.text = currentHp.ToString("N1") + " HP";
     }
     public void Timer_Play()
     {

@@ -74,3 +74,56 @@ public class Player_Ctrl : MonoBehaviour
         }
     }
 }
+/*if (Input.GetMouseButtonDown(0))
+{
+    if (EventSystem.current.IsPointerOverGameObject() == false)
+    {  //UI이 위가 아니면.
+        Debug.Log("UI위가 아닙니다");
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitInfo;
+
+        if (Physics.Raycast(ray, out hitInfo, 100f, layerMask))
+        {
+            int layer = hitInfo.transform.gameObject.layer;
+            dish_Node_Id = hitInfo.collider.transform.GetComponent<Dish_Node_Id>();
+            smallFood_Dish_Id = GameObject.FindGameObjectWithTag("SmallFood").GetComponent<SmallFood_Dish_Id>();
+
+            //Debug.Log("Dish_Node_Id="); Debug.Log(dish_Node_Id.id);
+            //Debug.Log("smallFood_Dish_Id="); Debug.Log(smallFood_Dish_Id.id);
+            if (layer == LayerMask.NameToLayer(DishLayer) && dish_Node_Id.id == smallFood_Dish_Id.id)
+            {
+                if (ps == PlayerState.Combo)
+                {
+                    Combo_Mode();
+                }
+                else {
+                    ps = PlayerState.Eat;
+                    Eat_Mode();
+                }
+            }
+            if (layer == LayerMask.NameToLayer(DishLayer) && dish_Node_Id.id != smallFood_Dish_Id.id)
+            {
+                if (ps == PlayerState.Combo)
+                {
+                    Combo_Mode();
+                }
+                else {
+                    ps = PlayerState.False;
+                    Flase_Mode();
+                }
+            }
+            if (superComboMode_Count >= 20)
+            {
+                if (ps != PlayerState.Skill)
+                {
+                    ps = PlayerState.Combo;
+                    combo_Count -= 1;
+                    Combo_Mode();
+                }
+            }
+            //if (layer==LayerMask.NameToLayer(DishLayer) && superComboMode_Count == 20)
+        }
+    }
+
+}*/

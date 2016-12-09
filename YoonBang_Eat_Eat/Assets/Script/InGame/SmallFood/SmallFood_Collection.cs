@@ -3,5 +3,5 @@ using System.Collections;
 
 public class SmallFood_Collection : MonoBehaviour {
 
-    public GameObject[] smallFood_Menu = new GameObject[10];
+    public GameObject[] smallFood_Menu = new GameObject[500];
 }
