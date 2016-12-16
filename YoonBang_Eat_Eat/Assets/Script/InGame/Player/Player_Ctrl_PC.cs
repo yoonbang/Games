@@ -33,6 +33,7 @@ public class Player_Ctrl_PC : MonoBehaviour
     YellowDishGather yellowDishGather;
     GreenDishGather greenDishGather;
     RedDishGather redDishGather;
+    PlayerAnimation playerAnimation;
 
     public PlayerState ps;
     int layerMask;
@@ -79,6 +80,7 @@ public class Player_Ctrl_PC : MonoBehaviour
         yellowDishGather = GameObject.FindGameObjectWithTag("Yellow_Dish_Gather").GetComponent<YellowDishGather>();
         greenDishGather = GameObject.FindGameObjectWithTag("Green_Dish_Gather").GetComponent<GreenDishGather>();
         redDishGather = GameObject.FindGameObjectWithTag("Red_Dish_Gather").GetComponent<RedDishGather>();
+        playerAnimation = GameObject.FindGameObjectWithTag("PlayerRender").GetComponent<PlayerAnimation>();
     }
 
     // Update is called once per frame
@@ -235,6 +237,7 @@ public class Player_Ctrl_PC : MonoBehaviour
                 mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
             }
             Food_Shot();
+            playerAnimation.AttackAnimation();
             Destroy(smallFood_Setting.smallFood_Index[0]);
             combo_Count += 1;
             int randomGold = Random.Range(stage.mainStageCount, stage.mainStageCount + stage.mainStageCount);
@@ -269,6 +272,7 @@ public class Player_Ctrl_PC : MonoBehaviour
                     mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
                 }
                     Food_Shot();
+                    playerAnimation.AttackAnimation();
                     Destroy(smallFood_Setting.smallFood_Index[0]);
                     combo_Count += 1;
                     startSmallFoodAnimation.SmallFoodAnimation();
