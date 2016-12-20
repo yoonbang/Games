@@ -242,7 +242,7 @@ public class Player_Ctrl_PC : MonoBehaviour
                 mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
             }
             Food_Shot();
-            playerAnimation.AttackAnimation();
+            playerAnimation.SuperModeAnimation();
             Destroy(smallFood_Setting.smallFood_Index[0]);
             combo_Count += 1;
             int randomGold = Random.Range(stage.mainStageCount, stage.mainStageCount + stage.mainStageCount);
