@@ -62,6 +62,11 @@ public class Player_Ctrl_PC : MonoBehaviour
     private List<GameObject> touchList = new List<GameObject>();
     private GameObject[] touchesOld;
 
+    public Transform eat_Effect1, eat_Effect2, eat_Effect3, eat_Effect4;
+    public Transform dish_Effect1, dish_Effect2, dish_Effect3, dish_Effect4;
+
+    public GameObject menu_Effect;
+    public GameObject dish_Effect;
     void Awake()
     {
         smallFood_Setting = GameObject.FindGameObjectWithTag("SmallMenu_Setting").GetComponent<SmallFood_Setting>();
@@ -320,9 +325,17 @@ public class Player_Ctrl_PC : MonoBehaviour
             redDishGather.redDishGatherPlus();
 
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Red_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
-            shoot.transform.SetParent(eat_Transform.transform);
+            shoot.transform.SetParent(eat_Transform.transform,false);
             shoot.transform.position = eat_Transform.transform.position;
             iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Red_Fly"), "time", 1));
+
+            GameObject menuEffect = Instantiate(menu_Effect,Vector3.zero,Quaternion.identity) as GameObject;
+            menuEffect.transform.SetParent(eat_Effect2.transform, false);
+            menuEffect.transform.position = eat_Effect2.transform.position;
+
+            GameObject dishEffect = Instantiate(dish_Effect, Vector3.zero, Quaternion.identity) as GameObject;
+            dishEffect.transform.SetParent(dish_Effect2.transform, false);
+            dishEffect.transform.position = dish_Effect2.transform.position;
 
 
             smallFood_Setting = GameObject.FindGameObjectWithTag("SmallMenu_Setting").GetComponent<SmallFood_Setting>();
@@ -333,8 +346,17 @@ public class Player_Ctrl_PC : MonoBehaviour
             yellowDishGather.yellowDishGatherPlus();
 
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Yellow_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
-            shoot.transform.SetParent(eat_Transform.transform);
+            shoot.transform.SetParent(eat_Transform.transform,false);
             shoot.transform.position = eat_Transform.transform.position;
+
+            GameObject menuEffect = Instantiate(menu_Effect, Vector3.zero, Quaternion.identity) as GameObject;
+            menuEffect.transform.SetParent(eat_Effect3.transform, false);
+            menuEffect.transform.position = eat_Effect3.transform.position;
+
+            GameObject dishEffect = Instantiate(dish_Effect, Vector3.zero, Quaternion.identity) as GameObject;
+            dishEffect.transform.SetParent(dish_Effect3.transform, false);
+            dishEffect.transform.position = dish_Effect3.transform.position;
+
             iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Yellow_Fly"), "time", 1));
         }
         else if (smallFood_Setting.smallFood_Index[0].layer == 10)
@@ -343,8 +365,17 @@ public class Player_Ctrl_PC : MonoBehaviour
             greenDishGather.greenDishGatherPlus();
 
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Green_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
-            shoot.transform.SetParent(eat_Transform.transform);
+            shoot.transform.SetParent(eat_Transform.transform,false);
             shoot.transform.position = eat_Transform.transform.position;
+
+            GameObject menuEffect = Instantiate(menu_Effect, Vector3.zero, Quaternion.identity) as GameObject;
+            menuEffect.transform.SetParent(eat_Effect4.transform, false);
+            menuEffect.transform.position = eat_Effect4.transform.position;
+
+            GameObject dishEffect = Instantiate(dish_Effect, Vector3.zero, Quaternion.identity) as GameObject;
+            dishEffect.transform.SetParent(dish_Effect4.transform, false);
+            dishEffect.transform.position = dish_Effect4.transform.position;
+
             iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Green_Fly"), "time", 1));
         }
         else if (smallFood_Setting.smallFood_Index[0].layer == 9)
@@ -355,8 +386,17 @@ public class Player_Ctrl_PC : MonoBehaviour
             blueDishGather.blueDishGatherPlus();
 
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Blue_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
-            shoot.transform.SetParent(eat_Transform.transform);
+            shoot.transform.SetParent(eat_Transform.transform,false);
             shoot.transform.position = eat_Transform.transform.position;
+
+            GameObject menuEffect = Instantiate(menu_Effect, Vector3.zero, Quaternion.identity) as GameObject;
+            menuEffect.transform.SetParent(eat_Effect1.transform, false);
+            menuEffect.transform.position = eat_Effect1.transform.position;
+
+            GameObject dishEffect = Instantiate(dish_Effect, Vector3.zero, Quaternion.identity) as GameObject;
+            dishEffect.transform.SetParent(dish_Effect1.transform, false);
+            dishEffect.transform.position = dish_Effect1.transform.position;
+
             iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Blue_Fly"), "time", 1));
         }
     }

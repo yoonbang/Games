@@ -46,12 +46,16 @@ public class SmallStageMenu : MonoBehaviour
         hp_Bar.fillAmount = currentHp / maxHP;
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
         hp_Text.text = currentHp.ToString("N1") +" HP";
+
+        this.GetComponent<Animator>().Rebind();
+        this.GetComponent<Animator>().Play("Damage");
         if (currentHp <= 0)
         {
             stageManager.smallstageCount = stageManager.smallstageCount + 1;
             stageManager.smallStageChange();
             smallStageMenu_Setting.foodChangeIndex++;
             smallStageMenu_Setting.Food_Change();
+
         }
     }
 
@@ -61,6 +65,10 @@ public class SmallStageMenu : MonoBehaviour
         hp_Bar.fillAmount = currentHp / maxHP;
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
         hp_Text.text = currentHp.ToString("N1") + " HP";
+
+        this.GetComponent<Animator>().Rebind();
+        this.GetComponent<Animator>().Play("Damage");
+
         if (currentHp <= 0)
         {
             stageManager.smallstageCount = stageManager.smallstageCount + 1;
