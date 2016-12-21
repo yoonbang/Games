@@ -36,9 +36,10 @@ public class MainFood : MonoBehaviour {
         //Timer_Play();
     }
 
-    public void Damage()
+    public void Damage(float power)
     {
-        currentHp -= player.power;
+        float damage = power;
+        currentHp -= damage;
         hp_Bar.fillAmount = currentHp / maxHP;
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
         hp_Text.text = currentHp.ToString("N1") + " HP";
@@ -69,6 +70,7 @@ public class MainFood : MonoBehaviour {
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
         hp_Text.text = currentHp.ToString("N1") + " HP";
     }
+
     public void Timer_Play()
     {
         if(currentTimer>0)

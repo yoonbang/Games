@@ -62,11 +62,14 @@ public class Player_Ctrl_PC : MonoBehaviour
     private List<GameObject> touchList = new List<GameObject>();
     private GameObject[] touchesOld;
 
-    public Transform eat_Effect1, eat_Effect2, eat_Effect3, eat_Effect4;
+    public Transform eat_Effect1;
     public Transform dish_Effect1, dish_Effect2, dish_Effect3, dish_Effect4;
 
     public GameObject menu_Effect;
     public GameObject dish_Effect;
+
+
+
     void Awake()
     {
         smallFood_Setting = GameObject.FindGameObjectWithTag("SmallMenu_Setting").GetComponent<SmallFood_Setting>();
@@ -117,7 +120,6 @@ public class Player_Ctrl_PC : MonoBehaviour
                     
                     if (Input.GetTouch(0).phase == TouchPhase.Began && layer == LayerMask.NameToLayer(DishLayer) && dish_Node_Id.id == smallFood_Dish_Id.id)
                     {
-                        Debug.Log("엄청눌렀다");
                         Destroy(smallFood_Setting.smallFood_Index[0]);
                         if (ps == PlayerState.Combo)
                         {
@@ -235,24 +237,32 @@ public class Player_Ctrl_PC : MonoBehaviour
         {
             if (mainStage == false)
             {
-                smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Damage();
+                smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Damage(power);
             }
             else
             {
-                mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
+                mainFood_Setting.GetComponentInChildren<MainFood>().Damage(power);
             }
             Food_Shot();
             playerAnimation.SuperModeAnimation();
             Destroy(smallFood_Setting.smallFood_Index[0]);
             combo_Count += 1;
+
+            GameObject menuEffect = Instantiate(menu_Effect, Vector3.zero, Quaternion.identity) as GameObject;
+            menuEffect.transform.SetParent(eat_Effect1.transform, false);
+            menuEffect.transform.position = eat_Effect1.transform.position;
+
+            GameObject eatEffect = Instantiate(eat_Effect, Vector3.zero, Quaternion.identity) as GameObject;
+            eatEffect.transform.SetParent(eat_Transform.transform, false);
+            eatEffect.transform.position = eat_Transform.transform.position;
+
             int randomGold = Random.Range(stage.mainStageCount, stage.mainStageCount + stage.mainStageCount);
+
             gold = gold + randomGold;
             goldText.text = gold.ToString();
             GetComponent<AudioSource>().clip = eat_Sound;
             GetComponent<AudioSource>().Play();
-            eat_Effect=Instantiate(Resources.Load("Eat_Effect"), Vector3.zero, Quaternion.identity) as GameObject;
-            eat_Effect.transform.SetParent(eat_Transform.transform);
-            eat_Effect.transform.position = eat_Transform.transform.position;
+
             combo_system.Combo_Mode();
         }
     }
@@ -270,29 +280,33 @@ public class Player_Ctrl_PC : MonoBehaviour
                 }
                 if (mainStage == false)
                 {
-                    smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Damage();
+                    smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Damage(power);
                 }
                 else
                 {
-                    mainFood_Setting.GetComponentInChildren<MainFood>().Damage();
+                    mainFood_Setting.GetComponentInChildren<MainFood>().Damage(power);
                 }
                     Food_Shot();
                     playerAnimation.AttackAnimation();
                     Destroy(smallFood_Setting.smallFood_Index[0]);
                     combo_Count += 1;
                     startSmallFoodAnimation.SmallFoodAnimation();
-                    
+
+                    GameObject menuEffect = Instantiate(menu_Effect, Vector3.zero, Quaternion.identity) as GameObject;
+                    menuEffect.transform.SetParent(eat_Effect1.transform, false);
+                    menuEffect.transform.position = eat_Effect1.transform.position;
+            
+                    GameObject eatEffect = Instantiate(eat_Effect, Vector3.zero, Quaternion.identity) as GameObject;
+                    eatEffect.transform.SetParent(eat_Transform.transform, false);
+                    eatEffect.transform.position = eat_Transform.transform.position;
+
                     int randomGold = Random.Range(stage.mainStageCount, (stage.mainStageCount + stage.mainStageCount) + 1);
+
                     gold = gold + randomGold;
                     goldText.text = gold.ToString();
                     GetComponent<AudioSource>().clip = eat_Sound;
                     GetComponent<AudioSource>().Play();
 
-					eat_Effect=Instantiate(Resources.Load("Eat_Effect"), Vector3.zero, Quaternion.identity) as GameObject;
-                    eat_Effect.transform.SetParent(eat_Transform.transform);
-                    eat_Effect.transform.position = eat_Transform.transform.position;
-					
-					
                     combo_system.combo_Strike();
         }
        
@@ -329,14 +343,9 @@ public class Player_Ctrl_PC : MonoBehaviour
             shoot.transform.position = eat_Transform.transform.position;
             iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Red_Fly"), "time", 1));
 
-            GameObject menuEffect = Instantiate(menu_Effect,Vector3.zero,Quaternion.identity) as GameObject;
-            menuEffect.transform.SetParent(eat_Effect2.transform, false);
-            menuEffect.transform.position = eat_Effect2.transform.position;
-
             GameObject dishEffect = Instantiate(dish_Effect, Vector3.zero, Quaternion.identity) as GameObject;
             dishEffect.transform.SetParent(dish_Effect2.transform, false);
             dishEffect.transform.position = dish_Effect2.transform.position;
-
 
             smallFood_Setting = GameObject.FindGameObjectWithTag("SmallMenu_Setting").GetComponent<SmallFood_Setting>();
         }
@@ -348,10 +357,6 @@ public class Player_Ctrl_PC : MonoBehaviour
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Yellow_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
             shoot.transform.SetParent(eat_Transform.transform,false);
             shoot.transform.position = eat_Transform.transform.position;
-
-            GameObject menuEffect = Instantiate(menu_Effect, Vector3.zero, Quaternion.identity) as GameObject;
-            menuEffect.transform.SetParent(eat_Effect3.transform, false);
-            menuEffect.transform.position = eat_Effect3.transform.position;
 
             GameObject dishEffect = Instantiate(dish_Effect, Vector3.zero, Quaternion.identity) as GameObject;
             dishEffect.transform.SetParent(dish_Effect3.transform, false);
@@ -367,10 +372,6 @@ public class Player_Ctrl_PC : MonoBehaviour
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Green_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
             shoot.transform.SetParent(eat_Transform.transform,false);
             shoot.transform.position = eat_Transform.transform.position;
-
-            GameObject menuEffect = Instantiate(menu_Effect, Vector3.zero, Quaternion.identity) as GameObject;
-            menuEffect.transform.SetParent(eat_Effect4.transform, false);
-            menuEffect.transform.position = eat_Effect4.transform.position;
 
             GameObject dishEffect = Instantiate(dish_Effect, Vector3.zero, Quaternion.identity) as GameObject;
             dishEffect.transform.SetParent(dish_Effect4.transform, false);
@@ -388,10 +389,6 @@ public class Player_Ctrl_PC : MonoBehaviour
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Blue_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
             shoot.transform.SetParent(eat_Transform.transform,false);
             shoot.transform.position = eat_Transform.transform.position;
-
-            GameObject menuEffect = Instantiate(menu_Effect, Vector3.zero, Quaternion.identity) as GameObject;
-            menuEffect.transform.SetParent(eat_Effect1.transform, false);
-            menuEffect.transform.position = eat_Effect1.transform.position;
 
             GameObject dishEffect = Instantiate(dish_Effect, Vector3.zero, Quaternion.identity) as GameObject;
             dishEffect.transform.SetParent(dish_Effect1.transform, false);
