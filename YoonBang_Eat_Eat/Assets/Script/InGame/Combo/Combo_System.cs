@@ -20,6 +20,8 @@ public class Combo_System : MonoBehaviour {
     public Player_Ctrl_PC pc;
     public Combo_State cs;
 
+    public GameObject superModeEffect;
+
     void Start()
     {
         pc = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Ctrl_PC>();
@@ -105,15 +107,19 @@ public class Combo_System : MonoBehaviour {
         combo_Gaze_Object.transform.SetParent(combo_Gaze_Position.transform,false);
         combo_Gaze_Object.transform.position = combo_Gaze_Position.transform.position;
 
+        superModeEffect.SetActive(true);
         cs = Combo_State.SuperMode;
     }
 
     public void Super_Combo_Play()
     {
+        combo_Gaze.fillAmount = pc.superComboMode_Count / pc.maxCombo;
+        combo_Gaze_Position.FindChild("ComboGaze(Clone)").FindChild("Gaze").GetComponent<Image>().fillAmount = pc.superComboMode_Count / pc.maxCombo;
         if (pc.superComboMode_Count<=0)
         {
             Destroy(combo_Object);
             Destroy(combo_Gaze_Object);
+            superModeEffect.SetActive(false);
             pc.superComboMode_Count = 0f;
             fiver_Map.SetActive(false);
             combo_Text.text = pc.combo_Count.ToString()+" Combo";
