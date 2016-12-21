@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SmallSpoonAnimation : MonoBehaviour {
-
-    // Use this for initialization
-    public void SmallSpoonAttackAnimation()
+public class SmallChopsticAnimation : MonoBehaviour {
+    public void SmallChopsticAttackAnimation()
     {
         this.GetComponent<Animator>().Rebind();
         this.GetComponent<Animator>().Play("Attack");

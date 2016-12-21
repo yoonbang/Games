@@ -6,7 +6,8 @@ public class PlayerAnimation : MonoBehaviour {
 
     public void AttackAnimation()
     {
-        animationNumber++;
+        //animationNumber++;
+        animationNumber = Random.Range(1, 4);
         if (animationNumber == 1)
         {
             this.GetComponent<Animator>().Rebind();
@@ -16,7 +17,12 @@ public class PlayerAnimation : MonoBehaviour {
         {
             this.GetComponent<Animator>().Rebind();
             this.GetComponent<Animator>().Play("Attack3");
-            animationNumber = 0;
+        }
+        if(animationNumber == 3)
+        {
+            this.GetComponent<Animator>().Rebind();
+            this.GetComponent<Animator>().Play("Attack1");
+            //animationNumber = 0;
         }
     }
 

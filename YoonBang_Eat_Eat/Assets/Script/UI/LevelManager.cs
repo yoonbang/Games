@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour {
     public Player_Ctrl_PC player;
     public Text GoldText;
     public Text playerLevel;
+    public Text playerDamage;
     public int LevelUpPoint = 0;
 
 
@@ -16,6 +17,7 @@ public class LevelManager : MonoBehaviour {
         LevelUpPoint = (player.level * player.level)*50;
         GoldText.text = LevelUpPoint.ToString();
         playerLevel.text ="Level " + player.level.ToString();
+        playerDamage.text = player.power.ToString("N1");
     }
     public void LevelUp()
     {
@@ -31,7 +33,8 @@ public class LevelManager : MonoBehaviour {
 
                 GoldText.text = LevelUpPoint.ToString();
                 playerLevel.text = "Level " + player.level.ToString();
+                playerDamage.text = player.power.ToString("N1");
 
-            }
+        }
     }
 }

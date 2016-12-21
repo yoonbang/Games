@@ -7,6 +7,8 @@ public class SmallStageMenu : MonoBehaviour
     SmallStageMenu_Setting smallStageMenu_Setting;
     Skill2_Button skill2;
     StageManager stageManager;
+    DamageTextManager damageText;
+
     public Image hp_Bar;
     public Image Canvas_UI_Hp_Bar;
     public Image Canvas_UI_Timer_Bar;
@@ -20,7 +22,7 @@ public class SmallStageMenu : MonoBehaviour
     public float currentHp = 100.0f;
     public float currentTimer = 15.0f;
     public float maxTimer = 15.0f;
-    
+    public float damage = 0.0f;
     // Use this for initialization
     void Start()
     {
@@ -28,6 +30,7 @@ public class SmallStageMenu : MonoBehaviour
         smallStageMenu_Setting = GameObject.FindGameObjectWithTag("SmallStageMenu_Setting").GetComponent<SmallStageMenu_Setting>();
         skill2 = GameObject.FindGameObjectWithTag("Skill2").GetComponent<Skill2_Button>();
         stageManager = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageManager>();
+        damageText = GameObject.FindGameObjectWithTag("DamageText").GetComponent<DamageTextManager>();
 
         maxHP = stageManager.smallStageHp;
         currentHp = stageManager.smallStageHp;
@@ -42,11 +45,12 @@ public class SmallStageMenu : MonoBehaviour
 
     public void Damage(float power)
     {
-        float damage = power;
+        damage = power;
         currentHp -= damage;
         hp_Bar.fillAmount = currentHp / maxHP;
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
         hp_Text.text = currentHp.ToString("N1") +" HP";
+        damageText.DamageUI();
 
         this.GetComponent<Animator>().Rebind();
         this.GetComponent<Animator>().Play("Damage");
@@ -56,7 +60,6 @@ public class SmallStageMenu : MonoBehaviour
             stageManager.smallStageChange();
             smallStageMenu_Setting.foodChangeIndex++;
             smallStageMenu_Setting.Food_Change();
-
         }
     }
 

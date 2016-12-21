@@ -20,7 +20,7 @@ public class MainFood : MonoBehaviour {
     public float currentHp = 100.0f;
     public float currentTimer=15.0f;
     public float maxTimer = 15.0f;
-
+    public float damage = 0.0f;
     // Use this for initialization
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Ctrl_PC>();
@@ -38,7 +38,7 @@ public class MainFood : MonoBehaviour {
 
     public void Damage(float power)
     {
-        float damage = power;
+        damage = power;
         currentHp -= damage;
         hp_Bar.fillAmount = currentHp / maxHP;
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;

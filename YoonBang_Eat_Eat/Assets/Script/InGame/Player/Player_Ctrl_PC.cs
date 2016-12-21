@@ -34,6 +34,9 @@ public class Player_Ctrl_PC : MonoBehaviour
     GreenDishGather greenDishGather;
     RedDishGather redDishGather;
     PlayerAnimation playerAnimation;
+    SmallChopsticAnimation smallChopsticAnimation;
+    SmallForksAnimation smallForksAnimation;
+    SmallKnifeAnimation smallKnifeAnimation;
 
     public PlayerState ps;
     int layerMask;
@@ -89,6 +92,9 @@ public class Player_Ctrl_PC : MonoBehaviour
         greenDishGather = GameObject.FindGameObjectWithTag("Green_Dish_Gather").GetComponent<GreenDishGather>();
         redDishGather = GameObject.FindGameObjectWithTag("Red_Dish_Gather").GetComponent<RedDishGather>();
         playerAnimation = GameObject.FindGameObjectWithTag("PlayerRender").GetComponent<PlayerAnimation>();
+        smallChopsticAnimation = GameObject.FindGameObjectWithTag("SmallChopstic").GetComponent<SmallChopsticAnimation>();
+        smallForksAnimation = GameObject.FindGameObjectWithTag("SmallForks").GetComponent<SmallForksAnimation>();
+        smallKnifeAnimation = GameObject.FindGameObjectWithTag("SmallKnife").GetComponent<SmallKnifeAnimation>();
     }
 
     // Update is called once per frame
@@ -337,6 +343,7 @@ public class Player_Ctrl_PC : MonoBehaviour
         {
             mainKnifeAnimation.MainSpoonAnimationStart();
             redDishGather.redDishGatherPlus();
+            smallKnifeAnimation.SmallKnifeAttackAnimation();
 
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Red_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
             shoot.transform.SetParent(eat_Transform.transform,false);
@@ -353,6 +360,7 @@ public class Player_Ctrl_PC : MonoBehaviour
         {
             mainChopsticAnimation.MainSpoonAnimationStart();
             yellowDishGather.yellowDishGatherPlus();
+            smallChopsticAnimation.SmallChopsticAttackAnimation();
 
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Yellow_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
             shoot.transform.SetParent(eat_Transform.transform,false);
@@ -368,6 +376,7 @@ public class Player_Ctrl_PC : MonoBehaviour
         {
             mainForksAnimation.MainSpoonAnimationStart();
             greenDishGather.greenDishGatherPlus();
+            smallForksAnimation.SmallForksAttackAnimation();
 
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Green_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
             shoot.transform.SetParent(eat_Transform.transform,false);
