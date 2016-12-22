@@ -81,7 +81,7 @@ public class StageManager : MonoBehaviour {
         }
         else
         {
-            mainStageHp = mainStageHp * 1.84f;
+            mainStageHp = mainStageHp * 1.67f;
 
             
             mainFood_Setting.GetComponentInChildren<MainFood>().maxHP = mainStageHp;

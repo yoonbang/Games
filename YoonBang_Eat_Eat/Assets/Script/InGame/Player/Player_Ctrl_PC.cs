@@ -264,7 +264,7 @@ public class Player_Ctrl_PC : MonoBehaviour
 
             int randomGold = Random.Range(stage.mainStageCount, stage.mainStageCount + stage.mainStageCount);
 
-            gold = gold + randomGold;
+            gold = gold + randomGold*2;
             goldText.text = gold.ToString();
             GetComponent<AudioSource>().clip = eat_Sound;
             GetComponent<AudioSource>().Play();
@@ -308,7 +308,7 @@ public class Player_Ctrl_PC : MonoBehaviour
 
                     int randomGold = Random.Range(stage.mainStageCount, (stage.mainStageCount + stage.mainStageCount) + 1);
 
-                    gold = gold + randomGold;
+                    gold = gold + (randomGold*2);
                     goldText.text = gold.ToString();
                     GetComponent<AudioSource>().clip = eat_Sound;
                     GetComponent<AudioSource>().Play();

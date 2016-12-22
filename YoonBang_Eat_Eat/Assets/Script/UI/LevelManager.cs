@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Ctrl_PC>();
-        LevelUpPoint = (player.level * player.level)*50;
+        LevelUpPoint = (player.level * player.level)*30;
         GoldText.text = LevelUpPoint.ToString();
         playerLevel.text ="Level " + player.level.ToString();
         playerDamage.text = player.power.ToString("N1");
@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour {
                 player.gold -= LevelUpPoint;
                 player.goldText.text = player.gold.ToString();
 
-                LevelUpPoint = (player.level * player.level) * 50;
+                LevelUpPoint = (player.level * player.level) * 30;
 
                 player.power = player.power + (player.power * 0.5f);
 
