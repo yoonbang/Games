@@ -23,7 +23,7 @@ public class LogoFade : MonoBehaviour
             else
             {
                 canvasGroup.interactable = false;
-                Application.LoadLevel("Title_Lobby");
+                Application.LoadLevel("Loading");
 
             }
         }

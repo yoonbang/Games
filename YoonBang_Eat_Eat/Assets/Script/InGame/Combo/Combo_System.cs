@@ -19,6 +19,7 @@ public class Combo_System : MonoBehaviour {
     public GameObject fiver_Map;
     public Player_Ctrl_PC pc;
     public Combo_State cs;
+    public bool ciriticalMode = false;
 
     public GameObject superModeEffect;
 
@@ -94,21 +95,43 @@ public class Combo_System : MonoBehaviour {
 
     public void Combo_Mode()
     {
-        Destroy(combo_Object);
-        Destroy(combo_Gaze_Object);
+        if (ciriticalMode == true)
+        {
+            Destroy(combo_Object);
+            Destroy(combo_Gaze_Object);
 
-        combo_Gaze.fillAmount = pc.superComboMode_Count / pc.maxCombo;
+            combo_Gaze.fillAmount = pc.superComboMode_Count / pc.maxCombo;
 
-        combo_Object = Instantiate(Resources.Load("SuperCombo_Text_Object"), Vector3.zero, Quaternion.identity) as GameObject;
-        combo_Object.transform.SetParent(Fiver_Position.transform,false);
-        combo_Object.transform.position = Fiver_Position.transform.position;
+            combo_Object = Instantiate(Resources.Load("SuperCombo_Text_Object"), Vector3.zero, Quaternion.identity) as GameObject;
+            combo_Object.transform.SetParent(Fiver_Position.transform, false);
+            combo_Object.transform.position = Fiver_Position.transform.position;
 
-        combo_Gaze_Object = Instantiate(Resources.Load("ComboGaze"), Vector3.zero, Quaternion.identity) as GameObject;
-        combo_Gaze_Object.transform.SetParent(combo_Gaze_Position.transform,false);
-        combo_Gaze_Object.transform.position = combo_Gaze_Position.transform.position;
+            combo_Gaze_Object = Instantiate(Resources.Load("ComboGaze"), Vector3.zero, Quaternion.identity) as GameObject;
+            combo_Gaze_Object.transform.SetParent(combo_Gaze_Position.transform, false);
+            combo_Gaze_Object.transform.position = combo_Gaze_Position.transform.position;
 
-        superModeEffect.SetActive(true);
-        cs = Combo_State.SuperMode;
+            superModeEffect.SetActive(true);
+            cs = Combo_State.SuperMode;
+            ciriticalMode = false;
+        }
+        else
+        {
+            Destroy(combo_Object);
+            Destroy(combo_Gaze_Object);
+
+            combo_Gaze.fillAmount = pc.superComboMode_Count / pc.maxCombo;
+
+            combo_Object = Instantiate(Resources.Load("SuperCombo_Text_Object"), Vector3.zero, Quaternion.identity) as GameObject;
+            combo_Object.transform.SetParent(Fiver_Position.transform, false);
+            combo_Object.transform.position = Fiver_Position.transform.position;
+
+            combo_Gaze_Object = Instantiate(Resources.Load("ComboGaze"), Vector3.zero, Quaternion.identity) as GameObject;
+            combo_Gaze_Object.transform.SetParent(combo_Gaze_Position.transform, false);
+            combo_Gaze_Object.transform.position = combo_Gaze_Position.transform.position;
+
+            superModeEffect.SetActive(true);
+            cs = Combo_State.SuperMode;
+        }
     }
 
     public void Super_Combo_Play()

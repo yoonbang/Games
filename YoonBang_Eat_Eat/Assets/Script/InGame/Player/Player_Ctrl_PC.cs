@@ -37,6 +37,7 @@ public class Player_Ctrl_PC : MonoBehaviour
     SmallChopsticAnimation smallChopsticAnimation;
     SmallForksAnimation smallForksAnimation;
     SmallKnifeAnimation smallKnifeAnimation;
+    DamageTextManager damegeTextManager;
 
     public PlayerState ps;
     int layerMask;
@@ -61,6 +62,9 @@ public class Player_Ctrl_PC : MonoBehaviour
     public int gold;
 
     public bool mainStage;
+    public bool criticalMode;
+
+    public int criticalInt = 10;
 
     private List<GameObject> touchList = new List<GameObject>();
     private GameObject[] touchesOld;
@@ -75,6 +79,7 @@ public class Player_Ctrl_PC : MonoBehaviour
 
     void Awake()
     {
+        damegeTextManager = GameObject.FindGameObjectWithTag("DamageText").GetComponent<DamageTextManager>();
         smallFood_Setting = GameObject.FindGameObjectWithTag("SmallMenu_Setting").GetComponent<SmallFood_Setting>();
         smallStageMenu_Setting = GameObject.FindGameObjectWithTag("SmallStageMenu_Setting").GetComponent<SmallStageMenu_Setting>();
         mainFood_Setting = GameObject.FindGameObjectWithTag("MainFood_Setting").GetComponent<MainFood_Setting>();
@@ -243,11 +248,27 @@ public class Player_Ctrl_PC : MonoBehaviour
         {
             if (mainStage == false)
             {
-                smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Damage(power);
+                if (Random.Range(1, 101) <= criticalInt)
+                {
+                    damegeTextManager.ciriticalMode = true;
+                    smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Damage(power * 2);
+                }
+                else
+                {
+                    smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Damage(power);
+                }
             }
             else
             {
-                mainFood_Setting.GetComponentInChildren<MainFood>().Damage(power);
+                if (Random.Range(1, 101) <= criticalInt)
+                {
+                    damegeTextManager.ciriticalMode = true;
+                    mainFood_Setting.GetComponentInChildren<MainFood>().Damage(power * 2);
+                }
+                else
+                {
+                    mainFood_Setting.GetComponentInChildren<MainFood>().Damage(power);
+                }
             }
             Food_Shot();
             playerAnimation.SuperModeAnimation();
@@ -286,11 +307,28 @@ public class Player_Ctrl_PC : MonoBehaviour
                 }
                 if (mainStage == false)
                 {
-                    smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Damage(power);
+                    if (Random.Range(1, 101) <= criticalInt)
+                    {
+                        damegeTextManager.ciriticalMode = true;
+                        smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Damage(power * 2);
+                    }
+                    else
+                    {
+                        smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Damage(power);
+                    }
                 }
                 else
                 {
+                    if (Random.Range(1, 101) <= criticalInt)
+                    {
+                        damegeTextManager.ciriticalMode = true;
+                        mainFood_Setting.GetComponentInChildren<MainFood>().Damage(power*2); 
+                    }
+                    else
+                    {
                     mainFood_Setting.GetComponentInChildren<MainFood>().Damage(power);
+                    }
+
                 }
                     Food_Shot();
                     playerAnimation.AttackAnimation();

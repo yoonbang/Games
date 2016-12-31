@@ -20,6 +20,7 @@ public class MainFood_Setting : MonoBehaviour {
         smallStageMenu_Setting = GameObject.FindGameObjectWithTag("SmallStageMenu_Setting").GetComponent<SmallStageMenu_Setting>();
 
         foodrandomIndexMax = mainFood_Collection.mainFood_Collection.Length;
+        Debug.Log("랜덤인덱스 = " + mainFood_Collection.mainFood_Collection.Length);
         //StartMainMenuSetting();
     }
 	

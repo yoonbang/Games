@@ -81,7 +81,7 @@ public class StageManager : MonoBehaviour {
         }
         else
         {
-            mainStageHp = mainStageHp * 1.67f;
+            mainStageHp = mainStageHp * 1.77f;
 
             
             mainFood_Setting.GetComponentInChildren<MainFood>().maxHP = mainStageHp;
@@ -105,7 +105,7 @@ public class StageManager : MonoBehaviour {
             smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().hp_Text.text = smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().currentHp.ToString() + " HP";
             smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().smallMenuName.text = smallStageMenu_Setting.smallStageFood.GetComponentInChildren<SmallStageMenu>().Name_String;
         }
-        smallStageHp = smallStageHp * 1.57f;
+        smallStageHp = smallStageHp * 1.62f;
         smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().maxHP = smallStageHp;
         smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().currentHp = smallStageHp;
 

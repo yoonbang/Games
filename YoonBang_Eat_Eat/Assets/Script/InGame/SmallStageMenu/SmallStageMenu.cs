@@ -32,7 +32,7 @@ public class SmallStageMenu : MonoBehaviour
         skill2 = GameObject.FindGameObjectWithTag("Skill2").GetComponent<Skill2_Button>();
         stageManager = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageManager>();
         damageText = GameObject.FindGameObjectWithTag("DamageText").GetComponent<DamageTextManager>();
-        stage = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageManager>();
+        
 
 
         maxHP = stageManager.smallStageHp;
@@ -62,9 +62,9 @@ public class SmallStageMenu : MonoBehaviour
 
             stageManager.smallstageCount = stageManager.smallstageCount + 1;
             stageManager.smallStageChange();
-            for (int i = 0; i < 15; i++) {
+            for (int i = 0; i < 10; i++) {
 
-                int randomGold = Random.Range(stage.mainStageCount, (stage.mainStageCount + stage.mainStageCount) + 1);
+                int randomGold = Random.Range(stageManager.mainStageCount, (stageManager.mainStageCount + stageManager.mainStageCount) + 1);
                 player.gold = player.gold + (randomGold * 2);
             }
 

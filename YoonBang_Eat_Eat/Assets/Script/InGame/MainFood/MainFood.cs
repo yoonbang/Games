@@ -51,6 +51,14 @@ public class MainFood : MonoBehaviour {
         {
             stageManager.mainStageCount++;
             stageManager.mainStageChange();
+
+            for (int i = 0; i < 20; i++)
+            {
+
+                int randomGold = Random.Range(stageManager.mainStageCount, (stageManager.mainStageCount + stageManager.mainStageCount) + 1);
+                player.gold = player.gold + (randomGold * 2);
+            }
+
             stageManager.smallstageText.gameObject.SetActive(true);
             Destroy(mainFood_Setting.main_Food);
             player.mainStage = false;
