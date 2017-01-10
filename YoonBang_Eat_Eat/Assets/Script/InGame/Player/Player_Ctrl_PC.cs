@@ -76,6 +76,7 @@ public class Player_Ctrl_PC : MonoBehaviour
     public GameObject menu_Effect;
     public GameObject dish_Effect;
 
+    public bool goldGain=false;
     //void Awake()
   
     void Awake()
@@ -288,8 +289,15 @@ public class Player_Ctrl_PC : MonoBehaviour
             eatEffect.transform.position = eat_Transform.transform.position;
 
             int randomGold = Random.Range(stage.mainStageCount, stage.mainStageCount + stage.mainStageCount);
-
-            gold = gold + randomGold*2;
+            if (goldGain == true)
+            {
+                randomGold = randomGold * 2;
+            }
+            else
+            {
+                randomGold = randomGold * 1;
+            }
+            gold = gold + (randomGold * 2);
             goldText.text = gold.ToString();
             GetComponent<AudioSource>().clip = eat_Sound;
             GetComponent<AudioSource>().Play();
@@ -351,8 +359,15 @@ public class Player_Ctrl_PC : MonoBehaviour
                     eatEffect.transform.position = eat_Transform.transform.position;
 
                     int randomGold = Random.Range(stage.mainStageCount, (stage.mainStageCount + stage.mainStageCount) + 1);
-
-                    gold = gold + (randomGold*2);
+                    if (goldGain == true)
+                    {
+                        randomGold = randomGold * 2;
+                    }
+                    else
+                    {
+                        randomGold = randomGold * 1;
+                    }
+                    gold = gold + (randomGold * 2);
                     goldText.text = gold.ToString();
                     GetComponent<AudioSource>().clip = eat_Sound;
                     GetComponent<AudioSource>().Play();
@@ -389,7 +404,7 @@ public class Player_Ctrl_PC : MonoBehaviour
         {
             //mainKnifeAnimation.MainSpoonAnimationStart();
             redDishGather.redDishGatherPlus();
-            smallKnifeAnimation.SmallKnifeAttackAnimation();
+            SmallSpoonAnimation.SmallSpoonAttackAnimation();
 
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Red_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
             shoot.transform.SetParent(eat_Transform.transform,false);
@@ -436,7 +451,7 @@ public class Player_Ctrl_PC : MonoBehaviour
         }
         else if (smallFood_Setting.smallFood_Index[0].layer == 9)
         {
-            SmallSpoonAnimation.SmallSpoonAttackAnimation();
+            smallKnifeAnimation.SmallKnifeAttackAnimation();
             //mainSpoonAnimation.MainSpoonAnimationStart();
 
             blueDishGather.blueDishGatherPlus();
