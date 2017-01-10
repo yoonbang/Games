@@ -66,12 +66,40 @@ public class SmallStageMenu : MonoBehaviour
 
                 int randomGold = Random.Range(stageManager.mainStageCount, (stageManager.mainStageCount + stageManager.mainStageCount) + 1);
                 player.gold = player.gold + (randomGold * 2);
+                player.goldText.text = player.gold.ToString();
             }
 
             smallStageMenu_Setting.foodChangeIndex++;
             smallStageMenu_Setting.Food_Change();
 
         }
+    }
+    public void TheDishesDamege(float power)
+    {
+        damage = power;
+        currentHp -= damage;
+        hp_Bar.fillAmount = currentHp / maxHP;
+        Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
+        hp_Text.text = currentHp.ToString("N1") + " HP";
+
+        if (currentHp <= 0)
+        {
+
+            stageManager.smallstageCount = stageManager.smallstageCount + 1;
+            stageManager.smallStageChange();
+            for (int i = 0; i < 10; i++)
+            {
+
+                int randomGold = Random.Range(stageManager.mainStageCount, (stageManager.mainStageCount + stageManager.mainStageCount) + 1);
+                player.gold = player.gold + (randomGold * 2);
+                player.goldText.text = player.gold.ToString();
+            }
+
+            smallStageMenu_Setting.foodChangeIndex++;
+            smallStageMenu_Setting.Food_Change();
+
+        }
+
     }
 
     public void Skill2Damage()

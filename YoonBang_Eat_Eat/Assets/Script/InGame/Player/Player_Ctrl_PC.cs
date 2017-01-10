@@ -38,6 +38,7 @@ public class Player_Ctrl_PC : MonoBehaviour
     SmallForksAnimation smallForksAnimation;
     SmallKnifeAnimation smallKnifeAnimation;
     DamageTextManager damegeTextManager;
+    MainCamara mainCamara;
 
     public PlayerState ps;
     int layerMask;
@@ -75,8 +76,8 @@ public class Player_Ctrl_PC : MonoBehaviour
     public GameObject menu_Effect;
     public GameObject dish_Effect;
 
-
-
+    //void Awake()
+  
     void Awake()
     {
         damegeTextManager = GameObject.FindGameObjectWithTag("DamageText").GetComponent<DamageTextManager>();
@@ -100,6 +101,7 @@ public class Player_Ctrl_PC : MonoBehaviour
         smallChopsticAnimation = GameObject.FindGameObjectWithTag("SmallChopstic").GetComponent<SmallChopsticAnimation>();
         smallForksAnimation = GameObject.FindGameObjectWithTag("SmallForks").GetComponent<SmallForksAnimation>();
         smallKnifeAnimation = GameObject.FindGameObjectWithTag("SmallKnife").GetComponent<SmallKnifeAnimation>();
+        mainCamara = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainCamara>();
     }
 
     // Update is called once per frame
@@ -131,7 +133,7 @@ public class Player_Ctrl_PC : MonoBehaviour
                     
                     if (Input.GetTouch(0).phase == TouchPhase.Began && layer == LayerMask.NameToLayer(DishLayer) && dish_Node_Id.id == smallFood_Dish_Id.id)
                     {
-                        Destroy(smallFood_Setting.smallFood_Index[0]);
+                        //Destroy(smallFood_Setting.smallFood_Index[0]);
                         if (ps == PlayerState.Combo)
                         {
                             Combo_Mode();
@@ -242,6 +244,8 @@ public class Player_Ctrl_PC : MonoBehaviour
             }
         }
     }
+
+
     public void Combo_Mode()
     {
         if(ps==PlayerState.Combo)
@@ -293,6 +297,8 @@ public class Player_Ctrl_PC : MonoBehaviour
             combo_system.Combo_Mode();
         }
     }
+
+
     public void Eat_Mode()
     {
         if(ps == PlayerState.Eat)
@@ -355,6 +361,7 @@ public class Player_Ctrl_PC : MonoBehaviour
         }
        
     }
+
     public void Flase_Mode()
     {
         if(ps==PlayerState.False)
@@ -367,6 +374,7 @@ public class Player_Ctrl_PC : MonoBehaviour
             {
                 mainFood_Setting.GetComponentInChildren<MainFood>().Heal();
             }
+            mainCamara.MainCamaraAnimationStart();
             combo_Count = 0;
             superComboMode_Count = 0;
             combo_system.combo_Gaze.fillAmount = superComboMode_Count / maxCombo;
@@ -379,7 +387,7 @@ public class Player_Ctrl_PC : MonoBehaviour
     {
         if (smallFood_Setting.smallFood_Index[0].layer == 12)
         {
-            mainKnifeAnimation.MainSpoonAnimationStart();
+            //mainKnifeAnimation.MainSpoonAnimationStart();
             redDishGather.redDishGatherPlus();
             smallKnifeAnimation.SmallKnifeAttackAnimation();
 
@@ -396,7 +404,7 @@ public class Player_Ctrl_PC : MonoBehaviour
         }
         else if (smallFood_Setting.smallFood_Index[0].layer == 11)
         {
-            mainChopsticAnimation.MainSpoonAnimationStart();
+            //mainChopsticAnimation.MainSpoonAnimationStart();
             yellowDishGather.yellowDishGatherPlus();
             smallChopsticAnimation.SmallChopsticAttackAnimation();
 
@@ -412,7 +420,7 @@ public class Player_Ctrl_PC : MonoBehaviour
         }
         else if (smallFood_Setting.smallFood_Index[0].layer == 10)
         {
-            mainForksAnimation.MainSpoonAnimationStart();
+            //mainForksAnimation.MainSpoonAnimationStart();
             greenDishGather.greenDishGatherPlus();
             smallForksAnimation.SmallForksAttackAnimation();
 
@@ -429,7 +437,7 @@ public class Player_Ctrl_PC : MonoBehaviour
         else if (smallFood_Setting.smallFood_Index[0].layer == 9)
         {
             SmallSpoonAnimation.SmallSpoonAttackAnimation();
-            mainSpoonAnimation.MainSpoonAnimationStart();
+            //mainSpoonAnimation.MainSpoonAnimationStart();
 
             blueDishGather.blueDishGatherPlus();
 

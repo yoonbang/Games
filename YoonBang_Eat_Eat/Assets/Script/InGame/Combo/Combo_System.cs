@@ -138,6 +138,7 @@ public class Combo_System : MonoBehaviour {
     {
         combo_Gaze.fillAmount = pc.superComboMode_Count / pc.maxCombo;
         combo_Gaze_Position.FindChild("ComboGaze(Clone)").FindChild("Gaze").GetComponent<Image>().fillAmount = pc.superComboMode_Count / pc.maxCombo;
+
         if (pc.superComboMode_Count<=0)
         {
             Destroy(combo_Object);

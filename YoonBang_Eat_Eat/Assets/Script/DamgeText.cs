@@ -15,6 +15,7 @@ public class DamgeText : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Ctrl_PC>();
         smallStageMenu_Setting = GameObject.FindGameObjectWithTag("SmallStageMenu_Setting").GetComponent<SmallStageMenu_Setting>();
         mainFood_Setting = GameObject.FindGameObjectWithTag("MainFood_Setting").GetComponent<MainFood_Setting>();
+
         if (player.mainStage == false)
         {
             text.text = smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().damage.ToString("N1");
@@ -36,6 +37,6 @@ public class DamgeText : MonoBehaviour {
             this.GetComponent<Animator>().Play("Attack2");
         }
 
-        Destroy(this.gameObject, 0.5f);
+        Destroy(this.gameObject, 0.7f);
     }
 }

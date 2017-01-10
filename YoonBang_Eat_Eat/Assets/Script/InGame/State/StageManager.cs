@@ -5,6 +5,9 @@ public class StageManager : MonoBehaviour {
     public int smallstageCount = 1;
     public int mainStageCount = 1;
 
+    int randomStage;
+    int randomMax;
+
     public float smallStageHp = 20.0f;
     public float mainStageHp = 30.0f;
 
@@ -18,25 +21,31 @@ public class StageManager : MonoBehaviour {
     public Text mainStageText1, mainStageText2, mainStageText3;
 
     public Sprite[] mainStageImage = new Sprite[500];
+    public Sprite NoImage;
 
     void Start()
     {
         smallStageMenu_Setting = GameObject.FindGameObjectWithTag("SmallStageMenu_Setting").GetComponent<SmallStageMenu_Setting>();
         mainFood_Setting = GameObject.FindGameObjectWithTag("MainFood_Setting").GetComponent<MainFood_Setting>();
-
+        randomMax = mainStageImage.Length;
 
         if (mainStageCount == 1)
         {
-            mainStageSlot2.gameObject.GetComponent<Image>().sprite = mainStageImage[mainStageCount];
-            mainStageSlot3.gameObject.GetComponent<Image>().sprite = mainStageImage[mainStageCount+1];
+            randomStage = Random.Range(1, randomMax);
+            mainStageSlot2.gameObject.GetComponent<Image>().sprite = mainStageImage[randomStage];
+            randomStage = Random.Range(1, randomMax);
+            mainStageSlot3.gameObject.GetComponent<Image>().sprite = mainStageImage[randomStage];
             mainStageText2.text = mainStageCount.ToString();
             mainStageText3.text = (mainStageCount+1).ToString();
         }
         else
         {
-            mainStageSlot1.gameObject.GetComponent<Image>().sprite = mainStageImage[mainStageCount-1];
-            mainStageSlot2.gameObject.GetComponent<Image>().sprite = mainStageImage[mainStageCount];
-            mainStageSlot3.gameObject.GetComponent<Image>().sprite = mainStageImage[mainStageCount + 1];
+            randomStage = Random.Range(1, randomMax);
+            mainStageSlot1.gameObject.GetComponent<Image>().sprite = mainStageImage[randomStage];
+            randomStage = Random.Range(1, randomMax);
+            mainStageSlot2.gameObject.GetComponent<Image>().sprite = mainStageImage[randomStage];
+            randomStage = Random.Range(1, randomMax);
+            mainStageSlot3.gameObject.GetComponent<Image>().sprite = mainStageImage[randomStage];
             mainStageText1.text = (mainStageCount - 1).ToString();
             mainStageText2.text = mainStageCount.ToString();
             mainStageText3.text = (mainStageCount + 1).ToString();
@@ -46,18 +55,30 @@ public class StageManager : MonoBehaviour {
 
     public void mainStageChange()
     {
-        if (mainStageCount == 1)
+        /*if (mainStageCount == 1)
         {
             mainStageSlot2.gameObject.GetComponent<Image>().sprite = mainStageImage[mainStageCount];
             mainStageSlot3.gameObject.GetComponent<Image>().sprite = mainStageImage[mainStageCount + 1];
             mainStageText2.text = mainStageCount.ToString();
             mainStageText3.text = (mainStageCount + 1).ToString();
+        }*/
+        if (mainStageCount == 1)
+        {
+            randomStage = Random.Range(1, randomMax);
+            mainStageSlot2.gameObject.GetComponent<Image>().sprite = mainStageImage[randomStage];
+            randomStage = Random.Range(1, randomMax);
+            mainStageSlot3.gameObject.GetComponent<Image>().sprite = mainStageImage[randomStage];
+            mainStageText2.text = mainStageCount.ToString();
+            mainStageText3.text = (mainStageCount + 1).ToString();
         }
         else
         {
-            mainStageSlot1.gameObject.GetComponent<Image>().sprite = mainStageImage[mainStageCount - 1];
-            mainStageSlot2.gameObject.GetComponent<Image>().sprite = mainStageImage[mainStageCount];
-            mainStageSlot3.gameObject.GetComponent<Image>().sprite = mainStageImage[mainStageCount + 1];
+            randomStage = Random.Range(1, randomMax);
+            mainStageSlot1.gameObject.GetComponent<Image>().sprite = mainStageImage[randomStage];
+            randomStage = Random.Range(1, randomMax);
+            mainStageSlot2.gameObject.GetComponent<Image>().sprite = mainStageImage[randomStage];
+            randomStage = Random.Range(1, randomMax);
+            mainStageSlot3.gameObject.GetComponent<Image>().sprite = mainStageImage[randomStage];
             mainStageText1.text = (mainStageCount - 1).ToString();
             mainStageText2.text = mainStageCount.ToString();
             mainStageText3.text = (mainStageCount + 1).ToString();
