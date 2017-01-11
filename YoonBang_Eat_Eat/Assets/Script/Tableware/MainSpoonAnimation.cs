@@ -15,7 +15,7 @@ public class MainSpoonAnimation : MonoBehaviour {
     public float power = 1f;
 
     public int level;
-
+    public AudioClip mainSpoonSound;
     // Use this for initialization
     void Start () {
         mainFood_Setting = GameObject.FindGameObjectWithTag("MainFood_Setting").GetComponent<MainFood_Setting>();
@@ -48,6 +48,8 @@ public class MainSpoonAnimation : MonoBehaviour {
                 smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().TheDishesDamege(power);
                 damegeTextManager.TheDishesDamage(power);
             }
+            GetComponent<AudioSource>().clip = mainSpoonSound;
+            GetComponent<AudioSource>().Play();
         }
         else
         {
@@ -60,7 +62,8 @@ public class MainSpoonAnimation : MonoBehaviour {
             {
                 mainFood_Setting.GetComponentInChildren<MainFood>().TheDishesDamege(power);
             }
-
+            GetComponent<AudioSource>().clip = mainSpoonSound;
+            GetComponent<AudioSource>().Play();
         }
     }
 

@@ -15,7 +15,7 @@ public class MainChopsticAnimation : MonoBehaviour {
     public float power = 1f;
 
     public int level;
-
+    public AudioClip mainChopsticSound;
     void Start () {
         mainFood_Setting = GameObject.FindGameObjectWithTag("MainFood_Setting").GetComponent<MainFood_Setting>();
         smallStageMenu_Setting = GameObject.FindGameObjectWithTag("SmallStageMenu_Setting").GetComponent<SmallStageMenu_Setting>();
@@ -57,6 +57,8 @@ public class MainChopsticAnimation : MonoBehaviour {
                 smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().TheDishesDamege(power);
                 damegeTextManager.TheDishesDamage(power);
             }
+            GetComponent<AudioSource>().clip = mainChopsticSound;
+            GetComponent<AudioSource>().Play();
         }
         else
         {
@@ -71,6 +73,8 @@ public class MainChopsticAnimation : MonoBehaviour {
                 mainFood_Setting.GetComponentInChildren<MainFood>().TheDishesDamege(power);
                 damegeTextManager.TheDishesDamage(power);
             }
+            GetComponent<AudioSource>().clip = mainChopsticSound;
+            GetComponent<AudioSource>().Play();
 
         }
     }

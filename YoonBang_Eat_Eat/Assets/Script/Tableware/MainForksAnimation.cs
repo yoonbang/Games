@@ -15,7 +15,7 @@ public class MainForksAnimation : MonoBehaviour {
     public float power = 1f;
 
     public int level;
-
+    public AudioClip mainForksSound;
     void Start () {
         mainFood_Setting = GameObject.FindGameObjectWithTag("MainFood_Setting").GetComponent<MainFood_Setting>();
         smallStageMenu_Setting = GameObject.FindGameObjectWithTag("SmallStageMenu_Setting").GetComponent<SmallStageMenu_Setting>();
@@ -48,6 +48,8 @@ public class MainForksAnimation : MonoBehaviour {
                 smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().TheDishesDamege(power);
                 damegeTextManager.TheDishesDamage(power);
             }
+            GetComponent<AudioSource>().clip = mainForksSound;
+            GetComponent<AudioSource>().Play();
         }
         else
         {
@@ -62,6 +64,8 @@ public class MainForksAnimation : MonoBehaviour {
                 mainFood_Setting.GetComponentInChildren<MainFood>().TheDishesDamege(power);
                 damegeTextManager.TheDishesDamage(power);
             }
+            GetComponent<AudioSource>().clip = mainForksSound;
+            GetComponent<AudioSource>().Play();
 
         }
     }

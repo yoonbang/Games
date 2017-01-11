@@ -82,6 +82,9 @@ public class SmallStageMenu : MonoBehaviour
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
         hp_Text.text = currentHp.ToString("N1") + " HP";
 
+        this.GetComponent<Animator>().Rebind();
+        this.GetComponent<Animator>().Play("Damage");
+
         if (currentHp <= 0)
         {
 

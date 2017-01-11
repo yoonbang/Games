@@ -15,7 +15,7 @@ public class MainKnifeAnimation : MonoBehaviour {
     public float power = 1f;
 
     public int level;
-
+    public AudioClip mainKnifeSound;
     // Use this for initialization
     void Start () {
         mainFood_Setting = GameObject.FindGameObjectWithTag("MainFood_Setting").GetComponent<MainFood_Setting>();
@@ -56,6 +56,8 @@ public class MainKnifeAnimation : MonoBehaviour {
                 smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().TheDishesDamege(power);
                 damegeTextManager.TheDishesDamage(power);
             }
+            GetComponent<AudioSource>().clip = mainKnifeSound;
+            GetComponent<AudioSource>().Play();
         }
         else
         {
@@ -70,6 +72,8 @@ public class MainKnifeAnimation : MonoBehaviour {
                 mainFood_Setting.GetComponentInChildren<MainFood>().TheDishesDamege(power);
                 damegeTextManager.TheDishesDamage(power);
             }
+            GetComponent<AudioSource>().clip = mainKnifeSound;
+            GetComponent<AudioSource>().Play();
 
         }
     }
