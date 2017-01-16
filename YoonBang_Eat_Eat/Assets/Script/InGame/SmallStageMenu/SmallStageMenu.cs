@@ -24,6 +24,7 @@ public class SmallStageMenu : MonoBehaviour
     public float currentTimer = 15.0f;
     public float maxTimer = 15.0f;
     public float damage = 0.0f;
+
     // Use this for initialization
     void Start()
     {
@@ -43,7 +44,30 @@ public class SmallStageMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Timer_Play();
+        if (currentHp <= 0)
+        {
+            currentHp = 0;
+            hp_Text.text = currentHp.ToString() + " HP";
+            stageManager.smallstageCount = stageManager.smallstageCount + 1;
+            stageManager.smallStageChange();
+            for (int i = 0; i < 10; i++)
+            {
+
+                int randomGold = Random.Range(stageManager.mainStageCount, (stageManager.mainStageCount + stageManager.mainStageCount) + 1);
+                player.gold = player.gold + (randomGold * 2);
+                player.goldText.text = CountModuleGold(player.gold);
+            }
+
+            if (stageManager.currentBonusTime < stageManager.maxBonusTime)
+            {
+                stageManager.currentBonusTime += 0.5f;
+                stageManager.bonusTimerBar.fillAmount = stageManager.currentBonusTime / stageManager.maxBonusTime;
+            }
+
+            smallStageMenu_Setting.foodChangeIndex++;
+            smallStageMenu_Setting.Food_Change();
+
+        }
     }
 
     public void Damage(float power)
@@ -52,12 +76,13 @@ public class SmallStageMenu : MonoBehaviour
         currentHp -= damage;
         hp_Bar.fillAmount = currentHp / maxHP;
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
-        hp_Text.text = currentHp.ToString("N1") +" HP";
+        //hp_Text.text = currentHp.ToString("N1") +" HP";
+        hp_Text.text = CountModule(currentHp) + " HP";
         damageText.DamageUI();
 
         this.GetComponent<Animator>().Rebind();
         this.GetComponent<Animator>().Play("Damage");
-        if (currentHp <= 0)
+        /*if (currentHp <= 0)
         {
 
             stageManager.smallstageCount = stageManager.smallstageCount + 1;
@@ -69,10 +94,16 @@ public class SmallStageMenu : MonoBehaviour
                 player.goldText.text = player.gold.ToString();
             }
 
+            if (stageManager.currentBonusTime<= stageManager.maxBonusTime)
+            {
+                stageManager.currentBonusTime += 0.5f;
+                stageManager.bonusTimerBar.fillAmount = stageManager.currentBonusTime/ stageManager.maxBonusTime;
+            }
+ 
             smallStageMenu_Setting.foodChangeIndex++;
             smallStageMenu_Setting.Food_Change();
 
-        }
+        }*/
     }
     public void TheDishesDamege(float power)
     {
@@ -80,12 +111,12 @@ public class SmallStageMenu : MonoBehaviour
         currentHp -= damage;
         hp_Bar.fillAmount = currentHp / maxHP;
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
-        hp_Text.text = currentHp.ToString("N1") + " HP";
-
+        //hp_Text.text = currentHp.ToString("N1") + " HP";
+        hp_Text.text = CountModule(currentHp) + " HP";
         this.GetComponent<Animator>().Rebind();
         this.GetComponent<Animator>().Play("Damage");
 
-        if (currentHp <= 0)
+        /*if (currentHp <= 0)
         {
 
             stageManager.smallstageCount = stageManager.smallstageCount + 1;
@@ -101,27 +132,60 @@ public class SmallStageMenu : MonoBehaviour
             smallStageMenu_Setting.foodChangeIndex++;
             smallStageMenu_Setting.Food_Change();
 
-        }
+        }*/
+    }
+    
+    public void SmallDishesDamege(float power)
+    {
+        damage = power;
+        currentHp -= damage;
+        hp_Bar.fillAmount = currentHp / maxHP;
+        Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
+        //hp_Text.text = currentHp.ToString("N1") + " HP";
+        hp_Text.text = CountModule(currentHp) + " HP";
+
+        this.GetComponent<Animator>().Rebind();
+        this.GetComponent<Animator>().Play("Damage");
+
+        /*if (currentHp <= 0)
+        {
+
+            stageManager.smallstageCount = stageManager.smallstageCount + 1;
+            stageManager.smallStageChange();
+            for (int i = 0; i < 10; i++)
+            {
+
+                int randomGold = Random.Range(stageManager.mainStageCount, (stageManager.mainStageCount + stageManager.mainStageCount) + 1);
+                player.gold = player.gold + (randomGold * 2);
+                player.goldText.text = player.gold.ToString();
+            }
+
+            smallStageMenu_Setting.foodChangeIndex++;
+            smallStageMenu_Setting.Food_Change();
+
+        }*/
 
     }
+
 
     public void Skill2Damage()
     {
         currentHp -= skill2.power;
         hp_Bar.fillAmount = currentHp / maxHP;
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
-        hp_Text.text = currentHp.ToString("N1") + " HP";
+        //hp_Text.text = currentHp.ToString("N1") + " HP";
+        hp_Text.text = CountModule(currentHp) + " HP";
 
         this.GetComponent<Animator>().Rebind();
         this.GetComponent<Animator>().Play("Damage");
 
-        if (currentHp <= 0)
+        /*if (currentHp <= 0)
         {
             stageManager.smallstageCount = stageManager.smallstageCount + 1;
             stageManager.smallStageChange();
             smallStageMenu_Setting.foodChangeIndex++;
             smallStageMenu_Setting.Food_Change();
-        }
+        }*/
     }
 
     public void Heal()
@@ -132,7 +196,8 @@ public class SmallStageMenu : MonoBehaviour
 		}
 			hp_Bar.fillAmount = currentHp / maxHP;
 			Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
-            hp_Text.text = currentHp.ToString("N1") +" HP";
+            //hp_Text.text = currentHp.ToString("N1") +" HP";
+            hp_Text.text = CountModule(currentHp) + " HP";
 
     }
     public void Timer_Play()
@@ -144,5 +209,40 @@ public class SmallStageMenu : MonoBehaviour
 
             Canvas_UI_Timer_Bar.fillAmount = currentTimer / maxTimer;
         }
+    }
+
+    public string CountModule(float haveCount)
+    {
+        if (haveCount > 1000000000000000000)
+            return string.Format("{0:#.#}G", (float)haveCount / 1000000000000000000);
+        if (haveCount > 1000000000000000)
+            return string.Format("{0:#.#}P", (float)haveCount / 1000000000000000);
+        if (haveCount > 1000000000000)
+            return string.Format("{0:#.#}T", (float)haveCount / 1000000000000);
+        if (haveCount > 1000000000)
+            return string.Format("{0:#.#}B", (float)haveCount / 1000000000);
+        else if (haveCount > 1000000)
+            return string.Format("{0:#.#}M", (float)haveCount / 1000000);
+        if (haveCount > 1000)
+            return string.Format("{0:#.#}K", (float)haveCount / 1000);
+        else
+            return haveCount.ToString("N1");
+    }
+    public string CountModuleGold(float haveCount)
+    {
+        if (haveCount > 1000000000000000000)
+            return string.Format("{0:#.#}G", (float)haveCount / 1000000000000000000);
+        if (haveCount > 1000000000000000)
+            return string.Format("{0:#.#}P", (float)haveCount / 1000000000000000);
+        if (haveCount > 1000000000000)
+            return string.Format("{0:#.#}T", (float)haveCount / 1000000000000);
+        if (haveCount > 1000000000)
+            return string.Format("{0:#.#}B", (float)haveCount / 1000000000);
+        else if (haveCount > 1000000)
+            return string.Format("{0:#.#}M", (float)haveCount / 1000000);
+        if (haveCount > 1000)
+            return string.Format("{0:#.#}K", (float)haveCount / 1000);
+        else
+            return haveCount.ToString("N0");
     }
 }

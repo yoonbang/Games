@@ -12,6 +12,7 @@ public enum PlayerState
     Eat,
     SuperMode,
     False,
+    SuperFiverMode,
 }
 
 public class Player_Ctrl_PC : MonoBehaviour
@@ -39,6 +40,7 @@ public class Player_Ctrl_PC : MonoBehaviour
     SmallKnifeAnimation smallKnifeAnimation;
     DamageTextManager damegeTextManager;
     MainCamara mainCamara;
+    SustainmentTime stt;
 
     public PlayerState ps;
     int layerMask;
@@ -51,7 +53,7 @@ public class Player_Ctrl_PC : MonoBehaviour
     public float power=10.0f;
 
     public float superComboMode_Count = 1f;
-    public float maxCombo = 20f;
+    public float maxCombo = 30f;
     public AudioClip eat_Sound;
 
     public GameObject eat_Effect;
@@ -60,7 +62,7 @@ public class Player_Ctrl_PC : MonoBehaviour
 
     public Text goldText;
     public int level;
-    public int gold;
+    public float gold;
 
     public bool mainStage;
     public bool criticalMode;
@@ -74,9 +76,13 @@ public class Player_Ctrl_PC : MonoBehaviour
     public Transform dish_Effect1, dish_Effect2, dish_Effect3, dish_Effect4;
 
     public GameObject menu_Effect;
-    public GameObject dish_Effect;
+    public GameObject red_Dish_Effect,green_Dish_Effect,yellow_Dish_Effect,blue_Dish_Effect;
 
+    public GameObject red_Point_Dish, yellow_Point_Dish, green_Point_Dish, blue_Dish_Point, firstDishPoint;
+    public Transform dishPointShot;
     public bool goldGain=false;
+    public float superFiverMode = 0f;
+    public float maxSuperFiverMode = 50f;
     //void Awake()
   
     void Awake()
@@ -103,12 +109,14 @@ public class Player_Ctrl_PC : MonoBehaviour
         smallForksAnimation = GameObject.FindGameObjectWithTag("SmallForks").GetComponent<SmallForksAnimation>();
         smallKnifeAnimation = GameObject.FindGameObjectWithTag("SmallKnife").GetComponent<SmallKnifeAnimation>();
         mainCamara = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainCamara>();
+        stt = GameObject.FindGameObjectWithTag("STI").GetComponent<SustainmentTime>();
     }
 
     // Update is called once per frame
     void Update()
     {
         MouseButtonClick();
+        
     }
     public void MouseButtonClick()
     {
@@ -139,6 +147,10 @@ public class Player_Ctrl_PC : MonoBehaviour
                         {
                             Combo_Mode();
                         }
+                        else if(ps==PlayerState.SuperFiverMode)
+                        {
+                            Super_Fiver_Mode();
+                        }
                         else {
                             ps = PlayerState.Eat;
                             Eat_Mode();
@@ -150,18 +162,35 @@ public class Player_Ctrl_PC : MonoBehaviour
                         {
                             Combo_Mode();
                         }
+                        else if (ps == PlayerState.SuperFiverMode)
+                        {
+                            Super_Fiver_Mode();
+                        }
                         else {
                             ps = PlayerState.False;
                             Flase_Mode();
                         }
                     }
-                    if (superComboMode_Count >= 20)
+
+                    if (superComboMode_Count >= maxCombo)
                     {
-                        if (ps != PlayerState.Skill)
+                        if (superFiverMode >= maxSuperFiverMode)
                         {
-                            ps = PlayerState.Combo;
-                            combo_Count -= 1;
-                            Combo_Mode();
+                            ps = PlayerState.SuperFiverMode;
+                            superComboMode_Count = 0f;
+                            SustainmentTimeInformationIcon2();
+                            Super_Fiver_Mode();
+                        }
+                        else {
+                            if (ps != PlayerState.SuperFiverMode || ps!=PlayerState.Skill)
+                            {
+                                superFiverMode += 10f;
+                                combo_system.superModeGaze.fillAmount = superFiverMode / maxSuperFiverMode;
+                                SustainmentTimeInformationIcon();
+                                ps = PlayerState.Combo;
+                                combo_Count -= 1;
+                                Combo_Mode();
+                            }
                         }
                     }
                 }
@@ -177,6 +206,7 @@ public class Player_Ctrl_PC : MonoBehaviour
             smallFood_Setting.smallFood_Index[0] = Instantiate(smallFood_Setting.smallFood_Index[1]) as GameObject;
             smallFood_Setting.smallFood_Index[0].transform.SetParent(smallFood_Setting.smallfood_Postion.smallFood_Position[0].transform,false);
             smallFood_Setting.smallFood_Index[0].transform.position = smallFood_Setting.smallfood_Postion.smallFood_Position[0].transform.position;
+            DishPoint();
 
             Destroy(smallFood_Setting.smallFood_Index[1]);
             smallFood_Setting.smallFood_Index[1] = Instantiate(smallFood_Setting.smallFood_Index[2]) as GameObject;
@@ -278,6 +308,7 @@ public class Player_Ctrl_PC : MonoBehaviour
             Food_Shot();
             playerAnimation.SuperModeAnimation();
             Destroy(smallFood_Setting.smallFood_Index[0]);
+            Destroy(firstDishPoint);
             combo_Count += 1;
 
             GameObject menuEffect = Instantiate(menu_Effect, Vector3.zero, Quaternion.identity) as GameObject;
@@ -298,7 +329,7 @@ public class Player_Ctrl_PC : MonoBehaviour
                 randomGold = randomGold * 1;
             }
             gold = gold + (randomGold * 2);
-            goldText.text = gold.ToString();
+            goldText.text = CountModule(gold);
             GetComponent<AudioSource>().clip = eat_Sound;
             GetComponent<AudioSource>().Play();
 
@@ -336,17 +367,18 @@ public class Player_Ctrl_PC : MonoBehaviour
                     if (Random.Range(1, 101) <= criticalInt)
                     {
                         damegeTextManager.ciriticalMode = true;
-                        mainFood_Setting.GetComponentInChildren<MainFood>().Damage(power*2); 
+                        mainFood_Setting.GetComponentInChildren<MainFood>().Damage(power*2);
                     }
                     else
                     {
-                    mainFood_Setting.GetComponentInChildren<MainFood>().Damage(power);
+                        mainFood_Setting.GetComponentInChildren<MainFood>().Damage(power);
                     }
 
                 }
                     Food_Shot();
                     playerAnimation.AttackAnimation();
                     Destroy(smallFood_Setting.smallFood_Index[0]);
+                    Destroy(firstDishPoint);
                     combo_Count += 1;
                     startSmallFoodAnimation.SmallFoodAnimation();
 
@@ -368,7 +400,7 @@ public class Player_Ctrl_PC : MonoBehaviour
                         randomGold = randomGold * 1;
                     }
                     gold = gold + (randomGold * 2);
-                    goldText.text = gold.ToString();
+                    goldText.text = CountModule(gold);
                     GetComponent<AudioSource>().clip = eat_Sound;
                     GetComponent<AudioSource>().Play();
 
@@ -376,6 +408,67 @@ public class Player_Ctrl_PC : MonoBehaviour
         }
        
     }
+
+    public void Super_Fiver_Mode()
+    {
+        if (ps == PlayerState.SuperFiverMode)
+        {
+            if (mainStage == false)
+            {
+                if (Random.Range(1, 101) <= criticalInt)
+                {
+                    damegeTextManager.ciriticalMode = true;
+                    smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Damage(power * 3f);
+                }
+                else
+                {
+                    smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().Damage(power*1.5f);
+                }
+            }
+            else
+            {
+                if (Random.Range(1, 101) <= criticalInt)
+                {
+                    damegeTextManager.ciriticalMode = true;
+                    mainFood_Setting.GetComponentInChildren<MainFood>().Damage(power * 2);
+                }
+                else
+                {
+                    mainFood_Setting.GetComponentInChildren<MainFood>().Damage(power);
+                }
+            }
+            Food_Shot();
+            playerAnimation.SuperModeAnimation();
+            Destroy(smallFood_Setting.smallFood_Index[0]);
+            Destroy(firstDishPoint);
+            combo_Count += 1;
+
+            GameObject menuEffect = Instantiate(menu_Effect, Vector3.zero, Quaternion.identity) as GameObject;
+            menuEffect.transform.SetParent(eat_Effect1.transform, false);
+            menuEffect.transform.position = eat_Effect1.transform.position;
+
+            GameObject eatEffect = Instantiate(eat_Effect, Vector3.zero, Quaternion.identity) as GameObject;
+            eatEffect.transform.SetParent(eat_Transform.transform, false);
+            eatEffect.transform.position = eat_Transform.transform.position;
+
+            int randomGold = Random.Range(stage.mainStageCount, stage.mainStageCount + stage.mainStageCount);
+            if (goldGain == true)
+            {
+                randomGold = randomGold * 2;
+            }
+            else
+            {
+                randomGold = randomGold * 1;
+            }
+            gold = gold + (randomGold * 2);
+            goldText.text = CountModule(gold);
+            GetComponent<AudioSource>().clip = eat_Sound;
+            GetComponent<AudioSource>().Play();
+
+            combo_system.SuperFiver();
+        }
+    }
+
 
     public void Flase_Mode()
     {
@@ -392,7 +485,9 @@ public class Player_Ctrl_PC : MonoBehaviour
             mainCamara.MainCamaraAnimationStart();
             combo_Count = 0;
             superComboMode_Count = 0;
+            superFiverMode = 0;
             combo_system.combo_Gaze.fillAmount = superComboMode_Count / maxCombo;
+            combo_system.superModeGaze.fillAmount = superFiverMode / maxSuperFiverMode;
             combo_system.combo_Text.text = combo_Count.ToString()+" Combo";
             ps = PlayerState.Idle;
         }
@@ -406,12 +501,15 @@ public class Player_Ctrl_PC : MonoBehaviour
             redDishGather.redDishGatherPlus();
             SmallSpoonAnimation.SmallSpoonAttackAnimation();
 
+            //Debug.Log("스몰데미지="+ SmallSpoonAnimation.smallPower);
+
             GameObject shoot = Instantiate(Resources.Load("SmallFood_Red_Dish_Shoot"), Vector3.zero, Quaternion.identity) as GameObject;
             shoot.transform.SetParent(eat_Transform.transform,false);
             shoot.transform.position = eat_Transform.transform.position;
             iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Red_Fly"), "time", 1));
+            //Destroy();
 
-            GameObject dishEffect = Instantiate(dish_Effect, Vector3.zero, Quaternion.identity) as GameObject;
+            GameObject dishEffect = Instantiate(red_Dish_Effect, Vector3.zero, Quaternion.identity) as GameObject;
             dishEffect.transform.SetParent(dish_Effect2.transform, false);
             dishEffect.transform.position = dish_Effect2.transform.position;
 
@@ -427,7 +525,7 @@ public class Player_Ctrl_PC : MonoBehaviour
             shoot.transform.SetParent(eat_Transform.transform,false);
             shoot.transform.position = eat_Transform.transform.position;
 
-            GameObject dishEffect = Instantiate(dish_Effect, Vector3.zero, Quaternion.identity) as GameObject;
+            GameObject dishEffect = Instantiate(yellow_Dish_Effect, Vector3.zero, Quaternion.identity) as GameObject;
             dishEffect.transform.SetParent(dish_Effect3.transform, false);
             dishEffect.transform.position = dish_Effect3.transform.position;
 
@@ -443,7 +541,7 @@ public class Player_Ctrl_PC : MonoBehaviour
             shoot.transform.SetParent(eat_Transform.transform,false);
             shoot.transform.position = eat_Transform.transform.position;
 
-            GameObject dishEffect = Instantiate(dish_Effect, Vector3.zero, Quaternion.identity) as GameObject;
+            GameObject dishEffect = Instantiate(green_Dish_Effect, Vector3.zero, Quaternion.identity) as GameObject;
             dishEffect.transform.SetParent(dish_Effect4.transform, false);
             dishEffect.transform.position = dish_Effect4.transform.position;
 
@@ -460,11 +558,177 @@ public class Player_Ctrl_PC : MonoBehaviour
             shoot.transform.SetParent(eat_Transform.transform,false);
             shoot.transform.position = eat_Transform.transform.position;
 
-            GameObject dishEffect = Instantiate(dish_Effect, Vector3.zero, Quaternion.identity) as GameObject;
+            GameObject dishEffect = Instantiate(blue_Dish_Effect, Vector3.zero, Quaternion.identity) as GameObject;
             dishEffect.transform.SetParent(dish_Effect1.transform, false);
             dishEffect.transform.position = dish_Effect1.transform.position;
 
             iTween.MoveTo(shoot, iTween.Hash("path", iTweenPath.GetPath("Blue_Fly"), "time", 1));
         }
+    }
+
+    public void DishPoint()
+    {
+        if (smallFood_Setting.smallFood_Index[0].GetComponent<SmallFood_Dish_Id>().id == 1)
+        {
+            firstDishPoint = Instantiate(red_Point_Dish, Vector3.zero, Quaternion.identity) as GameObject;
+            firstDishPoint.transform.SetParent(dishPointShot.transform, false);
+            firstDishPoint.transform.position = dishPointShot.transform.position;
+        }
+        if (smallFood_Setting.smallFood_Index[0].GetComponent<SmallFood_Dish_Id>().id == 3)
+        {
+            firstDishPoint = Instantiate(yellow_Point_Dish, Vector3.zero, Quaternion.identity) as GameObject;
+            firstDishPoint.transform.SetParent(dishPointShot.transform, false);
+            firstDishPoint.transform.position = dishPointShot.transform.position;
+        }
+        if (smallFood_Setting.smallFood_Index[0].GetComponent<SmallFood_Dish_Id>().id == 2)
+        {
+            firstDishPoint = Instantiate(blue_Dish_Point, Vector3.zero, Quaternion.identity) as GameObject;
+            firstDishPoint.transform.SetParent(dishPointShot.transform, false);
+            firstDishPoint.transform.position = dishPointShot.transform.position;
+        }
+        if (smallFood_Setting.smallFood_Index[0].GetComponent<SmallFood_Dish_Id>().id == 4)
+        {
+            firstDishPoint = Instantiate(green_Point_Dish, Vector3.zero, Quaternion.identity) as GameObject;
+            firstDishPoint.transform.SetParent(dishPointShot.transform, false);
+            firstDishPoint.transform.position = dishPointShot.transform.position;
+        }
+    }
+
+    public void SustainmentTimeInformationIcon()
+    {
+        for (int i = 0; i < stt.SustainmentTimeInformationIcon.Length; i++)
+        {
+            if (stt.SustainmentTimeInformationIcon[0] == null)
+            {
+                stt.SustainmentTimeInformationIcon[0] = Instantiate(stt.skillBlessTime[0]) as GameObject;
+                stt.SustainmentTimeInformationIcon[0].transform.SetParent(stt.slotTransform[0].transform, false);
+                stt.SustainmentTimeInformationIcon[0].transform.position = stt.slotTransform[0].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[1] == null)
+            {
+                stt.SustainmentTimeInformationIcon[1] = Instantiate(stt.skillBlessTime[1]) as GameObject;
+                stt.SustainmentTimeInformationIcon[1].transform.SetParent(stt.slotTransform[1].transform, false);
+                stt.SustainmentTimeInformationIcon[1].transform.position = stt.slotTransform[1].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[2] == null)
+            {
+                stt.SustainmentTimeInformationIcon[2] = Instantiate(stt.skillBlessTime[1]) as GameObject;
+                stt.SustainmentTimeInformationIcon[2].transform.SetParent(stt.slotTransform[2].transform, false);
+                stt.SustainmentTimeInformationIcon[2].transform.position = stt.slotTransform[2].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[3] == null)
+            {
+                stt.SustainmentTimeInformationIcon[3] = Instantiate(stt.skillBlessTime[1]) as GameObject;
+                stt.SustainmentTimeInformationIcon[3].transform.SetParent(stt.slotTransform[3].transform, false);
+                stt.SustainmentTimeInformationIcon[3].transform.position = stt.slotTransform[3].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[4] == null)
+            {
+                stt.SustainmentTimeInformationIcon[4] = Instantiate(stt.skillBlessTime[1]) as GameObject;
+                stt.SustainmentTimeInformationIcon[4].transform.SetParent(stt.slotTransform[4].transform, false);
+                stt.SustainmentTimeInformationIcon[4].transform.position = stt.slotTransform[4].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[5] == null)
+            {
+                stt.SustainmentTimeInformationIcon[5] = Instantiate(stt.skillBlessTime[1]) as GameObject;
+                stt.SustainmentTimeInformationIcon[5].transform.SetParent(stt.slotTransform[5].transform, false);
+                stt.SustainmentTimeInformationIcon[5].transform.position = stt.slotTransform[5].transform.position;
+
+                return;
+            }
+        }
+    }
+
+    public void SustainmentTimeInformationIcon2()
+    {
+        for (int i = 0; i < stt.SustainmentTimeInformationIcon.Length; i++)
+        {
+            if (stt.SustainmentTimeInformationIcon[0] == null)
+            {
+                stt.SustainmentTimeInformationIcon[0] = Instantiate(stt.skillBlessTime[1]) as GameObject;
+                stt.SustainmentTimeInformationIcon[0].transform.SetParent(stt.slotTransform[0].transform, false);
+                stt.SustainmentTimeInformationIcon[0].transform.position = stt.slotTransform[0].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[1] == null)
+            {
+                stt.SustainmentTimeInformationIcon[1] = Instantiate(stt.skillBlessTime[1]) as GameObject;
+                stt.SustainmentTimeInformationIcon[1].transform.SetParent(stt.slotTransform[1].transform, false);
+                stt.SustainmentTimeInformationIcon[1].transform.position = stt.slotTransform[1].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[2] == null)
+            {
+                stt.SustainmentTimeInformationIcon[2] = Instantiate(stt.skillBlessTime[1]) as GameObject;
+                stt.SustainmentTimeInformationIcon[2].transform.SetParent(stt.slotTransform[2].transform, false);
+                stt.SustainmentTimeInformationIcon[2].transform.position = stt.slotTransform[2].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[3] == null)
+            {
+                stt.SustainmentTimeInformationIcon[3] = Instantiate(stt.skillBlessTime[1]) as GameObject;
+                stt.SustainmentTimeInformationIcon[3].transform.SetParent(stt.slotTransform[3].transform, false);
+                stt.SustainmentTimeInformationIcon[3].transform.position = stt.slotTransform[3].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[4] == null)
+            {
+                stt.SustainmentTimeInformationIcon[4] = Instantiate(stt.skillBlessTime[1]) as GameObject;
+                stt.SustainmentTimeInformationIcon[4].transform.SetParent(stt.slotTransform[4].transform, false);
+                stt.SustainmentTimeInformationIcon[4].transform.position = stt.slotTransform[4].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[5] == null)
+            {
+                stt.SustainmentTimeInformationIcon[5] = Instantiate(stt.skillBlessTime[1]) as GameObject;
+                stt.SustainmentTimeInformationIcon[5].transform.SetParent(stt.slotTransform[5].transform, false);
+                stt.SustainmentTimeInformationIcon[5].transform.position = stt.slotTransform[5].transform.position;
+
+                return;
+            }
+        }
+    }
+
+    public string CountModule(float haveCount)
+    {
+        if (haveCount > 1000000000000000000)
+            return string.Format("{0:#.#}G", (float)haveCount / 1000000000000000000);
+        if (haveCount > 1000000000000000)
+            return string.Format("{0:#.#}P", (float)haveCount / 1000000000000000);
+        if (haveCount > 1000000000000)
+            return string.Format("{0:#.#}T", (float)haveCount / 1000000000000);
+        if (haveCount > 1000000000)
+            return string.Format("{0:#.#}B", (float)haveCount / 1000000000);
+        else if (haveCount > 1000000)
+            return string.Format("{0:#.#}M", (float)haveCount / 1000000);
+        if (haveCount > 1000)
+            return string.Format("{0:#.#}K", (float)haveCount / 1000);
+        else
+            return haveCount.ToString("N0");
     }
 }

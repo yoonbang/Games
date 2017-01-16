@@ -12,12 +12,15 @@ public class Skill1CoolTime : MonoBehaviour {
 
     // Use this for initialization
     public Player_Ctrl_PC pc;
+    SustainmentTime stt;
+
     void Start () {
         if (img == null)
             img = gameObject.GetComponent<Image>();
         if (btn == null)
             btn = gameObject.GetComponent<UnityEngine.UI.Button>();
         pc = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Ctrl_PC>();
+        stt = GameObject.FindGameObjectWithTag("STI").GetComponent<SustainmentTime>();
     }
 
     // Update is called once per frame
@@ -72,12 +75,71 @@ public class Skill1CoolTime : MonoBehaviour {
         if(leftTime==0 && btn.enabled == true)
         {
             leftTime = cooltime;
-            pc.superComboMode_Count = 21f;
-            pc.ps = PlayerState.Combo;
-            pc.Combo_Mode();
-
+            pc.superFiverMode = 50f;
+            pc.ps = PlayerState.SuperFiverMode;
+            pc.Super_Fiver_Mode();
+            SustainmentTimeInformationIcon();
             if (btn)
                 btn.enabled = false;
+        }
+    }
+    public void SustainmentTimeInformationIcon()
+    {
+        for (int i = 0; i < stt.SustainmentTimeInformationIcon.Length; i++)
+        {
+            if (stt.SustainmentTimeInformationIcon[0] == null)
+            {
+                stt.SustainmentTimeInformationIcon[0] = Instantiate(stt.skillBlessTime[1]) as GameObject;
+                stt.SustainmentTimeInformationIcon[0].transform.SetParent(stt.slotTransform[0].transform, false);
+                stt.SustainmentTimeInformationIcon[0].transform.position = stt.slotTransform[0].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[1] == null)
+            {
+                stt.SustainmentTimeInformationIcon[1] = Instantiate(stt.skillBlessTime[1]) as GameObject;
+                stt.SustainmentTimeInformationIcon[1].transform.SetParent(stt.slotTransform[1].transform, false);
+                stt.SustainmentTimeInformationIcon[1].transform.position = stt.slotTransform[1].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[2] == null)
+            {
+                stt.SustainmentTimeInformationIcon[2] = Instantiate(stt.skillBlessTime[1]) as GameObject;
+                stt.SustainmentTimeInformationIcon[2].transform.SetParent(stt.slotTransform[2].transform, false);
+                stt.SustainmentTimeInformationIcon[2].transform.position = stt.slotTransform[2].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[3] == null)
+            {
+                stt.SustainmentTimeInformationIcon[3] = Instantiate(stt.skillBlessTime[1]) as GameObject;
+                stt.SustainmentTimeInformationIcon[3].transform.SetParent(stt.slotTransform[3].transform, false);
+                stt.SustainmentTimeInformationIcon[3].transform.position = stt.slotTransform[3].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[4] == null)
+            {
+                stt.SustainmentTimeInformationIcon[4] = Instantiate(stt.skillBlessTime[1]) as GameObject;
+                stt.SustainmentTimeInformationIcon[4].transform.SetParent(stt.slotTransform[4].transform, false);
+                stt.SustainmentTimeInformationIcon[4].transform.position = stt.slotTransform[4].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[5] == null)
+            {
+                stt.SustainmentTimeInformationIcon[5] = Instantiate(stt.skillBlessTime[1]) as GameObject;
+                stt.SustainmentTimeInformationIcon[5].transform.SetParent(stt.slotTransform[5].transform, false);
+                stt.SustainmentTimeInformationIcon[5].transform.position = stt.slotTransform[5].transform.position;
+
+                return;
+            }
         }
     }
 }

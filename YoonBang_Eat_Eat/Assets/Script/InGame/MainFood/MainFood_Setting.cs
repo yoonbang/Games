@@ -20,7 +20,7 @@ public class MainFood_Setting : MonoBehaviour {
         smallStageMenu_Setting = GameObject.FindGameObjectWithTag("SmallStageMenu_Setting").GetComponent<SmallStageMenu_Setting>();
 
         foodrandomIndexMax = mainFood_Collection.mainFood_Collection.Length;
-        Debug.Log("랜덤인덱스 = " + mainFood_Collection.mainFood_Collection.Length);
+        //Debug.Log("랜덤인덱스 = " + mainFood_Collection.mainFood_Collection.Length);
         //StartMainMenuSetting();
     }
 	
@@ -53,7 +53,26 @@ public class MainFood_Setting : MonoBehaviour {
         main_Food.transform.position = food_Transform.position;
 
         main_Food.GetComponentInChildren<MainFood>().Canvas_UI_Hp_Bar.fillAmount = main_Food.GetComponentInChildren<MainFood>().currentHp / main_Food.GetComponentInChildren<MainFood>().maxHP;
-        main_Food.GetComponentInChildren<MainFood>().hp_Text.text = main_Food.GetComponentInChildren<MainFood>().currentHp.ToString("N1") + " HP";
+        //main_Food.GetComponentInChildren<MainFood>().hp_Text.text = main_Food.GetComponentInChildren<MainFood>().currentHp.ToString("N1") + " HP";
+        main_Food.GetComponentInChildren<MainFood>().hp_Text.text = CountModule(main_Food.GetComponentInChildren<MainFood>().currentHp) + " HP";
         main_Food.GetComponentInChildren<MainFood>().mainMenuName.text = main_Food.GetComponentInChildren<MainFood>().Name_String;
+    }
+
+    public string CountModule(float haveCount)
+    {
+        if (haveCount > 1000000000000000000)
+            return string.Format("{0:#.#}G", (float)haveCount / 1000000000000000000);
+        if (haveCount > 1000000000000000)
+            return string.Format("{0:#.#}P", (float)haveCount / 1000000000000000);
+        if (haveCount > 1000000000000)
+            return string.Format("{0:#.#}T", (float)haveCount / 1000000000000);
+        if (haveCount > 1000000000)
+            return string.Format("{0:#.#}B", (float)haveCount / 1000000000);
+        else if (haveCount > 1000000)
+            return string.Format("{0:#.#}M", (float)haveCount / 1000000);
+        if (haveCount > 1000)
+            return string.Format("{0:#.#}K", (float)haveCount / 1000);
+        else
+            return haveCount.ToString("N1");
     }
 }

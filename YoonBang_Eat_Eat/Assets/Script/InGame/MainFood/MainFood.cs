@@ -33,11 +33,32 @@ public class MainFood : MonoBehaviour {
 
         maxHP = stageManager.mainStageHp;
         currentHp = stageManager.mainStageHp;
+
+ 
     }
 	
 	// Update is called once per frame
 	void Update () {
-        //Timer_Play();
+        if (currentHp <= 0)
+        {
+            stageManager.mainStageCount++;
+            stageManager.mainStageChange();
+            currentHp = 0;
+            hp_Text.text = currentHp.ToString() + " HP";
+            for (int i = 0; i < 20; i++)
+            {
+
+                int randomGold = Random.Range(stageManager.mainStageCount, (stageManager.mainStageCount + stageManager.mainStageCount) + 1);
+                player.gold = player.gold + (randomGold * 2);
+                player.goldText.text = CountModuleGold(player.gold);
+            }
+
+            stageManager.smallstageText.gameObject.SetActive(true);
+            Destroy(mainFood_Setting.main_Food);
+            player.mainStage = false;
+            smallStageMenu_Setting.Food_Change();
+            stageManager.SmallStageSetting();
+        }
     }
 
     public void Damage(float power)
@@ -46,31 +67,13 @@ public class MainFood : MonoBehaviour {
         currentHp -= damage;
         hp_Bar.fillAmount = currentHp / maxHP;
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
-        hp_Text.text = currentHp.ToString("N1") + " HP";
+        //hp_Text.text = currentHp.ToString("N1") + " HP";
+        hp_Text.text = CountModule(currentHp) + " HP";
         damageText.DamageUI();
 
         this.GetComponent<Animator>().Rebind();
         this.GetComponent<Animator>().Play("Damage");
 
-        if (currentHp<=0)
-        {
-            stageManager.mainStageCount++;
-            stageManager.mainStageChange();
-
-            for (int i = 0; i < 20; i++)
-            {
-
-                int randomGold = Random.Range(stageManager.mainStageCount, (stageManager.mainStageCount + stageManager.mainStageCount) + 1);
-                player.gold = player.gold + (randomGold * 2);
-                player.goldText.text = player.gold.ToString();
-            }
-
-            stageManager.smallstageText.gameObject.SetActive(true);
-            Destroy(mainFood_Setting.main_Food);
-            player.mainStage = false;
-            smallStageMenu_Setting.Food_Change();
-            stageManager.SmallStageSetting();
-        }
     }
 
     public void TheDishesDamege(float power)
@@ -79,30 +82,10 @@ public class MainFood : MonoBehaviour {
         currentHp -= damage;
         hp_Bar.fillAmount = currentHp / maxHP;
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
-        hp_Text.text = currentHp.ToString("N1") + " HP";
-
+        //hp_Text.text = currentHp.ToString("N1") + " HP";
+        hp_Text.text = CountModule(currentHp) + " HP";
         this.GetComponent<Animator>().Rebind();
         this.GetComponent<Animator>().Play("Damage");
-        
-        if (currentHp <= 0)
-        {
-            stageManager.mainStageCount++;
-            stageManager.mainStageChange();
-
-            for (int i = 0; i < 20; i++)
-            {
-
-                int randomGold = Random.Range(stageManager.mainStageCount, (stageManager.mainStageCount + stageManager.mainStageCount) + 1);
-                player.gold = player.gold + (randomGold * 2);
-                player.goldText.text = player.gold.ToString();
-            }
-
-            stageManager.smallstageText.gameObject.SetActive(true);
-            Destroy(mainFood_Setting.main_Food);
-            player.mainStage = false;
-            smallStageMenu_Setting.Food_Change();
-            stageManager.SmallStageSetting();
-        }
     }
 
     public void Heal()
@@ -114,7 +97,8 @@ public class MainFood : MonoBehaviour {
                
         hp_Bar.fillAmount = currentHp / maxHP;
         Canvas_UI_Hp_Bar.fillAmount = currentHp / maxHP;
-        hp_Text.text = currentHp.ToString("N1") + " HP";
+        //hp_Text.text = currentHp.ToString("N1") + " HP";
+        hp_Text.text = CountModule(currentHp) + " HP";
     }
 
     public void Timer_Play()
@@ -127,4 +111,41 @@ public class MainFood : MonoBehaviour {
             Canvas_UI_Timer_Bar.fillAmount = currentTimer / maxTimer;
         }
     }
+
+    public string CountModule(float haveCount)
+    {
+        if (haveCount > 1000000000000000000)
+            return string.Format("{0:#.#}G", (float)haveCount / 1000000000000000000);
+        if (haveCount > 1000000000000000)
+            return string.Format("{0:#.#}P", (float)haveCount / 1000000000000000);
+        if (haveCount > 1000000000000)
+            return string.Format("{0:#.#}T", (float)haveCount / 1000000000000);
+        if (haveCount > 1000000000)
+            return string.Format("{0:#.#}B", (float)haveCount / 1000000000);
+        else if (haveCount > 1000000)
+            return string.Format("{0:#.#}M", (float)haveCount / 1000000);
+        if (haveCount > 1000)
+            return string.Format("{0:#.#}K", (float)haveCount / 1000);
+        else
+            return haveCount.ToString("N1");
+    }
+
+    public string CountModuleGold(float haveCount)
+    {
+        if (haveCount > 1000000000000000000)
+            return string.Format("{0:#.#}G", (float)haveCount / 1000000000000000000);
+        if (haveCount > 1000000000000000)
+            return string.Format("{0:#.#}P", (float)haveCount / 1000000000000000);
+        if (haveCount > 1000000000000)
+            return string.Format("{0:#.#}T", (float)haveCount / 1000000000000);
+        if (haveCount > 1000000000)
+            return string.Format("{0:#.#}B", (float)haveCount / 1000000000);
+        else if (haveCount > 1000000)
+            return string.Format("{0:#.#}M", (float)haveCount / 1000000);
+        if (haveCount > 1000)
+            return string.Format("{0:#.#}K", (float)haveCount / 1000);
+        else
+            return haveCount.ToString("N0");
+    }
+
 }

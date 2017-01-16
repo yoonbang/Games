@@ -5,6 +5,7 @@ public class SmallFood_Setting : MonoBehaviour
 {
     public GameObject small_Red_Dish, small_Blue_Dish, small_Yellow_Dish, small_Green_Dish;
     public GameObject[] smallFood_Index = new GameObject[7];
+    Player_Ctrl_PC player;
     int randomIndex=0;
     int foodCount=0;
 
@@ -16,6 +17,9 @@ public class SmallFood_Setting : MonoBehaviour
         foodCount = smallFood_Index.Length;
         smallfood_Postion = GameObject.FindGameObjectWithTag("SmallFood_Position").GetComponent<SmallFood_Position>();
         FoodSetting();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Ctrl_PC>();
+       
+        player.DishPoint();
     }
 
     // Update is called once per frame

@@ -21,6 +21,8 @@ public class Skill5_Button : MonoBehaviour {
     public float mainChopsticDamege;
     public float mainKnifeDamege;
     public float mainForksDamege;
+
+    SustainmentTime stt;
     // Use this for initialization
     void Start () {
         if (img == null)
@@ -32,6 +34,7 @@ public class Skill5_Button : MonoBehaviour {
         mainChopstic = GameObject.FindGameObjectWithTag("MainChopstic").GetComponent<MainChopsticAnimation>();
         mainKnife = GameObject.FindGameObjectWithTag("MainKnife").GetComponent<MainKnifeAnimation>();
         mainForks = GameObject.FindGameObjectWithTag("MainForks").GetComponent<MainForksAnimation>();
+        stt = GameObject.FindGameObjectWithTag("STI").GetComponent<SustainmentTime>();
     }
 	
 	// Update is called once per frame
@@ -96,11 +99,72 @@ public class Skill5_Button : MonoBehaviour {
             mainKnife.power = mainKnife.power * 2;
             mainForks.power = mainForks.power * 2;
 
+            SustainmentTimeInformationIcon();
             GameObject TheDishes = Instantiate(TheDishesPrefab, Vector3.zero, Quaternion.identity) as GameObject;
             if (btn)
             {
                 btn.enabled = false;
 
+            }
+        }
+    }
+
+    public void SustainmentTimeInformationIcon()
+    {
+        for (int i = 0; i < stt.SustainmentTimeInformationIcon.Length; i++)
+        {
+            if (stt.SustainmentTimeInformationIcon[0] == null)
+            {
+                stt.SustainmentTimeInformationIcon[0] = Instantiate(stt.skillBlessTime[4]) as GameObject;
+                stt.SustainmentTimeInformationIcon[0].transform.SetParent(stt.slotTransform[0].transform, false);
+                stt.SustainmentTimeInformationIcon[0].transform.position = stt.slotTransform[0].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[1] == null)
+            {
+                stt.SustainmentTimeInformationIcon[1] = Instantiate(stt.skillBlessTime[4]) as GameObject;
+                stt.SustainmentTimeInformationIcon[1].transform.SetParent(stt.slotTransform[1].transform, false);
+                stt.SustainmentTimeInformationIcon[1].transform.position = stt.slotTransform[1].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[2] == null)
+            {
+                stt.SustainmentTimeInformationIcon[2] = Instantiate(stt.skillBlessTime[4]) as GameObject;
+                stt.SustainmentTimeInformationIcon[2].transform.SetParent(stt.slotTransform[2].transform, false);
+                stt.SustainmentTimeInformationIcon[2].transform.position = stt.slotTransform[2].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[3] == null)
+            {
+                stt.SustainmentTimeInformationIcon[3] = Instantiate(stt.skillBlessTime[4]) as GameObject;
+                stt.SustainmentTimeInformationIcon[3].transform.SetParent(stt.slotTransform[3].transform, false);
+                stt.SustainmentTimeInformationIcon[3].transform.position = stt.slotTransform[3].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[4] == null)
+            {
+                stt.SustainmentTimeInformationIcon[4] = Instantiate(stt.skillBlessTime[4]) as GameObject;
+                stt.SustainmentTimeInformationIcon[4].transform.SetParent(stt.slotTransform[4].transform, false);
+                stt.SustainmentTimeInformationIcon[4].transform.position = stt.slotTransform[4].transform.position;
+
+                return;
+            }
+
+            else if (stt.SustainmentTimeInformationIcon[5] == null)
+            {
+                stt.SustainmentTimeInformationIcon[5] = Instantiate(stt.skillBlessTime[4]) as GameObject;
+                stt.SustainmentTimeInformationIcon[5].transform.SetParent(stt.slotTransform[5].transform, false);
+                stt.SustainmentTimeInformationIcon[5].transform.position = stt.slotTransform[5].transform.position;
+
+                return;
             }
         }
     }

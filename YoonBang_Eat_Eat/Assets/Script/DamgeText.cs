@@ -18,11 +18,11 @@ public class DamgeText : MonoBehaviour {
 
         if (player.mainStage == false)
         {
-            text.text = smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().damage.ToString("N1");
+            text.text = CountModule(smallStageMenu_Setting.GetComponentInChildren<SmallStageMenu>().damage);
         }
         else
         {
-            text.text = mainFood_Setting.GetComponentInChildren<MainFood>().damage.ToString("N1");
+            text.text = CountModule(mainFood_Setting.GetComponentInChildren<MainFood>().damage);
         }
 
         animationNumber = Random.Range(1, 3);
@@ -38,5 +38,23 @@ public class DamgeText : MonoBehaviour {
         }
 
         Destroy(this.gameObject, 0.7f);
+    }
+
+    public string CountModule(float haveCount)
+    {
+        if (haveCount > 1000000000000000000)
+            return string.Format("{0:#.#}G", (float)haveCount / 1000000000000000000);
+        if (haveCount > 1000000000000000)
+            return string.Format("{0:#.#}P", (float)haveCount / 1000000000000000);
+        if (haveCount > 1000000000000)
+            return string.Format("{0:#.#}T", (float)haveCount / 1000000000000);
+        if (haveCount > 1000000000)
+            return string.Format("{0:#.#}B", (float)haveCount / 1000000000);
+        else if (haveCount > 1000000)
+            return string.Format("{0:#.#}M", (float)haveCount / 1000000);
+        if (haveCount > 1000)
+            return string.Format("{0:#.#}K", (float)haveCount / 1000);
+        else
+            return haveCount.ToString("N1");
     }
 }
